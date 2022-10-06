@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/06 19:07:08 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/06 20:22:43 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 typedef struct s_data{
     struct s_env_list  *env_list;
 }   t_data;
+
+typedef struct s_parse{
+    int             quot_s_idx;
+    int             quot_e_idx;
+    int             quot_cnt;
+    int             d_quot_s_idx;
+    int             d_quot_e_idx;
+    int             d_quot_cnt;
+}   t_parse;
 
 typedef struct s_env{
 	char			*key;
@@ -36,6 +45,8 @@ typedef struct s_env_list{
 
 void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
+
+void    parse_cmd(t_data *data, char *str);
 
 t_env	*search_env(t_env_list *list, char *key);
 int	create_env_list_sub(t_env_list *list);
