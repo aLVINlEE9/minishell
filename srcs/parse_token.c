@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:37:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/07 13:33:35 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 14:15:03 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ int is_space(char c)
     return (0);
 }
 
+// char    *make_one_space(char *str)
+// {
+//     char    *s;
+
+//     s = str;
+//     while (*s)
+//     {
+//         if (is_space(*s) && is_space(*(s + 1)))
+//         s++;
+//     }
+//     return (str);
+// }
+
 void    parse_token(t_data *data, char *str)
 {
     char    *s;
@@ -66,7 +79,7 @@ void    parse_token(t_data *data, char *str)
         }
         s = buf_s - 1;
     }
-    while (*(s + 1))
+    while (*(s))
     {
         if (is_quot(*s))
         {
@@ -83,7 +96,7 @@ void    parse_token(t_data *data, char *str)
             }
             s = buf_q;
         }
-        if (is_space(*s) && !is_space(*(s + 1)) && !is_quot(*(s + 1)))
+        if (is_space(*s) && *(s + 1) && !is_space(*(s + 1)) && !is_quot(*(s + 1)))
         {
             s++;
             buf_s = s;
@@ -102,7 +115,7 @@ void    parse_token(t_data *data, char *str)
         }
         s++;
     }
-    if (!str && !buf_q) // quotation only once
+    if ((str && !*buf_q)) // quotation only once
     {
         printf("quotation only once\n");
     }
