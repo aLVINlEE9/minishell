@@ -1,48 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   node_env.c                                         :+:      :+:    :+:   */
+/*   node_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/07 12:32:58 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/07 13:19:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes/minishell.h"
 
-t_env	*search_env(t_env_list *list, char *key)
+t_token	*search_token(t_token_list *list, char *token)
 {
-    t_env   *now;
+    t_token   *now;
 
     now = list->head->next;
     while (now)
     {
-        if (ft_strncmp(now->key, key, -1) == 0)
+        if (ft_strncmp(now->token, token, -1) == 0)
             return (now);
         now = now->next;
     }
     return (0);
 }
 
-int	create_env_list_sub(t_env_list *list)
+int	create_token_list_sub(t_token_list *list)
 {
-	t_env	*head;
-	t_env	*tail;
+	t_token	*head;
+	t_token	*tail;
 
-	list->head = (t_env *)malloc(sizeof(t_env));
+	list->head = (t_token *)malloc(sizeof(t_token));
 	if (list->head == 0)
 		return (1);
-	list->tail = (t_env *)malloc(sizeof(t_env));
+	list->tail = (t_token *)malloc(sizeof(t_token));
 	if (list->tail == 0)
 		return (1);
 	head = list->head;
 	tail = list->tail;
-	head->key = 0;
-	head->val = 0;
-	tail->key = 0;
-	tail->val = 0;
+	head->token = 0;
+	head->around = -1;
+	tail->token = 0;
+	tail->around = -1;
 	head->next = tail;
 	head->prev = 0;
 	tail->next = 0;
@@ -50,18 +51,18 @@ int	create_env_list_sub(t_env_list *list)
 	return (0);
 }
 
-void	create_env_list(t_data *data)
+void	create_token_list(t_data *data)
 {
-	data->env_list = (t_env_list *)malloc(sizeof(t_env_list));
-	if (data->env_list == 0)
+	data->token_list = (t_token_list *)malloc(sizeof(t_token_list));
+	if (data->token_list == 0)
 		exit(1);
-	if (create_env_list_sub(data->env_list))
+	if (create_token_list_sub(data->token_list))
 		exit(1);
-	data->env_list->count = 0;
+	data->token_list->count = 0;
 }
 
 
-void	append_env_sub(t_env_list *list, t_env *new_node)
+void	append_token_sub(t_token_list *list, t_token *new_node)
 {
 	list->tail->prev->next = new_node;
 	new_node->prev = list->tail->prev;
@@ -70,27 +71,31 @@ void	append_env_sub(t_env_list *list, t_env *new_node)
 	list->count++;
 }
 
-int	append_env(t_env_list *list, char *key, char *val)
+int	append_token(t_token_list *list, char *token, size_t size)
 {
-	t_env		*new_node;
+	t_token		*new_node;
+	char		buf;
+    char        *ret;
 
+	ft_strlcpy(&buf, token, size + 1);
+    ret = ft_strdup(&buf);
 	new_node = 0;
-	new_node = create_env(key, val);
+	new_node = create_token(ret);
 	if (new_node == 0)
 		return (1);
-	append_env_sub(list, new_node);
+	append_token_sub(list, new_node);
 	return (0);
 }
 
-t_env	*create_env(char *key, char *val)
+t_token	*create_token(char *token)
 {
-	t_env	*new_node;
+	t_token	*new_node;
 
-	new_node = (t_env *)malloc(sizeof(t_env));
+	new_node = (t_token *)malloc(sizeof(t_token));
 	if (new_node == 0)
 		return (0);
-	new_node->key = key;
-	new_node->val = val;
+	new_node->token = token;
+    new_node->around = -1;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);

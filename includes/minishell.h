@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/06 23:32:04 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:29:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,29 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+enum e_around{
+    QOUT = 20,
+    D_QOUT = 21,
+    NO = 22
+} ;
+
 typedef struct s_data{
-	struct s_cmd_list	*cmd_list;
+	struct s_token_list	*token_list;
 	struct s_env_list	*env_list;
 }	t_data;
 
-typedef struct s_cmd{
-	char			*cmd;
-	int				dollar;
-	struct s_cmd	*prev;
-	struct s_cmd	*next;
-}	t_cmd;
+typedef struct s_token{
+	char			*token;
+	int				around;
+	struct s_token	*prev;
+	struct s_token	*next;
+}	t_token;
 
-typedef struct s_cmd_list{
+typedef struct s_token_list{
 	int		count;
-	t_cmd	*head;
-	t_cmd	*tail;
-}	t_cmd_list;
+	t_token	*head;
+	t_token	*tail;
+}	t_token_list;
 
 typedef struct s_env{
 	char			*key;
@@ -51,14 +57,14 @@ typedef struct s_env_list{
 void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
 
-void    parse_cmd(t_data *data, char *str);
+void    parse_token(t_data *data, char *str);
 
-t_cmd	*search_cmd(t_cmd_list *list, char *cmd);
-int	create_cmd_list_sub(t_cmd_list *list);
-void	create_cmd_list(t_data *data);
-void	append_cmd_sub(t_cmd_list *list, t_cmd *new_node);
-int	append_cmd(t_cmd_list *list, char *cmd, size_t size, int dollar);
-t_cmd	*create_cmd(char *cmd, int dollar);
+t_token	*search_token(t_token_list *list, char *token);
+int	create_token_list_sub(t_token_list *list);
+void	create_token_list(t_data *data);
+void	append_token_sub(t_token_list *list, t_token *new_node);
+int	append_token(t_token_list *list, char *token, size_t size);
+t_token	*create_token(char *token);
 
 t_env	*search_env(t_env_list *list, char *key);
 int	create_env_list_sub(t_env_list *list);
