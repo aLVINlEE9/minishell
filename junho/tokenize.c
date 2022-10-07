@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:15:16 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/06 22:39:02 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:20:29 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	tokenize(t_list **token_list, char *str)
 	{
 		if (*temp == ' ')//space
 		{
+			if (flag == 2)
+			{
+				chk = parse_between_arrow(temp, token_list, flag);
+				temp += (chk - 1);
+			}
 			flag = 0;
 		}
 		else if (*temp == '"')
@@ -44,21 +49,20 @@ int	tokenize(t_list **token_list, char *str)
 		}
 		else if (*temp == '|')
 		{
-			temp += parse_pipe(temp, token_list);
+			temp += parse_pipe(temp, token_list) - 1;
 			flag = 0;
 		}
-		/*
+		
 		else if (*temp == '<')
 		{
-			temp += parse_left_arrow(temp, token_list, flag);
+			temp += parse_left_arrow(temp, token_list, flag) - 1;
 			flag = 0;
 		}
 		else if (*temp == '>')
 		{
-			temp += parse_right_arrow(temp, token_list, flag);
-			flag = 0
+			temp += parse_right_arrow(temp, token_list, flag) - 1;
+			flag = 0;;
 		}
-		*/
 		else
 		{
 			chk = parse_another(temp, token_list, flag);

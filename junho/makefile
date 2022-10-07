@@ -1,7 +1,7 @@
 CC = cc -lreadline -g
 CFLAGS = 
 SRC_DIR = .
-SRCS = ./lst.c ./parse.c ./tokenize.c
+SRCS = ./lst.c ./parse.c ./tokenize.c ./trase.c
 NAME = parsing
 OBJS = $(SRCS:.c=.o)
 INCLUDE = .

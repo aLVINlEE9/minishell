@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:10:02 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/06 21:59:05 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:20:19 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,4 +157,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	*(p + count) = '\0';
 	return (p);
+}
+
+int	ft_strlen(const char *s)
+{
+	int	len;
+
+	len = 0;
+	while (*(s + len) != '\0')
+		len ++;
+	return (len);
 }

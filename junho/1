@@ -1,0 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   trase.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/07 16:47:21 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/07 17:52:17 by junhjeon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "tokenize.h"
+
+void	transe_str(t_list *token)
+{
+	if (token -> str_type == 0 || token -> str_type == 1)
+		translate(token);
+}
+
+void	translate(t_list *token)
+{
+	char	*temp;
+	int		len;
+
+	len = 0;
+	temp = (char *)(token -> content);
+	while (*(temp + len))
+	{
+		if (*(temp + len) == 92)
+		{
+			len = backslash(token, temp, len);
+		}
+		/*
+		if (*(temp + len) == '$')
+			dollar();
+		*/
+		len ++;
+		temp = (char *)(token -> content);
+	}
+}
+
+int	backslash(t_list *token, char *str, int len)
+{
+	char	*front;
+	char	*back;
+	char	*save;
+	char	*ret;
+
+	save = str;
+	front = ft_substr(str, 0, len);
+	back = ft_substr(str, len + 1, ft_strlen(str) - (len + 1));
+	ret = ft_strjoin(front, back);
+	token -> content = (void *)(ret);
+	free(front);
+	free(back);
+	free(save);
+
+	return (len + 1);
+}
