@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:11:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 20:19:45 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:42:36 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main (int argc, char **argv, char **envp)
 	int count = 0;
 	while (temp)
 	{
-		printf("%s\n", (char *)(temp -> content));
+		printf("data :%s\n", (char *)(temp -> content));
 		temp = temp -> next;
 		count ++;
 	}
@@ -91,9 +91,9 @@ int	parse_double_q(char *temp, t_list **token_list, int flag)
 		node = ft_lstlast(*token_list);
 		node -> str_type = 1;
 		ret = (node -> content);
+		save = transe_str2(save);
 		node -> content = (void *)(ft_strjoin((char *)(node -> content), save));
 		free(ret);
-		transe_str(node);
 	}
 	return (count);
 }
@@ -230,18 +230,36 @@ int	parse_another(char *temp, t_list **token_list, int flag)
 	int		count;
 	char	*ret;
 	char	*save;
+	int		b_slash;
 
 	save = temp;
 	count = 0;
+	b_slash = 0;
 	while (*temp)
 	{
-		if (*temp == 39 || *temp == '|' || *temp == '<' || *temp == '>' || *temp == '"' || \
+		if (*temp == '\\')
+		{
+			if (b_slash == 1)
+				b_slash = 0;
+			else
+				b_slash = 1;
+		}
+		else if (*temp == 39 || *temp == '|' || *temp == '<' || *temp == '>' || *temp == '"' || \
 				*temp == ' ')
-			break ;
+		{
+			if (b_slash != 1)
+				break ;
+			b_slash = 0;
+		}
+		else
+			b_slash = 0;
 		count ++;
 		temp ++;
 	}
+	if (b_slash == 1)
+		exit(1);
 	ret = ft_substr(save, 0, count);
+	ret = transe_str2(ret);
 	if (flag == 0 || flag == 2)
 	{
 		node = ft_lstnew((void *) ret);

@@ -6,11 +6,21 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:47:21 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 19:36:27 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:03:34 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenize.h"
+
+char	*transe_str2(char *str)
+{
+	t_list	temp;
+	temp.content = (void *)str;
+	temp.str_type = 0;
+
+	transe_str(&temp);
+	return ((char *)(temp.content));
+}
 
 void	transe_str(t_list *token)
 {
@@ -25,6 +35,7 @@ void	translate(t_list *token)
 
 	len = 0;
 	temp = (char *)(token -> content);
+	printf("%s\n",temp);
 	while (*(temp + len))
 	{
 		if (*(temp + len) == 92)

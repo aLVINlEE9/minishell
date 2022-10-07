@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:07:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 20:18:52 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 20:30:40 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ long long	ft_atol(const char *str);
 void	make_string_itoa(char *p, long long n, int len);
 int	find_len_itoa(long long n);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*transe_str2(char *str);
 
 #endif

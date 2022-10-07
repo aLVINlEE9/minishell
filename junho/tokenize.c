@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:15:16 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 19:57:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 21:27:58 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	tokenize(t_list **token_list, char *str)
 		{
 			chk = parse_another(temp, token_list, flag);
 			temp += (chk - 1);
-			flag = 0;
+			flag = 1;
 		}
 		temp ++;
 	}
