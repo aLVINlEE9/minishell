@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:11:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 19:24:20 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 20:19:45 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "tokenize.h"
 
-int main ()
+int main (int argc, char **argv, char **envp)
 {
 	char *str;
-	
+	t_data  data;
 	t_list	*token_list;
 	t_list	*temp;
 
 
+    parse_env(envp, &data);
+    update_shlvl(&data);
 	token_list = 0;
 	while(1)
 	{
@@ -63,7 +65,7 @@ int	parse_double_q(char *temp, t_list **token_list, int flag)
 		temp ++;
 	}
 	if (!(*temp))
-		return (-1);//error no "
+		exit(1);//error no "
 	*temp = 0;
 	if (count == 0)
 		return (count);
@@ -114,7 +116,7 @@ int	parse_single_q(char *temp, t_list **token_list, int flag)
 		temp ++;
 	}
 	if (!(*temp))
-		return (-1);//error no "
+		exit(1);//error no "
 	*temp = 0;
 	if (count == 0)
 		return (count);

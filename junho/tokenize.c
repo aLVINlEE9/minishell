@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:15:16 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 16:20:29 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 19:57:33 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ int	tokenize(t_list **token_list, char *str)
 	{
 		if (*temp == ' ')//space
 		{
-			if (flag == 2)
-			{
-				chk = parse_between_arrow(temp, token_list, flag);
-				temp += (chk - 1);
-			}
 			flag = 0;
 		}
 		else if (*temp == '"')

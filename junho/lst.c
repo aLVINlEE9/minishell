@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:10:02 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/07 17:20:19 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/07 20:18:46 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,211 @@ int	ft_strlen(const char *s)
 	while (*(s + len) != '\0')
 		len ++;
 	return (len);
+}
+
+int	count_word(char const *s, char c)
+{
+	int	count;
+	int	len;
+	int	flag;
+
+	count = 0;
+	flag = 0;
+	len = 0;
+	if (*s == '\0')
+		return (count);
+	while (*(s + len) != '\0')
+	{
+		if (*(s + len) != c && flag == 0)
+		{
+			flag = 1;
+			count ++;
+		}
+		else if (*(s + len) == c)
+			flag = 0;
+		len ++;
+	}
+	return (count);
+}
+
+int	put_word(char **ret, char const *s, int wordn, char c)
+{
+	int		len;
+	char	*p;
+
+	len = 0;
+	while (*(s + len) != '\0')
+	{
+		if (*(s + len) == c)
+			break ;
+		len ++;
+	}
+	p = malloc(sizeof(char) * (len + 1));
+	if (!ret)
+		return (0);
+	len = 0;
+	while (*(s + len) != '\0')
+	{
+		if (*(s + len) == c)
+			break ;
+		*(p + len) = *(s + len);
+		len ++;
+	}
+	*(p + len) = '\0';
+	*(ret + wordn) = p;
+	return (len);
+}
+
+char	**go_free(char **ret, int wordn)
+{
+	while (wordn >= 0)
+	{
+		free(*(ret + wordn));
+		wordn --;
+	}
+	free(ret);
+	return (0);
+}
+
+char	**ft_make_split(char **ret, char const *s, char c)
+{
+	int	wordn;
+	int	check;
+	int	temp;
+
+	temp = 0;
+	wordn = 0;
+	while (*(s + temp) != '\0')
+	{
+		if (*(s + temp) != c)
+		{
+			check = put_word(ret, s + temp, wordn ++, c);
+			if (!check)
+				return (go_free(ret, --wordn));
+			temp += check - 1;
+		}
+		temp ++;
+	}
+	*(ret + wordn) = 0;
+	return (ret);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	int		wordn;
+	int		temp;
+	char	**ret;
+
+	temp = 0;
+	if (!s)
+		return (0);
+	wordn = count_word(s, c);
+	ret = malloc(sizeof(char *) * (wordn + 1));
+	if (!ret)
+		return (0);
+	if (!ft_make_split(ret, s, c))
+		return (0);
+	return (ret);
+}
+
+char	*ft_itoa(int n)
+{
+	long long	ln;
+	char		*p;
+	int			len;
+
+	ln = n;
+	if (ln < 0)
+		ln = -ln;
+	len = find_len_itoa(ln);
+	if (n >= 0)
+		p = malloc(sizeof(char) * (len + 1));
+	else
+		p = malloc(sizeof(char) * (len + 2));
+	if (!p)
+		return (0);
+	if (n < 0)
+	{
+		*p = '-';
+		p ++;
+	}
+	*(p + len) = '\0';
+	make_string_itoa(p, ln, len - 1);
+	if (n < 0)
+		return (--p);
+	return (p);
+}
+
+long long	ft_atol(const char *str)
+{
+	long long	ret;
+	long long	p;
+
+	ret = 0;
+	p = 1;
+	while (*str == '\f' || *str == '\n' || *str == '\r'
+		|| *str == '\t' || *str == '\v' || *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			p *= -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		ret *= 10;
+		ret += (p * (*str - '0'));
+		str++;
+	}
+	return (ret);
+}
+
+void	make_string_itoa(char *p, long long n, int len)
+{
+	if (n / 10 == 0)
+	{
+		*p = (n % 10 + '0');
+		return ;
+	}
+	make_string_itoa(p, n / 10, len - 1);
+	*(p + len) = (n % 10 + '0');
+}
+
+int	find_len_itoa(long long n)
+{
+	int	ret;
+
+	ret = 0;
+	if (n == 0)
+		return (1);
+	while (n)
+	{
+		n /= 10;
+		ret ++;
+	}
+	return (ret);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*s1_u;
+	unsigned char	*s2_u;
+
+	i = 0;
+	s1_u = (unsigned char *)s1;
+	s2_u = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
+	while (*s1_u && *s2_u && i++ < n - 1)
+	{
+		if (*s1_u != *s2_u)
+		{
+			return (*s1_u - *s2_u);
+		}
+		s1_u++;
+		s2_u++;
+	}
+	return (*s1_u - *s2_u);
 }
