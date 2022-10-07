@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:37:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/07 15:55:23 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:26:59 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ int is_space(char c)
 	if (c == ' ')
 		return (1);
 	return (0);
+}
+
+int	is_escape(char *str)
+{
+	char	*ptr;
+	ptr = str;
+	while(*ptr)
+	{
+
+		ptr++;
+	}
 }
 
 void    parse_token(t_data *data, char *str)
@@ -76,6 +87,8 @@ void    parse_token(t_data *data, char *str)
 			{
 				if (*s == *buf_q)
 				{
+					if (is_escape(buf_q))
+						
 					if (*(buf_q - 1) == '\\' && *(buf_q - 2) != '\\')
 						buf_q++;
 					append_token(data->token_list, s + 1, buf_q - s - 1);

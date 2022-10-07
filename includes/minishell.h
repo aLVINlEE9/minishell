@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/07 15:52:29 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/07 19:02:00 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);
 void	create_token_list(t_data *data);
 void	append_token_sub(t_token_list *list, t_token *new_node);
-int	append_token(t_token_list *list, char *token, size_t size);
+int	append_token(t_token_list *list, char *token);
 t_token	*create_token(char *token);
 
 t_env	*search_env(t_env_list *list, char *key);
