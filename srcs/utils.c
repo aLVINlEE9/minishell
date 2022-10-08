@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/06 19:06:50 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 17:09:57 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,10 +247,10 @@ char	**ft_make_split(char **ret, char const *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	int		wordn;
-	int		temp;
+	// int		temp;
 	char	**ret;
 
-	temp = 0;
+	// temp = 0;
 	if (!s)
 		return (0);
 	wordn = count_word(s, c);
