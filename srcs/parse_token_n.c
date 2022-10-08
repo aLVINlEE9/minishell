@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 18:15:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:34:10 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	parse_token(t_data *data, char *str)
 			{
 				idxq_e = i;
 			}
-			if (in_qout && idxq_s && idxq_e)
+			if (in_qout && idxq_e)
 			{
 				ft_memmove(&s[idxq_e], &s[idxq_e + 1], ft_strlen(s) - idxq_e);
 				ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_s);
@@ -145,7 +145,7 @@ void	parse_token(t_data *data, char *str)
 				{
 					idxq_e = i;
 				}
-				if (in_qout && idxq_s && idxq_e)
+				if (in_qout && idxq_e)
 				{
 					ft_memmove(&s[idxq_e], &s[idxq_e + 1], ft_strlen(s) - idxq_e);
 					ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_s);
