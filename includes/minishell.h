@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 17:10:07 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 19:01:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@ typedef struct s_data{
 	struct s_token_list	*token_list;
 	struct s_env_list	*env_list;
 }	t_data;
+
+typedef struct s_parse{
+	char	*s;
+	char	q;
+	int	i;
+	int	in_qout;
+	int	idx;
+	int	idxq_s;
+	int	idxq_e;
+}	t_parse;
 
 typedef struct s_token{
 	char			*token;

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 18:44:11 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 19:10:53 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,104 +61,77 @@ int	is_backslash(char *str, int i)
 	return (0);
 }
 
+int	parse_token_sub(t_data *data, t_parse *parse)
+{
+	while (1)
+	{
+		if (is_backslash(parse->s, parse->i))
+		{
+			ft_memmove(&parse->s[parse->i], &parse->s[parse->i + 1], ft_strlen(parse->s) - parse->i);
+			parse->i++;
+			continue ;
+		}
+		if ((!parse->in_qout && is_space(parse->s[parse->i])) || !parse->s[parse->i])
+		{
+			append_token(data->token_list, &parse->s[parse->idx], parse->i - parse->idx);
+			break ;
+		}
+		else if (!parse->in_qout && is_quot(parse->s[parse->i]))
+		{
+			parse->in_qout = TRUE;
+			parse->idxq_s = parse->i;
+			parse->q = parse->s[parse->i];
+		}
+		else if (parse->in_qout && parse->q == parse->s[parse->i])
+		{
+			parse->idxq_e = parse->i;
+		}
+		if (parse->in_qout && parse->idxq_e)
+		{
+			ft_memmove(&parse->s[parse->idxq_e], &parse->s[parse->idxq_e + 1], ft_strlen(parse->s) - parse->idxq_e);
+			ft_memmove(&parse->s[parse->idxq_s], &parse->s[parse->idxq_s + 1], ft_strlen(parse->s) - parse->idxq_s);
+			parse->in_qout = FALSE;
+			parse->idxq_s = 0;
+			parse->idxq_e = 0;
+			parse->i -= 2;
+		}
+		parse->i++;
+	}
+	return (parse->i);
+}
+
+void	init_parse(t_parse *parse, char *str)
+{
+	parse->s = str;
+	parse->q = 0;
+	parse->i = 0;
+	parse->in_qout = FALSE;
+	parse->idx = 0;
+	parse->idxq_s = 0;
+	parse->idxq_e = 0;
+}
+
 void	parse_token(t_data *data, char *str)
 {
-	char	*s;
-	char	q;
-	int	i;
-	int	in_qout;
-	int	idx;
-	int	idxq_s;
-	int	idxq_e;
+	t_parse	parse;
 
-	s = str;
-	i = 0;
-	in_qout = FALSE;
-	idx = 0;
-	idxq_s = 0;
-	idxq_e = 0;
+	init_parse(&parse, str);
 	create_token_list(data);
-	if (!is_space(s[i]))
+	if (!is_space(parse.s[parse.i]))
 	{
-		idx = i;
-		while (1)
-		{
-			if (is_backslash(s, i))
-			{
-				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
-				i++;
-				continue ;
-			}
-			if ((!in_qout && is_space(s[i])) || !s[i])
-			{
-				append_token(data->token_list, &s[idx], i - idx);
-				break ;
-			}
-			else if (!in_qout && is_quot(s[i]))
-			{
-				in_qout = TRUE;
-				idxq_s = i;
-				q = s[i];
-			}
-			else if (in_qout && q == s[i])
-			{
-				idxq_e = i;
-			}
-			if (in_qout && idxq_e)
-			{
-				ft_memmove(&s[idxq_e], &s[idxq_e + 1], ft_strlen(s) - idxq_e);
-				ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_s);
-				in_qout = FALSE;
-				idxq_s = 0;
-				idxq_e = 0;
-				i -= 2;
-			}
-			i++;
-		}
+		parse.idx = parse.i;
+		parse.i = parse_token_sub(data, &parse);
 	}
-	while (s[i])
+	while (parse.s[parse.i])
 	{
-		if (s[i] && s[i + 1] && is_space(s[i]) && !is_space(s[i + 1]))
+		if (parse.s[parse.i] && parse.s[parse.i + 1] && is_space(parse.s[parse.i]) && !is_space(parse.s[parse.i + 1]))
 		{
-			i++;
-			idx = i;
-			while (1)
-			{
-				if (is_backslash(s, i))
-				{
-					ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
-					i++;
-					continue ;
-				}
-				if ((!in_qout && is_space(s[i])) || !s[i])
-				{
-					append_token(data->token_list, &s[idx], i - idx);
-					break ;
-				}
-				else if (!in_qout && is_quot(s[i]))
-				{
-					in_qout = TRUE;
-					idxq_s = i;
-					q = s[i];
-				}
-				else if (in_qout && q == s[i])
-				{
-					idxq_e = i;
-				}
-				if (in_qout && idxq_e)
-				{
-					ft_memmove(&s[idxq_e], &s[idxq_e + 1], ft_strlen(s) - idxq_e);
-					ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_s);
-					in_qout = FALSE;
-					idxq_s = 0;
-					idxq_e = 0;
-					i -= 2;
-				}
-				i++;
-			}
-			i--;
+			parse.i++;
+			parse.idx = parse.i;
+			parse.i = parse_token_sub(data, &parse);
+			parse.i--;
 		}
-		i++;
+		parse.i++;
 	}
 }
 
