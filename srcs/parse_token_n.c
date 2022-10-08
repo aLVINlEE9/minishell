@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 18:34:10 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:44:11 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	parse_token(t_data *data, char *str)
 	}
 	while (s[i])
 	{
-		if (s[i] && is_space(s[i]) && !is_space(s[i + 1]))
+		if (s[i] && s[i + 1] && is_space(s[i]) && !is_space(s[i + 1]))
 		{
 			i++;
 			idx = i;
