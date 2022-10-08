@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 18:09:19 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:15:53 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	parse_token(t_data *data, char *str)
 		{
 			if (is_backslash(s, i))
 			{
-				i += 2;
+				ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
+				i++;
 				continue ;
 			}
 			if ((!in_qout && is_space(s[i])) || !s[i])
@@ -125,7 +126,8 @@ void	parse_token(t_data *data, char *str)
 			{
 				if (is_backslash(s, i))
 				{
-					i += 2;
+					ft_memmove(&s[i], &s[i + 1], ft_strlen(s) - i);
+					i++;
 					continue ;
 				}
 				if ((!in_qout && is_space(s[i])) || !s[i])
@@ -146,7 +148,7 @@ void	parse_token(t_data *data, char *str)
 				if (in_qout && idxq_s && idxq_e)
 				{
 					ft_memmove(&s[idxq_e], &s[idxq_e + 1], ft_strlen(s) - idxq_e);
-					ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_us);
+					ft_memmove(&s[idxq_s], &s[idxq_s + 1], ft_strlen(s) - idxq_s);
 					in_qout = FALSE;
 					idxq_s = 0;
 					idxq_e = 0;
