@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:37:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 16:45:25 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 17:16:31 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	is_escape(char *str)
 	}
 }
 
-void    parse_token(t_data *data, char *str)
+void	parse_token(t_data *data, char *str)
 {
 	char	*s;
 	char	*buf_q;

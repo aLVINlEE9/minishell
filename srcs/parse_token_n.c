@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 19:10:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 17:20:31 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,73 @@ int	is_backslash(char *str, int i)
 	return (0);
 }
 
+int	is_dollar(char c)
+{
+	if (c == '$')
+		return (1);
+	return (0);
+}
+
+void	remove_char_from_idx(char *s, int idx)
+{
+	ft_memmove(&s[idx], &s[idx + 1], ft_strlen(s) - idx);
+}
+
+void	remove_string(char *s, int idx_s, int idx_e)
+{
+	while (idx_s <= idx_e)
+	{
+		remove_char_from_idx(s, idx_e);
+		idx_e--;
+	}
+}
+
+// void	replace_string(char *s, char *rep_s, int idx_s, int idx_e)
+// {
+// 	int	len;
+
+// 	len = ft_strlen(rep_s);
+// 	remove_string(s, idx_s, idx_e);
+// 	if (len == 0)
+// 		return ;
+// 	else
+// 	{
+		
+// 	}
+// }
+
+// void	replace_dollar(t_data *data, t_parse *parse)
+// {
+// 	t_env	*env;
+// 	char	buf;
+
+// 	if (parse->in_qout && parse->q == '\'')
+// 		return ;
+// 	else
+// 	{
+// 		ft_strlcpy(&buf, &parse->s[parse->idxd_s], parse->idxd_e - parse->idxd_e + 1);
+// 		env = search_env(data->env_list, &buf);
+// 		if (env == 0)
+// 			replace_string(parse->s, "", parse->idxd_s - 1, parse->idxd_e);
+// 		else
+// 			replace_string(parse->s, env->val, parse->idxd_s - 1, parse->idxd_e);
+// 	}
+// }
+
 int	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
 		if (is_backslash(parse->s, parse->i))
 		{
-			ft_memmove(&parse->s[parse->i], &parse->s[parse->i + 1], ft_strlen(parse->s) - parse->i);
+			remove_char_from_idx(parse->s, parse->i);
 			parse->i++;
 			continue ;
 		}
 		if ((!parse->in_qout && is_space(parse->s[parse->i])) || !parse->s[parse->i])
 		{
-			append_token(data->token_list, &parse->s[parse->idx], parse->i - parse->idx);
+			append_token(data->token_list, parse, &parse->s[parse->idx], parse->i - parse->idx);
+			parse->in_dollar = FALSE;
 			break ;
 		}
 		else if (!parse->in_qout && is_quot(parse->s[parse->i]))
@@ -86,10 +140,22 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 		{
 			parse->idxq_e = parse->i;
 		}
+		else if (!parse->in_dollar && is_dollar(parse->s[parse->i]))
+		{
+			if (parse->in_qout && parse->q == '\'')
+				parse->in_dollar = FALSE;
+			else
+				parse->in_dollar = TRUE;
+		}
+		// else if (parse->s[parse->i + 1] && parse->in_dollar && (is_space(parse->s[parse->i + 1]) || is_quot(parse->s[parse->i + 1])))
+		// {
+		// 	parse->idxd_e = parse->i;
+		// 	replace_dollar(data, parse);
+		// }
 		if (parse->in_qout && parse->idxq_e)
 		{
-			ft_memmove(&parse->s[parse->idxq_e], &parse->s[parse->idxq_e + 1], ft_strlen(parse->s) - parse->idxq_e);
-			ft_memmove(&parse->s[parse->idxq_s], &parse->s[parse->idxq_s + 1], ft_strlen(parse->s) - parse->idxq_s);
+			remove_char_from_idx(parse->s, parse->idxq_e);
+			remove_char_from_idx(parse->s, parse->idxq_s);
 			parse->in_qout = FALSE;
 			parse->idxq_s = 0;
 			parse->idxq_e = 0;
@@ -106,9 +172,12 @@ void	init_parse(t_parse *parse, char *str)
 	parse->q = 0;
 	parse->i = 0;
 	parse->in_qout = FALSE;
+	parse->in_dollar = FALSE;
 	parse->idx = 0;
 	parse->idxq_s = 0;
 	parse->idxq_e = 0;
+	parse->idxd_s = 0;
+	parse->idxd_e = 0;
 }
 
 void	parse_token(t_data *data, char *str)

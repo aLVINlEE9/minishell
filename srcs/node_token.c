@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 16:47:49 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 17:20:05 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ int	create_token_list_sub(t_token_list *list)
 	head = list->head;
 	tail = list->tail;
 	head->token = 0;
+	head->in_dollar = 0;
 	head->around = -1;
 	tail->token = 0;
+	tail->in_dollar = 0;
 	tail->around = -1;
 	head->next = tail;
 	head->prev = 0;
@@ -71,7 +73,7 @@ void	append_token_sub(t_token_list *list, t_token *new_node)
 	list->count++;
 }
 
-int	append_token(t_token_list *list, char *token, size_t size)
+int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size)
 {
 	t_token		*new_node;
 	char		buf;
@@ -80,14 +82,14 @@ int	append_token(t_token_list *list, char *token, size_t size)
 	ft_strlcpy(&buf, token, size + 1);
 	ret = ft_strdup(&buf);
 	new_node = 0;
-	new_node = create_token(ret);
+	new_node = create_token(ret, parse);
 	if (new_node == 0)
 		return (1);
 	append_token_sub(list, new_node);
 	return (0);
 }
 
-t_token	*create_token(char *token)
+t_token	*create_token(char *token, t_parse *parse)
 {
 	t_token	*new_node;
 
@@ -95,7 +97,8 @@ t_token	*create_token(char *token)
 	if (new_node == 0)
 		return (0);
 	new_node->token = token;
-    new_node->around = -1;
+	new_node->in_dollar = parse->in_dollar;
+	new_node->around = -1;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);

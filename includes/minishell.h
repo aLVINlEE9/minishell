@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 19:01:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 17:20:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,17 @@ typedef struct s_parse{
 	char	q;
 	int	i;
 	int	in_qout;
+	int	in_dollar;
 	int	idx;
 	int	idxq_s;
 	int	idxq_e;
+	int	idxd_s;
+	int	idxd_e;
 }	t_parse;
 
 typedef struct s_token{
 	char			*token;
+	int				in_dollar;
 	int				around;
 	struct s_token	*prev;
 	struct s_token	*next;
@@ -76,8 +80,8 @@ t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);
 void	create_token_list(t_data *data);
 void	append_token_sub(t_token_list *list, t_token *new_node);
-int	append_token(t_token_list *list, char *token, size_t size);
-t_token	*create_token(char *token);
+int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
+t_token	*create_token(char *token, t_parse *parse);
 
 t_env	*search_env(t_env_list *list, char *key);
 int	create_env_list_sub(t_env_list *list);
