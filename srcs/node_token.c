@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 22:19:48 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 23:02:27 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size)
 	char		buf;
 	char		*ret;
 
+	if (parse->in_qout)
+	{
+		printf("unclose qout\n");
+		return (0);
+	}
 	ft_strlcpy(&buf, token, size + 1);
 	ret = ft_strdup(&buf);
 	new_node = 0;
