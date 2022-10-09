@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 23:29:49 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 23:56:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,20 @@ int	is_space(char c)
 	return (0);
 }
 
-int	is_backslash(t_parse *parse, char *str, int i)
+int	condition_backslash(t_parse *parse)
 {
-	if (!str[i + 1])
-		return (0);
-	if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
-	{
-		if (str[i] == '\\')
-		{
-			if (str[i + 1] == '\"')
-				return (1);
-			else if (str[i + 1] == '\\')
-				return (1);
-		}
-	}
+	if (parse->s[parse->i] == '\\')
+		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
+			return (1);
 	return (0);
+}
+
+int	valid_backslash(t_parse *parse)
+{
+	if (!parse->s[parse->i + 1])
+		return (1);
+	else
+		return (0);
 }
 
 int	is_dollar(char c)
@@ -127,8 +126,13 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
-		if (is_backslash(parse, parse->s, parse->i))
+		if (condition_backslash(parse))
 		{
+			if (valid_backslash(parse))
+			{
+				printf("unclose backslash\n");
+				break ;
+			}
 			remove_char_from_idx(parse->s, parse->i);
 			parse->i++;
 			continue ;
