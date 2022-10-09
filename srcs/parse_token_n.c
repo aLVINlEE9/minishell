@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 23:56:40 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 00:40:15 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,36 @@ int	condition_dollar_exist(t_parse *parse)
 	return (0);
 }
 
+void	replace_dollar_to_env_sub(t_data *data, t_parse *parse, char *key)
+{
+	t_env	*env;
+
+	env = search_env(data->env_list, key);
+	if (!env)
+		return ;
+	env->val;
+}
+
+void	replace_dollar_to_env(t_data *data, t_parse *parse)
+{
+	int	i;
+	int	s;
+	int	e;
+	char	buf;
+	char	*ret;
+	char	*splited;
+
+	i = parse->i;
+	s = i;
+	while (!is_space(parse->s[i]) && !is_quot(parse->s[i]) && \
+			!is_dollar(parse->s[i]))
+		i++;
+	e = i;
+	ft_strlcpy(&buf, &parse->s[s], e - s + 1);
+	ret = ft_strdup(&buf);
+	replace_dollar_to_env_sub(data, parse, ret);
+}
+
 int	parse_condition_check(t_data *data, t_parse *parse)
 {
 	if (condition_append_token(parse))
@@ -115,6 +145,7 @@ int	parse_condition_check(t_data *data, t_parse *parse)
 		if (!(parse->in_qout && parse->q == '\''))
 		{
 			parse->in_dollar++;
+			replace_dollar_to_env(data, parse);
 			if (is_dollar(parse->s[parse->i + 1]))
 				parse->i++;
 		}
