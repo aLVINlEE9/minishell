@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 17:20:31 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/09 22:08:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 		if ((!parse->in_qout && is_space(parse->s[parse->i])) || !parse->s[parse->i])
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], parse->i - parse->idx);
-			parse->in_dollar = FALSE;
+			parse->in_dollar = 0;
 			break ;
 		}
 		else if (!parse->in_qout && is_quot(parse->s[parse->i]))
@@ -140,12 +140,17 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 		{
 			parse->idxq_e = parse->i;
 		}
-		else if (!parse->in_dollar && is_dollar(parse->s[parse->i]))
+		else if (is_dollar(parse->s[parse->i]) && !is_quot(parse->s[parse->i + 1]) && !is_space(parse->s[parse->i + 1]) && parse->s[parse->i + 1])
 		{
 			if (parse->in_qout && parse->q == '\'')
-				parse->in_dollar = FALSE;
+				;
+			else if (is_dollar(parse->s[parse->i + 1]))
+			{
+				parse->in_dollar++;
+				parse->i++;
+			}
 			else
-				parse->in_dollar = TRUE;
+				parse->in_dollar++;
 		}
 		// else if (parse->s[parse->i + 1] && parse->in_dollar && (is_space(parse->s[parse->i + 1]) || is_quot(parse->s[parse->i + 1])))
 		// {
