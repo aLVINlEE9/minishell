@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 12:19:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:36:33 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -29,6 +30,7 @@ enum e_around{
 typedef struct s_data{
 	struct s_token_list	*token_list;
 	struct s_env_list	*env_list;
+	int					exit_code;
 }	t_data;
 
 typedef struct s_parse{
@@ -75,6 +77,8 @@ void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
 
 void    parse_token(t_data *data, char *str);
+int	is_dollar_option(char *str);
+
 
 t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);

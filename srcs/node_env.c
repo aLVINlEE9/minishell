@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 23:48:48 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:37:05 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_env	*search_env(t_env_list *list, char *key)
 {
     t_env   *now;
 
+    if (is_dollar_option(key))
+        return (0);
     now = list->head->next;
     while (now)
     {

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 12:27:38 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:48:03 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ int	valid_backslash(t_parse *parse)
 int	is_dollar(char c)
 {
 	if (c == '$')
+		return (1);
+	return (0);
+}
+
+int	is_dollar_option(char *str)
+{
+	if (ft_strncmp(str, "$", 1) == 0)
+		return (1);
+	else if (ft_strncmp(str, "?", 1) == 0)
 		return (1);
 	return (0);
 }
@@ -93,15 +102,28 @@ int	condition_dollar_exist(t_parse *parse)
 	return (0);
 }
 
-char	*replace_dollar_to_env_sub(char *first, char* val, char *last)
+char	*replace_dollar_to_env_sub(t_data *data, char *first, char* val, char *last)
 {
 	char	*ret;
 	int	len;
 
+	if (is_dollar_option(val))
+	{
+		if (ft_strncmp(val, "$", -1) == 0)
+		{
+			free(val);
+			val = ft_itoa(getpid());
+		}
+		else if (ft_strncmp(val, "?", -1) == 0)
+		{
+			free(val);
+			val = ft_itoa(data->exit_code);
+		}
+	}
 	len = ft_strlen(first) + ft_strlen(val) + ft_strlen(last);
 	ret = (char *)malloc(sizeof(char) * len + 1);
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
-	ft_strlcpycpy(&ret[ft_strlen(first) + 1], val, ft_strlen(val) + 1);
+	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
 	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val) + 1], last, len + 1);
 	return (ret);
 }
@@ -111,24 +133,36 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
     t_env   *env;
 	int	i;
 	int	s;
-	int	e;
-	char	buf_env;
-    char    buf_s;
-    char    buf_e;
+    size_t buf_env_len;
+	char	*buf_env;
+    char    *buf_s;
+    char    *buf_e;
 
 	i = parse->i + 1;
 	s = i;
 	while (!is_space(parse->s[i]) && !is_quot(parse->s[i]) && \
 			!is_dollar(parse->s[i]) && parse->s[i])
 		i++;
-	e = i;
-    ft_strlcpy(&buf_s, parse->s, s + 1);
-	ft_strlcpy(&buf_env, &parse->s[s], e - s + 1);
-    ft_strlcpy(&buf_e, &parse->s[e + 1], ft_strlen(parse->s));
-    env = search_env(data->env_list, &buf_env);
+	if (is_dollar(parse->s[parse->i + 1]))
+		i++;
+    buf_env_len = i - s + 1;
+    buf_env = (char *)malloc(sizeof(char) * s + 1);
+    buf_s = (char *)malloc(sizeof(char) * buf_env_len + 1);
+    buf_e = (char *)malloc(sizeof(char) * ft_strlen(parse->s) + 1);
+    ft_strlcpy(buf_s, parse->s, s);
+	ft_strlcpy(buf_env, &parse->s[s], buf_env_len);
+    ft_strlcpy(buf_e, &parse->s[i + 1], ft_strlen(parse->s));
+    env = search_env(data->env_list, buf_env);
     if (!env)
-        return ;
-	parse->s = replace_dollar_to_env_sub(&buf_s, env->val, &buf_e);
+	{
+		if (is_dollar_option(buf_env))
+			parse->s = replace_dollar_to_env_sub(data, buf_s, buf_env, buf_e);
+	}
+	else
+		parse->s = replace_dollar_to_env_sub(data, buf_s, env->val, buf_e);
+	free(buf_env);
+    free(buf_s);
+    free(buf_e);
 }
 
 int	parse_condition_check(t_data *data, t_parse *parse)
