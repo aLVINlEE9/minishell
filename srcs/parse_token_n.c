@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 16:50:39 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:37:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	condition_qout_ended(t_parse *parse)
 
 int	condition_dollar_exist(t_parse *parse)
 {
-	if (is_dollar(parse->s[parse->i]) && !is_quot(parse->s[parse->i + 1]) \
+	if (is_dollar(parse->s[parse->i]) \
 			&& !is_space(parse->s[parse->i + 1]) && parse->s[parse->i + 1])
 		return (1);
 	return (0);
@@ -168,7 +168,7 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
     buf_env = (char *)malloc(sizeof(char) * s + 1);
     buf_s = (char *)malloc(sizeof(char) * buf_env_len + 1);
     buf_e = (char *)malloc(sizeof(char) * ft_strlen(parse->s) + 1);
-    ft_strlcpy(buf_s, parse->s, s);
+	ft_strlcpy(buf_s, parse->s, s);
 	ft_strlcpy(buf_env, &parse->s[s], buf_env_len);
     ft_strlcpy(buf_e, &parse->s[i], ft_strlen(parse->s));
     env = search_env(data->env_list, buf_env);
@@ -176,6 +176,8 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 	{
 		if (is_dollar_option(buf_env))
 			parse->s = replace_dollar_to_env_sub(data, buf_s, buf_env, buf_e);
+		else
+			remove_char_from_idx(parse->s, parse->i);
 	}
 	else
 		parse->s = replace_dollar_to_env_sub(data, buf_s, env->val, buf_e);
@@ -204,7 +206,12 @@ int	parse_condition_check(t_data *data, t_parse *parse)
 		parse->idxq_e = parse->i;
 	else if (condition_dollar_exist(parse))
 	{
-		if (!(parse->in_qout && parse->q == '\''))
+		if (is_quot(parse->s[parse->i + 1]))
+		{
+			remove_char_from_idx(parse->s, parse->i);
+			parse->i--;
+		}
+		else if (!(parse->in_qout && parse->q == '\''))
 		{
 			parse->in_dollar++;
 			replace_dollar_to_env(data, parse);

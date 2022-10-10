@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 14:37:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:56:16 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_env	*search_env(t_env_list *list, char *key)
     if (is_dollar_option(key))
         return (0);
     now = list->head->next;
-    while (now)
+    while (now != list->tail)
     {
         if (ft_strncmp(now->key, key, -1) == 0)
             return (now);

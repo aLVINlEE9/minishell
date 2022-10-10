@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 16:13:45 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:21:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@ void    print_node(t_token_list *token_list)
     }
 }
 
+void    print_env(t_env_list *env_list)
+{
+    t_env *now;
+
+    now = env_list->head->next;
+    while (now != env_list->tail)
+    {
+        printf("%s\n", now->key);
+        now = now->next;
+    }
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data      data;
@@ -32,6 +44,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	parse_env(envp, &data);
+    // print_env(data.env_list);
 	update_shlvl(&data);
 	// printf("%s %s\n", search_env(data.env_list, "SHLVL")->val, search_env(data.env_list, "SHLVL")->key);
 	while (1)

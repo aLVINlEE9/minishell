@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 16:13:14 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:23:04 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_token	*search_token(t_token_list *list, char *token)
     t_token   *now;
 
     now = list->head->next;
-    while (now)
+    while (now != list->tail)
     {
         if (ft_strncmp(now->token, token, -1) == 0)
             return (now);
