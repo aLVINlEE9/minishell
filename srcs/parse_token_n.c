@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_n.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 00:40:15 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:27:38 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,34 +93,42 @@ int	condition_dollar_exist(t_parse *parse)
 	return (0);
 }
 
-void	replace_dollar_to_env_sub(t_data *data, t_parse *parse, char *key)
+char	*replace_dollar_to_env_sub(char *first, char* val, char *last)
 {
-	t_env	*env;
+	char	*ret;
+	int	len;
 
-	env = search_env(data->env_list, key);
-	if (!env)
-		return ;
-	env->val;
+	len = ft_strlen(first) + ft_strlen(val) + ft_strlen(last);
+	ret = (char *)malloc(sizeof(char) * len + 1);
+	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
+	ft_strlcpycpy(&ret[ft_strlen(first) + 1], val, ft_strlen(val) + 1);
+	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val) + 1], last, len + 1);
+	return (ret);
 }
 
 void	replace_dollar_to_env(t_data *data, t_parse *parse)
 {
+    t_env   *env;
 	int	i;
 	int	s;
 	int	e;
-	char	buf;
-	char	*ret;
-	char	*splited;
+	char	buf_env;
+    char    buf_s;
+    char    buf_e;
 
-	i = parse->i;
+	i = parse->i + 1;
 	s = i;
 	while (!is_space(parse->s[i]) && !is_quot(parse->s[i]) && \
-			!is_dollar(parse->s[i]))
+			!is_dollar(parse->s[i]) && parse->s[i])
 		i++;
 	e = i;
-	ft_strlcpy(&buf, &parse->s[s], e - s + 1);
-	ret = ft_strdup(&buf);
-	replace_dollar_to_env_sub(data, parse, ret);
+    ft_strlcpy(&buf_s, parse->s, s + 1);
+	ft_strlcpy(&buf_env, &parse->s[s], e - s + 1);
+    ft_strlcpy(&buf_e, &parse->s[e + 1], ft_strlen(parse->s));
+    env = search_env(data->env_list, &buf_env);
+    if (!env)
+        return ;
+	parse->s = replace_dollar_to_env_sub(&buf_s, env->val, &buf_e);
 }
 
 int	parse_condition_check(t_data *data, t_parse *parse)

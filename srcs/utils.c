@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 17:09:57 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:18:55 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,25 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		i++;
 	}
 	dst[i] = '\0';
+	return (temp);
+}
+
+size_t  ft_strlcpycpy(char *dst, const char *src, size_t size)
+{
+    size_t	i;
+	size_t	temp;
+
+	i = 0;
+	if (!dst && !(char *)src)
+		return (0);
+	temp = ft_strlen(src);
+	if (!size)
+		return (temp);
+	while (i + 1 < size && (char)src[i])
+	{
+		dst[i] = (char)src[i];
+		i++;
+	}
 	return (temp);
 }
 

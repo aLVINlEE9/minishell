@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/09 23:57:31 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/10 12:27:47 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

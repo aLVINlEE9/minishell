@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 22:43:09 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:19:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_memmove(void *dst, const void *src, size_t num);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t      ft_strlcpycpy(char *dst, const char *src, size_t size);
 long long	ft_atol(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	count_word(char const *s, char c);
