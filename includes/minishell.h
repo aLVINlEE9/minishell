@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 14:36:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:11:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_parse{
 	int	i;
 	int	in_qout;
 	int	in_dollar;
+    int is_cmd;
 	int	idx;
 	int	idxq_s;
 	int	idxq_e;
@@ -49,6 +50,7 @@ typedef struct s_parse{
 typedef struct s_token{
 	char			*token;
 	int				in_dollar;
+    int             is_cmd;
 	int				around;
 	struct s_token	*prev;
 	struct s_token	*next;

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 14:48:03 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:28:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,25 @@ int	is_dollar_option(char *str)
 	else if (ft_strncmp(str, "?", 1) == 0)
 		return (1);
 	return (0);
+}
+
+void	is_cmd(t_parse *parse)
+{
+	if (!parse->in_qout && is_space(parse->s[parse->i - 1]))
+	{
+		if (ft_strncmp(&parse->s[parse->i], "<<", 2) == 0 || \
+			ft_strncmp(&parse->s[parse->i], ">>", 2) == 0)
+		{
+			if (is_space(parse->s[parse->i + 2]))
+				parse->is_cmd = 1;
+		}
+		else if (parse->s[parse->i] == '>' || parse->s[parse->i] == '<' \
+				|| parse->s[parse->i] == '|')
+		{
+			if (is_space(parse->s[parse->i + 1]))
+				parse->is_cmd = 1;
+		}
+	}
 }
 
 void	remove_char_from_idx(char *s, int idx)
@@ -172,6 +191,7 @@ int	parse_condition_check(t_data *data, t_parse *parse)
 		append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
 		parse->in_dollar = 0;
+		parse->is_cmd = 0;
 		return (1);
 	}
 	else if (condition_qout_started(parse))
@@ -199,6 +219,7 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
+		is_cmd(parse);
 		if (condition_backslash(parse))
 		{
 			if (valid_backslash(parse))
@@ -234,6 +255,7 @@ void	init_parse(t_parse *parse, char *str)
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
 	parse->idx = 0;
+	parse->is_cmd = 0;
 	parse->idxq_s = 0;
 	parse->idxq_e = 0;
 	parse->idxd_s = 0;

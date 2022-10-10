@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 17:20:57 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:13:45 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    print_node(t_token_list *token_list)
     now = token_list->head->next;
     while (now)
     {
-        printf("%s dollar:%d\n", now->token, now->in_dollar);
+        printf("%s dollar:%d cmd:%d\n", now->token, now->in_dollar, now->is_cmd);
         now = now->next;
     }
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/09 23:02:27 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:13:14 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ t_token	*create_token(char *token, t_parse *parse)
 	new_node->token = token;
 	new_node->in_dollar = parse->in_dollar;
 	new_node->around = -1;
+    new_node->is_cmd = parse->is_cmd;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);
