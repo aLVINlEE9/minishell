@@ -6,19 +6,21 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/10 14:48:17 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/10 19:39:33 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC		= cc -g -lreadline
-CFLAG	= -Werror -Wall -Wextra
+CFLAG	= 
 SRCS 	=	./srcs/main.c		\
 			./srcs/node_env.c	\
 			./srcs/node_token.c	\
 			./srcs/parse_env.c	\
 			./srcs/parse_token_n.c\
-			./srcs/utils.c
+			./srcs/utils.c\
+			./srcs/pipex.c\
+			./srcs/exe_cmd.c
 
 OBJS 	= ${SRCS:.c=.o}
 

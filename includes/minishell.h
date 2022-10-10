@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 14:36:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 19:47:36 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
 
 # define FALSE 0
 # define TRUE 1
@@ -50,6 +51,7 @@ typedef struct s_token{
 	char			*token;
 	int				in_dollar;
 	int				around;
+	int				is_cmd;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -111,5 +113,14 @@ char	**ft_split(char const *s, char c);
 void	make_string_itoa(char *p, long long n, int len);
 int	find_len_itoa(long long n);
 char	*ft_itoa(int n);
+void	pipex(t_data *data, char **envp);
+void	exe_fork(char ***cmd_lst, struct s_env_list *env_lst, char **envp);
+void	exe_cmd(char **cmd_ary, char **envp, int *fd);
 
+
+typedef struct s_cmd_make
+{
+	int					count;
+	struct s_cmd_make	*next;
+}					t_cmd_make;
 #endif
