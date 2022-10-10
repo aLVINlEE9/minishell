@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 16:28:18 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:50:39 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ char	*replace_dollar_to_env_sub(t_data *data, char *first, char* val, char *last
 	ret = (char *)malloc(sizeof(char) * len + 1);
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
-	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val) + 1], last, len + 1);
+	ft_strlcpycpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
 	return (ret);
 }
 
@@ -170,7 +170,7 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
     buf_e = (char *)malloc(sizeof(char) * ft_strlen(parse->s) + 1);
     ft_strlcpy(buf_s, parse->s, s);
 	ft_strlcpy(buf_env, &parse->s[s], buf_env_len);
-    ft_strlcpy(buf_e, &parse->s[i + 1], ft_strlen(parse->s));
+    ft_strlcpy(buf_e, &parse->s[i], ft_strlen(parse->s));
     env = search_env(data->env_list, buf_env);
     if (!env)
 	{
