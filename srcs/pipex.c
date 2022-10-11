@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/10 20:44:12 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:11:07 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 static void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new);
 static t_cmd_make	*ft_lstnew(int	c);
-static char			***make_cmd_list_pipe(t_token_list *t);
+static t_token		***make_cmd_list_pipe(t_token_list *t);
 
 void	pipex(t_data *data, char **envp)
 {
 	struct s_token_list		*token_lst;
 	struct s_env_list		*env_lst;
-	char					***cmd_lst;
+	t_token			***cmd_lst;
 
 	token_lst = data -> token_list;
 	env_lst = data -> env_list;
 
 	cmd_lst = make_cmd_list_pipe(token_lst);
 	exe_fork(cmd_lst, env_lst, envp);
-	/*printing ㅇㅖ제
-	int a = 0;
+	//printing ㅇㅖ제
+	/*int a = 0;
 	int b = 0;
 	printf("print cmd_lst\n");
 	while (cmd_lst[a])
@@ -36,23 +36,23 @@ void	pipex(t_data *data, char **envp)
 		b = 0;
 		while (cmd_lst[a][b])
 		{
-			printf("%s \n", cmd_lst[a][b]);
+			printf("%s \n", cmd_lst[a][b] -> token);
 			b++;
 		}
 		printf("\n");
 		a ++;
-	}
-	*/
+	}*/
+	//
 }
 
-static char	***make_cmd_list_pipe(t_token_list *token_list)
+static t_token	***make_cmd_list_pipe(t_token_list *token_list)
 {
 	t_token	*now;
 	t_token	*save;
 	int		cmd_count;
 	int		token_count;
-	char	***cmd_list;
-	char	**temp_list;
+	t_token	***cmd_list;
+	t_token	**temp_list;
 	
 	t_cmd_make	*node;
 	t_cmd_make	*start;
@@ -76,7 +76,7 @@ static char	***make_cmd_list_pipe(t_token_list *token_list)
 			token_count ++;
 		now = now -> next;
 	}
-	cmd_list = malloc(sizeof(char **) * (cmd_count + 1));
+	cmd_list = malloc(sizeof(struct s_token** ) * (cmd_count + 1));
 	if (!(cmd_list))
 		return (0);
 	cmd_list[cmd_count] = 0;
@@ -85,7 +85,7 @@ static char	***make_cmd_list_pipe(t_token_list *token_list)
 	cmd_count = 0;
 	temp = start;
 
-	temp_list = malloc(sizeof(char *) * ((temp -> count) + 1));
+	temp_list = malloc(sizeof(struct s_token* ) * ((temp -> count) + 1));
 	if (!temp_list)
 		return (0);
 	temp_list[temp -> count] = 0;
@@ -97,7 +97,7 @@ static char	***make_cmd_list_pipe(t_token_list *token_list)
 		if (/*now -> token -> is_cmd  == 1 &&*/ *(now -> token) == '|')
 		{
 			temp = temp -> next;
-			temp_list = malloc(sizeof(char *) * ((temp -> count) + 1));
+			temp_list = malloc(sizeof(struct s_token) * ((temp -> count) + 1));
 			if (!temp_list)
 				return (0);
 			temp_list[temp -> count] = 0;
@@ -107,7 +107,7 @@ static char	***make_cmd_list_pipe(t_token_list *token_list)
 		}
 		else
 		{
-			temp_list[token_count] = now -> token;
+			temp_list[token_count] = now;
 			token_count ++;
 		}
 		now = now -> next;
