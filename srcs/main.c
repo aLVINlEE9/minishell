@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 19:21:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:31:55 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int main(int argc, char **argv, char **envp)
 		add_history(str);
 		parse_token(&data, str);
 		print_node(data.token_list);
+		pipex(&data, envp);
 		free(str);
 	}
 }

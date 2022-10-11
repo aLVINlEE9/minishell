@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 15:45:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:49:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,12 @@ int	is_specifier(t_parse *parse)
 	if (ft_strncmp(&parse->s[parse->i], "<<", 2) == 0 || \
 		ft_strncmp(&parse->s[parse->i], ">>", 2) == 0)
 	{
+        parse->is_cmd = 1;
 		return (2);
 	}
 	else if (c == '>' || c == '<' || c == '|')
 	{
+        parse->is_cmd = 1;
 		return (1);
 	}
 	return (0);
@@ -224,6 +226,7 @@ int	parse_condition_check(t_data *data, t_parse *parse)
             append_token(data->token_list, parse, &parse->s[parse->idx], \
 						is_specifier(parse));
             parse->idx += is_specifier(parse);
+            parse->is_cmd = 0;
             return (0);
         }
 		return (1);

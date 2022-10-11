@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 12:02:12 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:31:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <fcntl.h>
+
 
 # define FALSE 0
 # define TRUE 1
@@ -115,5 +117,20 @@ char	**ft_split(char const *s, char c);
 void	make_string_itoa(char *p, long long n, int len);
 int	find_len_itoa(long long n);
 char	*ft_itoa(int n);
+void	pipex(t_data *data, char **envp);
+void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp);
+void	exe_cmd(t_token **cmd_ary, char **envp, int *fd);
+char	**make_inout_cmd(t_token **cmd_ary, int *fd);
+void	modify_inout(t_token **cmd_ary, int count, int *fd);
+void	cmd_leftarrow(char *s, int *fd);
+void	cmd_rightarrow(char *s, int *fd);
+void	cmd_doub_leftarrow(char *s, int *fd);
+void	cmd_doub_rightarrow(char *s, int *fd);
+void	ft_iofile(char *s, int *fd, int count);
 
+typedef struct s_cmd_make
+{
+	int					count;
+	struct s_cmd_make	*next;
+}					t_cmd_make;
 #endif

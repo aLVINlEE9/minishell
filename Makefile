@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/11 15:45:56 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/11 18:49:35 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/node_token.c	\
 			./srcs/parse_env.c	\
 			./srcs/parse_token_n.c\
-			./srcs/utils.c
+			./srcs/utils.c\
+			./srcs/pipex.c\
+			./srcs/exe_cmd.c\
+			./srcs/cmd.c\
+			./srcs/iofile.c
 
 OBJS 	= ${SRCS:.c=.o}
 
