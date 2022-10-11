@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 14:29:26 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:45:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,10 +209,15 @@ int	parse_condition_check(t_data *data, t_parse *parse)
 {
 	if (condition_append_token(parse))
 	{
-		append_token(data->token_list, parse, &parse->s[parse->idx], \
-						parse->i - parse->idx);
-		parse->in_dollar = 0;
-		parse->is_cmd = 0;
+        if (parse->i - parse->idx == 0 && (is_specifier(parse) || is_space(parse->s[parse->i])))
+            ;
+        else
+        {
+            append_token(data->token_list, parse, &parse->s[parse->idx], \
+                        parse->i - parse->idx);
+            parse->in_dollar = 0;
+            parse->is_cmd = 0;
+        }
         if (is_specifier(parse))
         {
             parse->idx = parse->i;
