@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_token_n.c                                    :+:      :+:    :+:   */
+/*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/07 18:10:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 14:29:26 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/11 12:58:54 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	is_quot(char c)
+void	remove_char_from_idx(char *s, int idx)
 {
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
+	ft_memmove(&s[idx], &s[idx + 1], ft_strlen(s) - idx);
 }
 
 int	is_space(char c)
@@ -26,20 +24,11 @@ int	is_space(char c)
 	return (0);
 }
 
-int	condition_backslash(t_parse *parse)
+int	is_quot(char c)
 {
-	if (parse->s[parse->i] == '\\')
-		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
-			return (1);
-	return (0);
-}
-
-int	valid_backslash(t_parse *parse)
-{
-	if (!parse->s[parse->i + 1])
+	if (c == '\'' || c == '\"')
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 int	is_dollar(char c)
@@ -58,23 +47,6 @@ int	is_dollar_option(char *str)
 	return (0);
 }
 
-// int	is_cmd(t_parse *parse)
-// {
-// 	if (ft_strncmp(&parse->s[parse->i], "<<", 2) == 0 || \
-// 		ft_strncmp(&parse->s[parse->i], ">>", 2) == 0)
-// 	{
-// 		return (2);
-// 		// parse->is_cmd = 1;
-// 	}
-// 	else if (parse->s[parse->i] == '>' || parse->s[parse->i] == '<' \
-// 			|| parse->s[parse->i] == '|')
-// 	{
-// 		return (1);
-// 		// parse->is_cmd = 1;
-// 	}
-// 	return (0);
-// }
-
 int	is_specifier(t_parse *parse)
 {
 	char	c;
@@ -92,51 +64,11 @@ int	is_specifier(t_parse *parse)
 	return (0);
 }
 
-void	remove_char_from_idx(char *s, int idx)
+int	is_backslash(t_parse *parse)
 {
-	ft_memmove(&s[idx], &s[idx + 1], ft_strlen(s) - idx);
-}
-
-void	remove_string(char *s, int idx_s, int idx_e)
-{
-	while (idx_s <= idx_e)
-	{
-		remove_char_from_idx(s, idx_e);
-		idx_e--;
-	}
-}
-
-int	condition_append_token(t_parse *parse)
-{
-	if ((!parse->in_qout && is_space(parse->s[parse->i])) || \
-			!parse->s[parse->i])
-		return (1);
-	else if (is_specifier(parse))
-	{
-		return (1);
-	}
-	return (0);
-}
-
-int	condition_qout_started(t_parse *parse)
-{
-	if (!parse->in_qout && is_quot(parse->s[parse->i]))
-		return (1);
-	return (0);
-}
-
-int	condition_qout_ended(t_parse *parse)
-{
-	if (parse->in_qout && parse->q == parse->s[parse->i])
-		return (1);
-	return (0);
-}
-
-int	condition_dollar_exist(t_parse *parse)
-{
-	if (is_dollar(parse->s[parse->i]) \
-			&& !is_space(parse->s[parse->i + 1]) && parse->s[parse->i + 1])
-		return (1);
+	if (parse->s[parse->i] == '\\')
+		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
+			return (1);
 	return (0);
 }
 
@@ -205,85 +137,130 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
     free(buf_e);
 }
 
-int	parse_condition_check(t_data *data, t_parse *parse)
+int	valid_backslash(t_parse *parse)
 {
-	if (condition_append_token(parse))
+	if (!parse->s[parse->i + 1])
+		return (1);
+	else
+		return (0);
+}
+
+int	condition_specifier(t_parse *parse)
+{
+	if (is_specifier(parse))
 	{
-		append_token(data->token_list, parse, &parse->s[parse->idx], \
-						parse->i - parse->idx);
-		parse->in_dollar = 0;
-		parse->is_cmd = 0;
-        if (is_specifier(parse))
-        {
-            parse->idx = parse->i;
-            append_token(data->token_list, parse, &parse->s[parse->idx], \
-						is_specifier(parse));
-            parse->idx += is_specifier(parse);
-            return (0);
-        }
+		parse->i += is_specifier(parse);
+		parse->is_cmd = TRUE;
 		return (1);
 	}
-	else if (condition_qout_started(parse))
+	return (0);
+}
+
+int	condition_backslash(t_parse *parse)
+{
+	if (is_backslash(parse))
+	{
+		if (valid_backslash(parse))
+		{
+			parse->unclose_slash = TRUE;
+			printf("unclose backslash\n");
+			return (1);
+		}
+		remove_char_from_idx(parse->s, parse->i);
+		parse->i++;
+		return (2);
+	}
+	return (0);
+}
+
+void	condition_qout_started(t_parse *parse)
+{
+	if (!parse->in_qout && is_quot(parse->s[parse->i]))
 	{
 		parse->in_qout = TRUE;
 		parse->idxq_s = parse->i;
 		parse->q = parse->s[parse->i];
 	}
-	else if (condition_qout_ended(parse))
+}
+
+void	condition_qout_ended(t_parse *parse)
+{
+	if (parse->in_qout && parse->q == parse->s[parse->i])
 		parse->idxq_e = parse->i;
-	else if (condition_dollar_exist(parse))
+}
+
+void	condition_dollar_exist(t_data *data, t_parse *parse)
+{
+	if (is_quot(parse->s[parse->i + 1]))
 	{
-		if (is_quot(parse->s[parse->i + 1]))
-		{
-			remove_char_from_idx(parse->s, parse->i);
-			parse->i--;
-		}
-		else if (!(parse->in_qout && parse->q == '\''))
-		{
-			parse->in_dollar++;
-			replace_dollar_to_env(data, parse);
-			if (is_dollar(parse->s[parse->i + 1]))
-				parse->i++;
-		}
+		remove_char_from_idx(parse->s, parse->i);
+		parse->i--;
 	}
+	else if (!(parse->in_qout && parse->q == '\''))
+	{
+		parse->in_dollar++;
+		replace_dollar_to_env(data, parse);
+		if (is_dollar(parse->s[parse->i + 1]))
+			parse->i++;
+	}
+}
+
+void	condition_qout_check(t_parse *parse)
+{
+	if (parse->in_qout && parse->idxq_e)
+	{
+		remove_char_from_idx(parse->s, parse->idxq_e);
+		remove_char_from_idx(parse->s, parse->idxq_s);
+		parse->in_qout = FALSE;
+		parse->idxq_s = 0;
+		parse->idxq_e = 0;
+		parse->i -= 2;
+	}
+}
+
+int	conditions(t_data *data, t_parse *parse)
+{
+	if (condition_specifier(parse))
+		return (1);
+	condition_qout_started(parse);
+	condition_qout_ended(parse);
+	condition_dollar_exist(data, parse);
+	condition_qout_check(parse);
+	if ((!parse->in_qout && is_space(parse->s[parse->i])) || \
+		!parse->s[parse->i])
+		return (1);
 	return (0);
 }
 
-int	parse_token_sub(t_data *data, t_parse *parse)
+void	parse_token_sub(t_data *data, t_parse *parse)
 {
+	int	backslash_r;
+
 	while (1)
 	{
-		if (condition_backslash(parse))
-		{
-			if (valid_backslash(parse))
-			{
-				printf("unclose backslash\n");
-				break ;
-			}
-			remove_char_from_idx(parse->s, parse->i);
-			parse->i++;
-			continue ;
-		}
-		if (parse_condition_check(data, parse))
+		backslash_r = is_backslash(parse);
+		if (backslash_r == 1)
 			break ;
-		if (parse->in_qout && parse->idxq_e)
+		else if (backslash_r == 2)
+			continue ;
+		if (conditions(data, parse))
 		{
-			remove_char_from_idx(parse->s, parse->idxq_e);
-			remove_char_from_idx(parse->s, parse->idxq_s);
-			parse->in_qout = FALSE;
-			parse->idxq_s = 0;
-			parse->idxq_e = 0;
-			parse->i -= 2;
+			append_token(data->token_list, parse, &parse->s[parse->idx], \
+						parse->i - parse->idx);
+			parse->in_dollar = 0;
+			parse->is_cmd = 0;
+			break ;
 		}
 		parse->i++;
 	}
-	return (parse->i);
 }
 
-void	init_parse(t_parse *parse, char *str)
+void	init_parse(t_parse *parse, char *s)
 {
-	parse->s = str;
+	parse->s = s;
 	parse->q = 0;
+	parse->unclose_quot = FALSE;
+	parse->unclose_slash = FALSE;
 	parse->i = 0;
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
@@ -304,21 +281,18 @@ void	parse_token(t_data *data, char *str)
 	if (!is_space(parse.s[parse.i]))
 	{
 		parse.idx = parse.i;
-		parse.i = parse_token_sub(data, &parse);
+		parse_token_sub(data, &parse);
 	}
 	while (parse.s[parse.i])
 	{
-		if (parse.s[parse.i + 1] && is_space(parse.s[parse.i]) && \
-            !is_space(parse.s[parse.i + 1]))
+		if (parse.s[parse.i + 1] && is_space(parse.s[parse.i]) \
+			&& !is_space(parse.s[parse.i + 1]))
 		{
 			parse.i++;
 			parse.idx = parse.i;
-			parse.i = parse_token_sub(data, &parse);
+			parse_token_sub(data, &parse);
 			parse.i--;
-        }
+		}
 		parse.i++;
 	}
 }
-
-// inside quot => ignore space
-// else => check space

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/10 16:29:43 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:02:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_data{
 typedef struct s_parse{
 	char	*s;
 	char	q;
+    int unclose_quot;
+    int unclose_slash;
 	int	i;
 	int	in_qout;
 	int	in_dollar;
