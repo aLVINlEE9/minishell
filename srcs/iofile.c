@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 18:08:15 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:22:07 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_iofile(char *s, int *fd, int count)
 	int		fd_iofile;
 
 	if (s[0] != '/')
-		filename = ft_strjoin("./", s);
+		filename = ft_strjoin_jh("./", s);
 	else
-		filename = ft_strjoin("", s);
+		filename = ft_strjoin_jh("", s);
 	if (count == 1)
 	{
 		fd_iofile = open(filename, O_RDONLY);
@@ -36,13 +36,19 @@ void	ft_iofile(char *s, int *fd, int count)
 	}
 	if (count == 2)
 	{
-		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND | O_EXCL, 0644)
-			if (fd_iofile == -1 || access(filenmae, W_OK) == -1)
-				eixt(1);// printerror
+		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND | O_EXCL, 0644);
+			if (fd_iofile == -1 || access(filename, W_OK) == -1)
+				exit(1);// printerror
 		dup2(fd_iofile, 1);
+		free(filename);
+		return ;
 	}
-	fd_iofile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd_iofile == -1 || access(filename, W_OK) == -1)
-		exit(1); // printerror need
-	dup2(fd_iofile, 1);
+	if (count == 0)
+	{
+		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_iofile == -1 || access(filename, W_OK) == -1)
+			exit(1); // printerror need
+		dup2(fd_iofile, 1); // 나중엔 풀어줘야함 
+		free(filename);
+	}
 }

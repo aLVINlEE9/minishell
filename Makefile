@@ -6,13 +6,13 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/11 18:49:35 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/11 19:12:49 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC		= cc -g -lreadline
-CFLAG	= -Werror -Wall -Wextra
+CFLAG	=
 SRCS 	=	./srcs/main.c		\
 			./srcs/node_env.c	\
 			./srcs/node_token.c	\

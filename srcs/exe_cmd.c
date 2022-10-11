@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 18:02:13 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:21:55 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 			exe_cmd(cmd_lst[count], envp, &fd[0]);
 		else
 		{
+			if (fd[2] != -1)
+				close(fd[2]);
 			close(fd[1]);
 			fd[2] = dup(fd[0]);
+			printf("fd[2] : %d\n", fd[2]);
 			//waitpid(-1, &status, WNOHANG);
 			close(fd[0]);
 		}
@@ -72,28 +75,33 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd)
 	char	*temp2;
 	int		count;
 
-	printf("exe_cmd\n");
+	printf("child fd[2] = %d \n", fd[2]);
+	//printf("exe_cmd\n");
 	count = 0;
 	path = parse_env2(envp);
+	dup2(fd[1], 1);
 	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
+	//printf("cmd_count\n");
+	/*
 	while (cmd[count])
 	{
 		printf("cmd : %s\n", cmd[count]);
 		count ++;
 	}
-	/*
+	*/
+	close(fd[0]);
 	while (path[count])
 	{
-		temp2 = ft_strjoin(path[count], "/");
-		execve(ft_strjoin(temp2, cmd_ary[0]), cmd_ary, envp);
+		temp2 = ft_strjoin_jh(path[count], "/");
+		execve(ft_strjoin_jh(temp2, cmd[0]), cmd, envp);
 		count ++;
+		free(temp2);
 	}
-	*/
 	exit(1);
 }
 
@@ -116,7 +124,6 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd)
 			cmd_arg_c ++;
 		count ++;
 	}
-
 	ret = malloc(sizeof(char *) * (cmd_arg_c + 1));
 	if (!ret)
 		return(0); //error
@@ -145,16 +152,16 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 	s = cmd_ary[count] -> token;
 	if (ft_strlen(s) == 1)
 	{
-		if (ft_strncmp(s, "<", 1))
+		if (ft_strncmp(s, "<", 1) == 0)
 			cmd_leftarrow(cmd_ary[count + 1] -> token, fd);
-		if (ft_strncmp(s, ">", 1))
+		if (ft_strncmp(s, ">", 1) == 0)
 			cmd_rightarrow(cmd_ary[count + 1] -> token, fd);
 	}
 	if (ft_strlen(s) == 2)
 	{
-		if (ft_strncmp(s, "<<", 2))
+		if (ft_strncmp(s, "<<", 2) == 0)
 			cmd_doub_leftarrow(cmd_ary[count + 1] -> token, fd);
-		if (ft_strncmp(s, ">>", 2))
+		if (ft_strncmp(s, ">>", 2) == 0 )
 			cmd_doub_rightarrow(cmd_ary[count + 1] -> token, fd);
 	}
 	return ;

@@ -127,6 +127,7 @@ void	cmd_rightarrow(char *s, int *fd);
 void	cmd_doub_leftarrow(char *s, int *fd);
 void	cmd_doub_rightarrow(char *s, int *fd);
 void	ft_iofile(char *s, int *fd, int count);
+char	*ft_strjoin_jh(char const *s1, char const *s2);
 
 typedef struct s_cmd_make
 {
