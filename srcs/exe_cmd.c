@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 20:21:55 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:21:52 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 			close(fd[0]);
 		}
 		count ++;
+	}
+	if (fd[2] != -1)
+		close(fd[2]);
+	while (1)
+	{
+		pid = waitpid(-1, &status, WNOHANG);
+		if (pid == -1)
+			break ;
 	}
 	return ;
 }
@@ -79,7 +87,7 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd)
 	//printf("exe_cmd\n");
 	count = 0;
 	path = parse_env2(envp);
-	dup2(fd[1], 1);
+	//dup2(fd[1], 1);
 	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	if (fd[2] != -1)
 	{
