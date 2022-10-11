@@ -6,11 +6,18 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 21:25:24 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:36:13 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	is_lstend(t_token ***cmd_lst, int count)
+{
+	if (cmd_lst[count + 1] == 0)
+		return (1);
+	return (0);
+}
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 {
@@ -28,7 +35,7 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 			exit(1);
 		pid = fork();
 		if (pid == 0)
-			exe_cmd(cmd_lst[count], envp, &fd[0]);
+			exe_cmd(cmd_lst[count], envp, &fd[0], is_lstend(cmd_lst, count));
 		else
 		{
 			if (fd[2] != -1)
@@ -76,7 +83,7 @@ char	**parse_env2(char **env)
 	return (0);
 }
 
-void	exe_cmd(t_token **cmd_ary, char **envp, int *fd)
+void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 {
 	char	**path;
 	char	**cmd;
@@ -87,7 +94,8 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd)
 	//printf("exe_cmd\n");
 	count = 0;
 	path = parse_env2(envp);
-	//dup2(fd[1], 1);
+	if (flag == 0)
+		dup2(fd[1], 1);
 	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	if (fd[2] != -1)
 	{
@@ -170,7 +178,10 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 		if (ft_strncmp(s, "<<", 2) == 0)
 			cmd_doub_leftarrow(cmd_ary[count + 1] -> token, fd);
 		if (ft_strncmp(s, ">>", 2) == 0 )
+		{
+			printf(">> is working\n");
 			cmd_doub_rightarrow(cmd_ary[count + 1] -> token, fd);
+		}
 	}
 	return ;
 }

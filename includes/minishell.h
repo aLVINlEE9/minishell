@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 18:31:19 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:34:04 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	find_len_itoa(long long n);
 char	*ft_itoa(int n);
 void	pipex(t_data *data, char **envp);
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp);
-void	exe_cmd(t_token **cmd_ary, char **envp, int *fd);
+void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag);
 char	**make_inout_cmd(t_token **cmd_ary, int *fd);
 void	modify_inout(t_token **cmd_ary, int count, int *fd);
 void	cmd_leftarrow(char *s, int *fd);

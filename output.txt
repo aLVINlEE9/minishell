@@ -1,1 +1,7 @@
 thisisinput
+Makefile
+includes
+input.txt
+minishell
+output.txt
+srcs
