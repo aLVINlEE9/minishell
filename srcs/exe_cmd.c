@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 21:21:52 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:25:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 
 	fd[2] = -1;
 	count = 0;
-	while (cmd_lst[count])
+	while (cmd_lst[count])//pipe가 없는경우 즉 마지막 커맨드같은경우에는 stdout으로 출력되야함.
 	{
 		printf("forked\n");
 		if (pipe(fd) == -1)
