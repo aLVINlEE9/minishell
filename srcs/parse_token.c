@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 17:04:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:28:45 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	condition_specifier(t_parse *parse, int check)
 		parse->is_cmd = TRUE;
 		return (1);
 	}
+	return (0);
 }
 
 void	init_parse_sub(t_parse *parse)
@@ -115,11 +116,23 @@ void	replace_util_sub(t_parse *parse, char *first, char *val, char *last)
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
-	free(parse->s);
 	parse->s = ret;
 	free(first);
 	free(val);
 	free(last);
+}
+
+void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end)
+{
+	char	*val;
+
+	val = NULL;
+	if (is_dollar_option(&parse->s[parse->i]) == 1)
+		val = ft_itoa(getpid());
+	else if (is_dollar_option(&parse->s[parse->i]) == 2)
+		val = ft_itoa(data->exit_code);
+	remove_char_from_idx(parse->s, parse->i);
+	replace_util_sub(parse, buf_start, val, buf_end);
 }
 
 void	replace_util(t_data *data, t_parse *parse, int idx, int start)
@@ -131,12 +144,12 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 	char	*buf_end;
 
 	buf_env_len = idx - start + 1;
-	buf_start = (char *)malloc(sizeof(char) * start - 1);
+	buf_start = (char *)malloc(sizeof(char) * start + 1);
 	buf_env = (char *)malloc(sizeof(char) * buf_env_len);
 	buf_end = (char *)malloc(sizeof(char) * ft_strlen(parse->s) - idx + 1);
-	ft_strlcpy(buf_start, parse->s, start - 2);
-	ft_strlcpy(buf_env, &parse->s[start], buf_env_len - 1);
-	ft_strlcpy(buf_end, &parse->s[idx], ft_strlen(parse->s) - idx);
+	ft_strlcpy(buf_start, parse->s, start + 1);
+	ft_strlcpy(buf_env, &parse->s[start], buf_env_len);
+	ft_strlcpy(buf_end, &parse->s[idx], ft_strlen(parse->s) - idx + 1);
 	if (is_dollar_option(&parse->s[parse->i]))
 		replace_dollar_options(data, parse, buf_start, buf_end);
 	else
@@ -147,17 +160,6 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		else
 			replace_util_sub(parse, buf_start, env->val, buf_end);
 	}
-}
-
-void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end)
-{
-	char	*val;
-
-	if (is_dollar_option(&parse->s[parse->i]) == 1)
-		val = ft_itoa(getpid());
-	else if (is_dollar_option(&parse->s[parse->i]) == 2)
-		val = ft_itoa(data->exit_code);
-	replace_util_sub(parse, buf_start, val, buf_end);
 }
 
 void	replace_dollar_to_env(t_data *data, t_parse *parse)
@@ -232,6 +234,8 @@ void	condition_dollar(t_data *data, t_parse *parse)
 		{
 			parse->in_dollar++;
 			replace_dollar_to_env(data, parse);
+			if (is_dollar_option(&parse->s[parse->i]))
+				parse->i++;
 		}
 	}
 }
@@ -258,12 +262,15 @@ int	condition_backslash(t_parse *parse)
 
 void	qout_remove(t_parse *parse)
 {
-	remove_char_from_idx(parse->s, parse->idxq_e);
-	remove_char_from_idx(parse->s, parse->idxq_s);
-	parse->in_qout = FALSE;
-	parse->idxq_s = 0;
-	parse->idxq_e = 0;
-	parse->i -= 2;
+	if (parse->in_qout && parse->idxq_e)
+	{
+		remove_char_from_idx(parse->s, parse->idxq_e);
+		remove_char_from_idx(parse->s, parse->idxq_s);
+		parse->in_qout = FALSE;
+		parse->idxq_s = 0;
+		parse->idxq_e = 0;
+		parse->i -= 2;
+	}
 }
 
 void	parse_token_sub(t_data *data, t_parse *parse)
@@ -291,6 +298,7 @@ void	parse_token(t_data *data, char *str)
 	t_parse	parse;
 
 	init_parse(&parse, str);
+	create_token_list(data);
 	if (!is_space(parse.s[parse.i]) || condition_specifier(&parse, 0))
 	{
 		parse.idx = parse.i;
@@ -303,8 +311,11 @@ void	parse_token(t_data *data, char *str)
 		if ((parse.s[parse.i + 1] && is_space(parse.s[parse.i]) \
 			&& !is_space(parse.s[parse.i + 1]))) // word after space
 		{
+			parse.i++;
+			parse.idx = parse.i;
 			condition_specifier(&parse, 1);
 			parse_token_sub(data, &parse);
+			parse.i--;
 		}
 		else if (condition_specifier(&parse, 0)) // now cmd
 		{
