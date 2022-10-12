@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 21:34:04 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:50:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <fcntl.h>
+#include <termios.h>
+#include <signal.h>
 
 
 # define FALSE 0
@@ -134,4 +136,16 @@ typedef struct s_cmd_make
 	int					count;
 	struct s_cmd_make	*next;
 }					t_cmd_make;
+
+typedef struct s_termi
+{
+	struct termios	*save_t;
+	struct termios	*new_t;
+}				t_termi;
+
+void	set_termi(struct s_termi termi);
+void	termi_old(struct s_termi termi);
+void	termi_new(struct s_termi termi);
+void	sig_handler(int signal);
+void	set_signal(void);
 #endif

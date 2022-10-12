@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 21:36:13 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 20:44:55 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_lstend(t_token ***cmd_lst, int count)
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 {
-	int		fd[3];
+	int		fd[5];
 	int		count;
 	int		status;
 	pid_t	pid;
@@ -30,8 +30,8 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 	count = 0;
 	while (cmd_lst[count])//pipe가 없는경우 즉 마지막 커맨드같은경우에는 stdout으로 출력되야함.
 	{
-		printf("forked\n");
-		if (pipe(fd) == -1)
+		//printf("forked\n");
+		if (pipe(fd) == -1 || pipe(&fd[3]) == -1)
 			exit(1);
 		pid = fork();
 		if (pid == 0)
@@ -42,9 +42,11 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 				close(fd[2]);
 			close(fd[1]);
 			fd[2] = dup(fd[0]);
-			printf("fd[2] : %d\n", fd[2]);
+			//printf("fd[2] : %d\n", fd[2]);
 			//waitpid(-1, &status, WNOHANG);
 			close(fd[0]);
+			close(fd[3]);
+			close(fd[4]);
 		}
 		count ++;
 	}
@@ -90,19 +92,16 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 	char	*temp2;
 	int		count;
 
-	printf("child fd[2] = %d \n", fd[2]);
+	//printf("child fd[2] = %d \n", fd[2]);
 	//printf("exe_cmd\n");
 	count = 0;
 	path = parse_env2(envp);
-	if (flag == 0)
-		dup2(fd[1], 1);
-	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
-	//printf("cmd_count\n");
+	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	/*
 	while (cmd[count])
 	{
@@ -111,6 +110,10 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 	}
 	*/
 	close(fd[0]);
+	close(fd[3]);
+	close(fd[4]);
+	if (flag == 0)
+		dup2(fd[1], 1);
 	while (path[count])
 	{
 		temp2 = ft_strjoin_jh(path[count], "/");
@@ -169,19 +172,18 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 	if (ft_strlen(s) == 1)
 	{
 		if (ft_strncmp(s, "<", 1) == 0)
-			cmd_leftarrow(cmd_ary[count + 1] -> token, fd);
+			cmd_doub_leftarrow(cmd_ary[count + 1] -> token, fd);
+			//cmd_leftarrow(cmd_ary[count + 1] -> token, fd);
 		if (ft_strncmp(s, ">", 1) == 0)
-			cmd_rightarrow(cmd_ary[count + 1] -> token, fd);
+			cmd_doub_rightarrow(cmd_ary[count + 1] -> token, fd);
+			//cmd_rightarrow(cmd_ary[count + 1] -> token, fd);
 	}
 	if (ft_strlen(s) == 2)
 	{
 		if (ft_strncmp(s, "<<", 2) == 0)
 			cmd_doub_leftarrow(cmd_ary[count + 1] -> token, fd);
 		if (ft_strncmp(s, ">>", 2) == 0 )
-		{
-			printf(">> is working\n");
 			cmd_doub_rightarrow(cmd_ary[count + 1] -> token, fd);
-		}
 	}
 	return ;
 }

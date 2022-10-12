@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 20:22:07 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:16:23 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	ft_iofile(char *s, int *fd, int count)
 	}
 	if (count == 2)
 	{
-		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND | O_EXCL, 0644);
-			if (fd_iofile == -1 || access(filename, W_OK) == -1)
-				exit(1);// printerror
+		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (fd_iofile == -1 || access(filename, W_OK) == -1)
+			exit(1);// printerror
 		dup2(fd_iofile, 1);
 		free(filename);
 		return ;

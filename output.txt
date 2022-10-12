@@ -1,7 +1,4 @@
-thisisinput
-Makefile
-includes
-input.txt
+> caadsfasdffdsfsfadput.txt
 minishell
 output.txt
 srcs

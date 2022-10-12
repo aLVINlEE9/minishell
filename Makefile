@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/11 19:12:49 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/12 18:55:58 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/pipex.c\
 			./srcs/exe_cmd.c\
 			./srcs/cmd.c\
-			./srcs/iofile.c
+			./srcs/iofile.c\
+			./srcs/set_terminal.c\
+			./srcs/set_signal.c
 
 OBJS 	= ${SRCS:.c=.o}
 
