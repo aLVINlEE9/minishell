@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iofile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 18:08:15 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:06:49 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_iofile(char *s, int *fd, int count)
 	char	*filename;
 	int		fd_iofile;
 
+    (void)fd;
 	if (s[0] != '/')
 		filename = ft_strjoin("./", s);
 	else
@@ -36,9 +37,9 @@ void	ft_iofile(char *s, int *fd, int count)
 	}
 	if (count == 2)
 	{
-		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND | O_EXCL, 0644)
-			if (fd_iofile == -1 || access(filenmae, W_OK) == -1)
-				eixt(1);// printerror
+		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND | O_EXCL, 0644);
+			if (fd_iofile == -1 || access(filename, W_OK) == -1)
+				exit(1);// printerror
 		dup2(fd_iofile, 1);
 	}
 	fd_iofile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);

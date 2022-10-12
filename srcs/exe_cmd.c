@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 18:02:13 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:04:44 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 {
 	int		fd[3];
 	int		count;
-	int		status;
+	// int		status;
 	pid_t	pid;
 
 	fd[2] = -1;
 	count = 0;
+    (void)env_lst;
 	while (cmd_lst[count])
 	{
 		printf("forked\n");
@@ -69,7 +70,7 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd)
 {
 	char	**path;
 	char	**cmd;
-	char	*temp2;
+	// char	*temp2;
 	int		count;
 
 	printf("exe_cmd\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/11 18:12:22 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 14:05:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	cmd_rightarrow(char *s, int *fd)
 void	cmd_doub_leftarrow(char *s, int *fd)
 {
 	//heredoc;
+    (void)s;
+    (void)fd;
 	return ;
 }
 
