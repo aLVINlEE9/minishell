@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 16:52:22 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:04:02 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ int	is_specifier(t_parse *parse, int check)
 		return (1);
 	}
 	return (0);
+}
+
+int	valid_backslash(t_parse *parse)
+{
+	if (!parse->s[parse->i + 1])
+		return (1);
+	else
+		return (0);
 }
 
 void	remove_char_from_idx(char *s, int idx)
@@ -149,7 +157,7 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char 
 		val = ft_itoa(getpid());
 	else if (is_dollar_option(&parse->s[parse->i]) == 2)
 		val = ft_itoa(data->exit_code);
-	replace_util_sub(buf_start, val, buf_end);
+	replace_util_sub(parse, buf_start, val, buf_end);
 }
 
 void	replace_dollar_to_env(t_data *data, t_parse *parse)
@@ -228,18 +236,42 @@ void	condition_dollar(t_data *data, t_parse *parse)
 	}
 }
 
-void	condition_backslash(t_parse *parse)
+int	condition_backslash(t_parse *parse)
 {
 	if (parse->s[parse->i] == '\\')
 	{
 		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
+		{
+			if (valid_backslash(parse))
+			{
+				printf("unclose backslash");
+				parse->unclose_slash = TRUE;
+				return (1);
+			}
+			remove_char_from_idx(parse->s, parse->i);
+			parse->i++;
+			return (1);
+		}
 	}
+	return (0);
+}
+
+void	qout_remove(t_parse *parse)
+{
+	remove_char_from_idx(parse->s, parse->idxq_e);
+	remove_char_from_idx(parse->s, parse->idxq_s);
+	parse->in_qout = FALSE;
+	parse->idxq_s = 0;
+	parse->idxq_e = 0;
+	parse->i -= 2;
 }
 
 void	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
+		if (condition_backslash(parse))
+			continue ;
 		if (condition_append_token(parse))
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
@@ -247,9 +279,9 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 			break ;
 		}
 		condition_dollar(data, parse);
-		condition_backslash(parse);
 		condition_qout_started(parse);
 		condition_qout_ended(parse);
+		qout_remove(parse);
 		parse->i++;
 	}
 }
