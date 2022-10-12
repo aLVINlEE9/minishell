@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/12 20:44:58 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:22:43 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	cmd_doub_leftarrow(char *s, int *fd)
 		str = readline("> ");
 		if (str == 0)
 		{
-			write(2, "\n", 1);
 			write(2, "\033[1A", 4);
 			write(2, "\033[2C", 4);
 			break ;

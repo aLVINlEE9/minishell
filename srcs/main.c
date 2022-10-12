@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 20:09:59 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:02:13 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ int main(int argc, char **argv, char **envp)
 	t_data      	data;
 	char        	*str;
 	int				ch;
-	struct termios	termi;
+	struct s_termi	termi;
 
 	(void)argc;
 	(void)argv;
 	parse_env(envp, &data);
-	//set_termi(termi);
+	set_termi(termi);
     // print_env(data.env_list);
 	update_shlvl(&data);
-	tcgetattr(0, &termi);
-	termi.c_lflag &= ~(ECHOCTL);
-	tcsetattr(0, TCSANOW, &termi);
+	//tcgetattr(0, &termi);
+	//termi.c_lflag &= ~(ECHOCTL);
+	//termi.c_lflag &= ~(ECHO);
+	//tcsetattr(0, TCSANOW, &termi);
 	set_signal();
 	// printf("%s %s\n", search_env(data.env_list, "SHLVL")->val, search_env(data.env_list, "SHLVL")->key);
 	while (1)
@@ -60,7 +61,6 @@ int main(int argc, char **argv, char **envp)
 		str = readline("minishell$ ");// 컴파일시 -lreadline 추가
 		if (str == 0)
 		{
-			printf("\n");
 			printf("\033[1A");
             printf("\033[10C");
 			printf(" exit\n");
@@ -74,8 +74,6 @@ int main(int argc, char **argv, char **envp)
 			pipex(&data, envp);
 			free(str);
 		}
-		else
-			printf("\n");
 	}
 }
 //env 저장

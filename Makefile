@@ -6,12 +6,12 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/12 18:55:58 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/12 21:57:40 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC		= cc -g -lreadline
+CC		= cc -g -lreadline -L/Users/junhjeon/.brew/opt/readline/lib -I/Users/junhjeon/.brew/opt/readline/include
 CFLAG	=
 SRCS 	=	./srcs/main.c		\
 			./srcs/node_env.c	\
