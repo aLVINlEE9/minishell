@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 14:07:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:21:31 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    print_node(t_token_list *token_list)
     t_token *now;
 
     now = token_list->head->next;
-    while (now)
+    while (now != token_list->tail)
     {
         printf("%s dollar:%d cmd:%d\n", now->token, now->in_dollar, now->is_cmd);
         now = now->next;
