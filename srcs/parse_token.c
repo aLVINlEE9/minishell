@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 19:31:36 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 20:36:01 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ int	valid_backslash(t_parse *parse)
 void	remove_char_from_idx(char *s, int idx)
 {
 	ft_memmove(&s[idx], &s[idx + 1], ft_strlen(s) - idx);
+}
+
+void	remove_string(char *s, int idx_s, int idx_e)
+{
+	while (idx_s <= idx_e)
+	{
+		remove_char_from_idx(s, idx_e);
+		idx_e--;
+	}
 }
 
 int	condition_specifier(t_parse *parse, int check)
@@ -153,7 +162,7 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 	{
 		env = search_env(data->env_list, buf_env);
 		if (!env)
-			remove_char_from_idx(parse->s, parse->i);
+			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 		else
 			replace_util_sub(parse, buf_start, env->val, buf_end);
 	}
