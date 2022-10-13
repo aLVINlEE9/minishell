@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 14:01:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:12:06 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,22 +202,26 @@ int	condition_append_token(t_parse *parse)
 	return (0);
 }
 
-void	condition_qout_started(t_parse *parse)
+int	condition_qout_started(t_parse *parse)
 {
 	if (!parse->in_qout && is_quot(parse->s[parse->i]))
 	{
 		parse->in_qout = TRUE;
 		parse->idxq_s = parse->i;
 		parse->q = parse->s[parse->i];
+		return (1);
 	}
+	return (0);
 }
 
-void	condition_qout_ended(t_parse *parse)
+int	condition_qout_ended(t_parse *parse)
 {
 	if (parse->in_qout && parse->q == parse->s[parse->i])
 	{
 		parse->idxq_e = parse->i;
+		return (1);
 	}
+	return (0);
 }
 
 void	condition_dollar(t_data *data, t_parse *parse)
@@ -286,8 +290,10 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 			break ;
 		}
 		condition_dollar(data, parse);
-		condition_qout_started(parse);
-		condition_qout_ended(parse);
+		if (condition_qout_started(parse))
+			;
+		else if (condition_qout_ended(parse))
+			;
 		qout_remove(parse);
 		parse->i++;
 	}
@@ -299,7 +305,7 @@ void	parse_token(t_data *data, char *str)
 
 	init_parse(&parse, str);
 	create_token_list(data);
-	if (!is_space(parse.s[parse.i]) || condition_specifier(&parse, 0))
+	if (parse.s[parse.i] && (!is_space(parse.s[parse.i]) || condition_specifier(&parse, 0)))
 	{
 		parse.idx = parse.i;
 		parse_token_sub(data, &parse);
