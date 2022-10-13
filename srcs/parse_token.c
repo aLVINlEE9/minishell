@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 19:28:45 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:01:33 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,6 @@ void	replace_util_sub(t_parse *parse, char *first, char *val, char *last)
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
 	parse->s = ret;
-	free(first);
-	free(val);
-	free(last);
 }
 
 void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end)
@@ -147,7 +144,7 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 	buf_start = (char *)malloc(sizeof(char) * start + 1);
 	buf_env = (char *)malloc(sizeof(char) * buf_env_len);
 	buf_end = (char *)malloc(sizeof(char) * ft_strlen(parse->s) - idx + 1);
-	ft_strlcpy(buf_start, parse->s, start + 1);
+	ft_strlcpy(buf_start, parse->s, start);
 	ft_strlcpy(buf_env, &parse->s[start], buf_env_len);
 	ft_strlcpy(buf_end, &parse->s[idx], ft_strlen(parse->s) - idx + 1);
 	if (is_dollar_option(&parse->s[parse->i]))
@@ -160,6 +157,9 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		else
 			replace_util_sub(parse, buf_start, env->val, buf_end);
 	}
+	free(buf_start);
+	free(buf_env);
+	free(buf_end);
 }
 
 void	replace_dollar_to_env(t_data *data, t_parse *parse)
