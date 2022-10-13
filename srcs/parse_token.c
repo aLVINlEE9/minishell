@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 14:57:18 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:18:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,7 +254,7 @@ int	condition_backslash(t_parse *parse)
 			{
 				printf("unclose backslash");
 				parse->unclose_slash = TRUE;
-				return (1);
+				exit(1);
 			}
 			remove_char_from_idx(parse->s, parse->i);
 			parse->i++;
@@ -312,6 +312,8 @@ void	parse_token(t_data *data, char *str)
 		parse.idx = parse.i;
 		parse_token_sub(data, &parse);
 	}
+	if (parse.is_cmd)
+		parse.i++;
 	while (parse.s[parse.i])
 	{
 		init_parse_sub(&parse);
