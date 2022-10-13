@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 18:32:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:05:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,17 @@ void	append_token_sub(t_token_list *list, t_token *new_node)
 int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size)
 {
 	t_token		*new_node;
-	char		buf;
-	char		*ret;
+	char		*buf;
 
 	if (parse->in_qout)
 	{
 		printf("unclose qout\n");
 		return (0);
 	}
-	ft_strlcpy(&buf, token, size + 1);
-	ret = ft_strdup(&buf);
+    buf = (char *)malloc(sizeof(char) * size + 2);
+	ft_strlcpy(buf, token, size + 1);
 	new_node = 0;
-	new_node = create_token(ret, parse);
+	new_node = create_token(buf, parse);
 	if (new_node == 0)
 		return (1);
 	append_token_sub(list, new_node);

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 14:12:06 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:57:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,7 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
+			parse->i--;
 			break ;
 		}
 		condition_dollar(data, parse);
@@ -304,8 +305,9 @@ void	parse_token(t_data *data, char *str)
 	t_parse	parse;
 
 	init_parse(&parse, str);
+	
 	create_token_list(data);
-	if (parse.s[parse.i] && (!is_space(parse.s[parse.i]) || condition_specifier(&parse, 0)))
+	if (parse.s[parse.i] && (condition_specifier(&parse, 0) || !is_space(parse.s[parse.i])))
 	{
 		parse.idx = parse.i;
 		parse_token_sub(data, &parse);
@@ -319,9 +321,8 @@ void	parse_token(t_data *data, char *str)
 		{
 			parse.i++;
 			parse.idx = parse.i;
-			condition_specifier(&parse, 1);
+			condition_specifier(&parse, 0);
 			parse_token_sub(data, &parse);
-			parse.i--;
 		}
 		else if (condition_specifier(&parse, 0)) // now cmd
 		{
