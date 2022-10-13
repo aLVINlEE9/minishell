@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/12 14:05:18 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:39:21 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,25 @@ void	cmd_rightarrow(char *s, int *fd)
 
 void	cmd_doub_leftarrow(char *s, int *fd)
 {
-	//heredoc;
-    (void)s;
-    (void)fd;
+	char	*str;
+
+	//dup2(fd[4], 0);
+	while (1)
+	{
+		str = readline("> ");
+		if (str == 0)
+		{
+			write(2, "\033[1A", 4);
+			write(2, "\033[2C", 4);
+			break ;
+		}
+		if (ft_strncmp(str, s, ft_strlen(s)) == 0) // 비교함수 고쳐야 함.
+			break ;
+		write(fd[4], str, ft_strlen(str));
+		write(fd[4], "\n", 1);
+		free(str);
+	}
+	dup2(fd[3], 0);
 	return ;
 }
 

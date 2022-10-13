@@ -1,0 +1,4 @@
+thisisinput
+input
+input?
+input!

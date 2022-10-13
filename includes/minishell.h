@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 18:31:19 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:00:48 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <fcntl.h>
+#include <termios.h>
+#include <signal.h>
 
 
 # define FALSE 0
@@ -119,7 +122,7 @@ int	find_len_itoa(long long n);
 char	*ft_itoa(int n);
 void	pipex(t_data *data, char **envp);
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp);
-void	exe_cmd(t_token **cmd_ary, char **envp, int *fd);
+void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag);
 char	**make_inout_cmd(t_token **cmd_ary, int *fd);
 void	modify_inout(t_token **cmd_ary, int count, int *fd);
 void	cmd_leftarrow(char *s, int *fd);
@@ -127,10 +130,23 @@ void	cmd_rightarrow(char *s, int *fd);
 void	cmd_doub_leftarrow(char *s, int *fd);
 void	cmd_doub_rightarrow(char *s, int *fd);
 void	ft_iofile(char *s, int *fd, int count);
+char	*ft_strjoin_jh(char const *s1, char const *s2);
 
 typedef struct s_cmd_make
 {
 	int					count;
 	struct s_cmd_make	*next;
 }					t_cmd_make;
+
+typedef struct s_termi
+{
+	struct termios	*save_t;
+	struct termios	*new_t;
+}				t_termi;
+
+void	set_termi(struct s_termi termi);
+void	termi_old(struct s_termi termi);
+void	termi_new(struct s_termi termi);
+void	sig_handler(int signal);
+void	set_signal(void);
 #endif

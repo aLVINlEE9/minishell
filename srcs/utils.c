@@ -61,6 +61,25 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (ret);
 }
 
+char	*ft_strjoin_jh(char const *s1, char const *s2)
+{
+	size_t			size_1;
+	size_t			size_2;
+	char			*ret;
+
+	if (!s1 && !s2)
+		return (NULL);
+	size_1 = ft_strlen(s1);
+	size_2 = ft_strlen(s2);
+	ret = (char *)malloc(sizeof(char) * (size_1 + size_2 + 1));
+	if (!ret)
+		return (NULL);
+	ft_memmove(ret, s1, size_1);
+	ft_memmove(ret + size_1, s2, size_2);
+	ret[size_1 + size_2] = '\0';
+	return (ret);
+}
+
 void	*ft_memmove(void *dst, const void *src, size_t num)
 {
 	size_t			i;
