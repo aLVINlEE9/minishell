@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 15:42:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:40:45 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,34 @@ int	is_lstend(t_token ***cmd_lst, int count)
 	return (0);
 }
 
-void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
+int	is_slash(char *s)
 {
-	int		fd[5];
+	char *temp;
+
+	temp = s;
+	while (*temp)
+	{
+		if (*temp == '/')
+			return (1);
+		temp ++;
+	}
+	return (0);
+}
+
+void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp, t_data *data)
+{
+	int		fd[4];
 	int		count;
 	int		status;
+	int		temp;
 	pid_t	pid;
 
 	fd[2] = -1;
+	fd[3] = dup(0);
 	count = 0;
 	while (cmd_lst[count])//pipe가 없는경우 즉 마지막 커맨드같은경우에는 stdout으로 출력되야함.
 	{
-		//printf("forked\n");
-		if (pipe(fd) == -1 || pipe(&fd[3]) == -1)
+		if (pipe(fd) == -1)
 			exit(1);
 		pid = fork();
 		if (pid == 0)
@@ -42,11 +57,7 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 				close(fd[2]);
 			close(fd[1]);
 			fd[2] = dup(fd[0]);
-			//printf("fd[2] : %d\n", fd[2]);
-			//waitpid(-1, &status, WNOHANG);
 			close(fd[0]);
-			close(fd[3]);
-			close(fd[4]);
 		}
 		count ++;
 	}
@@ -54,10 +65,17 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp)
 		close(fd[2]);
 	while (1)
 	{
-		pid = waitpid(-1, &status, WNOHANG);
-		if (pid == -1)
+		temp = waitpid(-1, &status, WNOHANG);
+		if (temp == -1)
 			break ;
+		if (temp == pid)
+		{
+			if ((status & 0177) ==0)
+				pid = (status >> 8);
+		}
 	}
+	close(fd[3]);
+	data -> exit_code = pid;
 	return ;
 }
 
@@ -92,8 +110,6 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 	char	*temp2;
 	int		count;
 
-	//printf("child fd[2] = %d \n", fd[2]);
-	//printf("exe_cmd\n");
 	count = 0;
 	path = parse_env2(envp);
 	if (fd[2] != -1)
@@ -102,13 +118,6 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 		close(fd[2]);
 	}
 	cmd = make_inout_cmd(cmd_ary, fd);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
-	/*
-	while (cmd[count])
-	{
-		printf("cmd : %s\n", cmd[count]);
-		count ++;
-	}
-	*/
 	close(fd[0]);
 	close(fd[3]);
 	close(fd[4]);
@@ -116,12 +125,17 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 		dup2(fd[1], 1);
 	while (path[count])
 	{
-		temp2 = ft_strjoin_jh(path[count], "/");
-		execve(ft_strjoin_jh(temp2, cmd[0]), cmd, envp);
+		if (!is_slash(cmd[0]))
+		{
+			temp2 = ft_strjoin_jh(path[count], "/");
+			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, envp);
+			free(temp2);
+		}
+		else
+			execve(cmd[0], cmd, envp);
 		count ++;
-		free(temp2);
 	}
-	exit(1);
+	print_error(cmd[0], 1);
 }
 
 char	**make_inout_cmd(t_token **cmd_ary, int *fd)
@@ -145,7 +159,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd)
 	}
 	ret = malloc(sizeof(char *) * (cmd_arg_c + 1));
 	if (!ret)
-		return(0); //error
+		exit(1); //error
 	ret[cmd_arg_c] = 0;
 	count = 0;
 	cmd_arg_c = 0;
@@ -165,9 +179,9 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 	char	*s;
 
 	if (cmd_ary[count + 1] == 0)
-		exit(1);//printerror & exit;
-	if (cmd_ary[count + 1] -> is_cmd == 1)
-		exit(1);//printerror & exit;
+		print_error(0, 2);
+	//if (cmd_ary[count + 1] -> is_cmd == 1)
+		//exit(1);//printerror & exit;
 	s = cmd_ary[count] -> token;
 	if (ft_strlen(s) == 1)
 	{

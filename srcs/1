@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 18:58:08 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:29:46 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	cmd_doub_leftarrow(char *s, int *fd)
 	char	*str;
 	int		temp[2];
 
+	printf("double\n");
 	pipe(temp);
-	dup2(fd[3], 0);
 	while (1)
 	{
 		str = readline("> ");

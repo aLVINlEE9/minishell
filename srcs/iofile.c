@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 15:41:26 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:12:49 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_iofile(char *s, int *fd, int count)
 	{
 		fd_iofile = open(filename, O_RDONLY);
 		if (fd_iofile == -1 || access(filename, R_OK) == -1)
-			exit(1); // printerror
+			print_error(s, 0);
 		else
 		{
 			dup2(fd_iofile, 0);
@@ -39,7 +39,7 @@ void	ft_iofile(char *s, int *fd, int count)
 	{
 		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd_iofile == -1 || access(filename, W_OK) == -1)
-			exit(1);// printerror
+			print_error(s, 0);
 		dup2(fd_iofile, 1);
 		free(filename);
 		return ;
@@ -48,7 +48,7 @@ void	ft_iofile(char *s, int *fd, int count)
 	{
 		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_iofile == -1 || access(filename, W_OK) == -1)
-			exit(1); // printerror need
+			print_error(s, 1);
 		dup2(fd_iofile, 1); // 나중엔 풀어줘야함 
 		free(filename);
 	}

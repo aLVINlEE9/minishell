@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 22:00:48 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:39:52 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <signal.h>
+#include <errno.h>
 
 
 # define FALSE 0
@@ -121,7 +122,7 @@ void	make_string_itoa(char *p, long long n, int len);
 int	find_len_itoa(long long n);
 char	*ft_itoa(int n);
 void	pipex(t_data *data, char **envp);
-void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp);
+void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp, t_data *t);
 void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag);
 char	**make_inout_cmd(t_token **cmd_ary, int *fd);
 void	modify_inout(t_token **cmd_ary, int count, int *fd);
@@ -149,4 +150,5 @@ void	termi_old(struct s_termi termi);
 void	termi_new(struct s_termi termi);
 void	sig_handler(int signal);
 void	set_signal(void);
+void	print_error(char *s, int n);
 #endif
