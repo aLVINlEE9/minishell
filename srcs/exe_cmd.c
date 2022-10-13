@@ -6,11 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/13 19:40:45 by junhjeon         ###   ########.fr       */
-=======
-/*   Updated: 2022/10/13 16:52:38 by seungsle         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/10/13 21:57:30 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,16 +185,16 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 	s = cmd_ary[count] -> token;
 	if (ft_strlen(s) == 1)
 	{
-		if (ft_strncmp(s, "<", 1) == 0)
+		if (ft_strncmp(s, "<", -1) == 0)
 			cmd_leftarrow(cmd_ary[count + 1] -> token, fd);
-		if (ft_strncmp(s, ">", 1) == 0)
+		if (ft_strncmp(s, ">", -1) == 0)
 			cmd_rightarrow(cmd_ary[count + 1] -> token, fd);
 	}
 	if (ft_strlen(s) == 2)
 	{
-		if (ft_strncmp(s, "<<", 2) == 0)
+		if (ft_strncmp(s, "<<", -1) == 0)
 			cmd_doub_leftarrow(cmd_ary[count + 1] -> token, fd);
-		if (ft_strncmp(s, ">>", 2) == 0 )
+		if (ft_strncmp(s, ">>", -1) == 0 )
 			cmd_doub_rightarrow(cmd_ary[count + 1] -> token, fd);
 	}
 	return ;

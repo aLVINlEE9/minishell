@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 19:39:27 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/13 21:54:31 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new);
 static t_cmd_make	*ft_lstnew(int	c);
 static t_token		***make_cmd_list_pipe(t_token_list *t);
+void	free_cmdmake(t_cmd_make **lst);
+void	free_cmdlst(t_token ***cmd_lst);
 
 void	pipex(t_data *data, char **envp)
 {
@@ -27,8 +29,21 @@ void	pipex(t_data *data, char **envp)
 
 	cmd_lst = make_cmd_list_pipe(token_lst);
 	exe_fork(cmd_lst, env_lst, envp, data);
+	free_cmdlst(cmd_lst);
 }
 
+void	free_cmdlst(t_token ***lst)
+{
+	int	count;
+
+	count = 0;
+	while (lst[count])
+	{
+		free(lst[count]);
+		count ++;
+	}
+	free(lst);
+}
 static t_token	***make_cmd_list_pipe(t_token_list *token_list)
 {
 	t_token	*now;
@@ -95,6 +110,8 @@ static t_token	***make_cmd_list_pipe(t_token_list *token_list)
 		}
 		now = now -> next;
 	}
+	free_cmdmake(&start);
+	//free_templist(temp_list);
 	return (cmd_list);
 }
 
@@ -129,4 +146,23 @@ static t_cmd_make	*ft_lstnew(int	c)
 		p -> count = c;
 	p -> next = NULL;
 	return (p);
+}
+
+void free_cmdmake(t_cmd_make **lst)
+{
+	t_cmd_make	*temp;
+	t_cmd_make	*save;
+
+	temp = (*lst);
+	if (!(*lst))
+		return ;
+	save = temp -> next;
+	free(temp);
+	while (save)
+	{
+		temp = save;
+		save = save -> next;
+		free(temp);
+	}
+	return ;
 }
