@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 15:40:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 18:45:36 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ void    print_node(t_token_list *token_list)
     }
 }
 
+// void	parse_entt(char **env)
+// {
+// 	int		i;
+// 	char	**ret;
+// 	char	**temp;
+
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		if (env[i][0] == 'S' && env[i][1] == 'H' && env[i][2] == 'L' && \
+// 				env[i][3] == 'V' && env[i][4] == 'L' && env[i][5] == '=')
+// 		{
+// 			env[i][6] = '8';
+// 		}
+// 		i ++;
+// 	}
+// }
+
 void    print_env(t_env_list *env_list)
 {
     t_env *now;
@@ -36,6 +54,44 @@ void    print_env(t_env_list *env_list)
     }
 }
 
+void    free_for_line(t_data *data)
+{
+    t_token *now;
+
+    now = data->token_list->head->next;
+    while (now != data->token_list->tail)
+    {
+        free(now->token);
+        free(now);
+        now = now->next;
+    }
+    free(data->token_list->head);
+    free(data->token_list->tail);
+    free(data->token_list);
+}
+
+void    free_for_all(t_data *data)
+{
+    t_env   *now;
+
+    now = data->env_list->head->next;
+    while (now != data->env_list->tail)
+    {
+        free(now->key);
+        free(now->val);
+        free(now);
+        now = now->next;
+    }
+    free(data->env_list->head);
+    free(data->env_list->tail);
+    free(data->env_list);
+}
+
+void    leak_check(void)
+{
+    system("leaks minishell");
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data      	data;
@@ -45,14 +101,16 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	parse_env(envp, &data);
-	set_termi(termi);
+    atexit(leak_check);
+	parse_env(envp, &data); // 32 leaks
+    // parse_entt(envp);
+	set_termi(termi); // 1 1eak
     // print_env(data.env_list);
-	update_shlvl(&data);
-	//tcgetattr(0, &termi);
-	//termi.c_lflag &= ~(ECHOCTL);
-	//termi.c_lflag &= ~(ECHO);
-	//tcsetattr(0, TCSANOW, &termi);
+	update_shlvl(&data); // 1 leak
+	// tcgetattr(0, &termi);
+	// termi.c_lflag &= ~(ECHOCTL);
+	// termi.c_lflag &= ~(ECHO);
+	// tcsetattr(0, TCSANOW, &termi);
 	set_signal();
 	// printf("%s %s\n", search_env(data.env_list, "SHLVL")->val, search_env(data.env_list, "SHLVL")->key);
 	while (1)
@@ -70,11 +128,13 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			parse_token(&data, str);
-			print_node(data.token_list);
-			pipex(&data, envp);
-			free(str);
+			// print_node(data.token_list);
+			// pipex(&data, envp);
+            free_for_line(&data);
 		}
+        free(str);
 	}
+    free_for_all(&data);
 }
 //env 저장
 //"", '' 파싱

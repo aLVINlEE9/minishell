@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/12 22:00:48 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:35:07 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void    parse_env(char **envp, t_data *data);
 void    parse_token(t_data *data, char *str);
 int	is_dollar_option(char *str);
 
+void	syntax_check(t_data *data);
 
 t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);
