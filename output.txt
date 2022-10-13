@@ -1,4 +1,0 @@
-> caadsfasdffdsfsfadput.txt
-minishell
-output.txt
-srcs

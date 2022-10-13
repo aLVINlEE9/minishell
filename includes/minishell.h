@@ -6,7 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/13 19:39:52 by junhjeon         ###   ########.fr       */
+=======
+/*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +93,7 @@ void    parse_env(char **envp, t_data *data);
 void    parse_token(t_data *data, char *str);
 int	is_dollar_option(char *str);
 
+void	syntax_check(t_data *data);
 
 t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);
@@ -145,7 +150,7 @@ typedef struct s_termi
 	struct termios	*new_t;
 }				t_termi;
 
-void	set_termi(struct s_termi termi);
+void	set_termi(struct s_termi *termi);
 void	termi_old(struct s_termi termi);
 void	termi_new(struct s_termi termi);
 void	sig_handler(int signal);
