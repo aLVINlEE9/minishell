@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 16:35:07 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ typedef struct s_termi
 	struct termios	*new_t;
 }				t_termi;
 
-void	set_termi(struct s_termi termi);
+void	set_termi(struct s_termi *termi);
 void	termi_old(struct s_termi termi);
 void	termi_new(struct s_termi termi);
 void	sig_handler(int signal);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:13:01 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/08 15:35:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:53:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void    update_shlvl(t_data *data)
     
     shlvl = search_env(data->env_list, "SHLVL");
     val = ft_strdup(shlvl->val);
+    free(shlvl->val);
 	shlvl->val = ft_itoa((int)ft_atol(val) + 1);
     free(val);
 }
@@ -39,7 +40,7 @@ void    parse_env(char **envp, t_data *data)
 			append_env(data->env_list, temp[0], temp[1]);
 			// free(temp[0]);//key
 			// free(temp[1]);//value
-			// free(temp);
+			free(temp);
 		}
 		i ++;
 	}

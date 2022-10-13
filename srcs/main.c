@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 18:45:36 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/13 20:00:29 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-    atexit(leak_check);
+    // atexit(leak_check);
 	parse_env(envp, &data); // 32 leaks
     // parse_entt(envp);
-	set_termi(termi); // 1 1eak
+	set_termi(&termi); // 1 1eak
     // print_env(data.env_list);
 	update_shlvl(&data); // 1 leak
 	// tcgetattr(0, &termi);
@@ -128,9 +128,9 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			parse_token(&data, str);
-			// print_node(data.token_list);
+			print_node(data.token_list);
 			// pipex(&data, envp);
-            free_for_line(&data);
+			free_for_line(&data);
 		}
         free(str);
 	}
