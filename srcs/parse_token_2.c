@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 17:56:42 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:05:51 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ int	condition_backslash(t_parse *parse)
 				exit(1);
 			}
 			remove_char_from_idx(parse->s, parse->i);
-			parse->i++;
 			return (1);
 		}
 	}
