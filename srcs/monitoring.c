@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_cmd2.c                                         :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 20:48:06 by junhjeon         ###   ########.fr       */
+/*   Created: 2022/10/14 20:37:33 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/14 20:53:19 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exe_cmd2(char **cmd, char **envp)
+void	monitoring(t_data *data, int pid, int *fd)
 {
-	char	**path;
-	char	*temp;
-	int		count;
+	int	temp;
+	int	status;
 
-	count = 0;
-	path = parse_env2(envp);
-	while (path[count])
+	if (fd[2] != -1)
+		close(fd[2]);
+	while (1)
 	{
-		if (!is_slash(cmd[0]))
+		temp = waitpid(-1, &status, WNOHANG);
+		if (temp == -1)
+			break ;
+		if (temp == pid)
 		{
-			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp, cmd[0]), cmd, envp);
-			free(temp2);
+			if ((status & 0177) ==0)
+				pid = (status >> 8);
 		}
-		else
-			execve(cmd[0], cmd, envp);
-		count ++;
 	}
+	close(fd[3]);
+	data -> exit_code = pid;
+	return ;
 }

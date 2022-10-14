@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 21:57:30 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:07:42 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,10 @@ int	is_lstend(t_token ***cmd_lst, int count)
 	return (0);
 }
 
-int	is_slash(char *s)
-{
-	char *temp;
-
-	temp = s;
-	while (*temp)
-	{
-		if (*temp == '/')
-			return (1);
-		temp ++;
-	}
-	return (0);
-}
-
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp, t_data *data)
 {
 	int		fd[4];
 	int		count;
-	int		status;
-	int		temp;
 	pid_t	pid;
 
 	fd[2] = -1;
@@ -61,57 +45,13 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp, t_dat
 		}
 		count ++;
 	}
-	if (fd[2] != -1)
-		close(fd[2]);
-	while (1)
-	{
-		temp = waitpid(-1, &status, WNOHANG);
-		if (temp == -1)
-			break ;
-		if (temp == pid)
-		{
-			if ((status & 0177) ==0)
-				pid = (status >> 8);
-		}
-	}
-	close(fd[3]);
-	data -> exit_code = pid;
-	return ;
-}
-
-char	**parse_env2(char **env)
-{
-	int		i;
-	char	**ret;
-	char	**temp;
-
-	i = 0;
-	while (env[i])
-	{
-		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && \
-				env[i][3] == 'H' && env[i][4] == '=')
-		{
-			temp = ft_split(env[i], '=');
-			ret = ft_split(temp[1], ':');
-			free(temp[0]);
-			free(temp[1]);
-			free(temp);
-			return (ret);
-		}
-		i ++;
-	}
-	return (0);
+	monitoring(data, pid, &fd[0]);
 }
 
 void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 {
-	char	**path;
 	char	**cmd;
-	char	*temp2;
-	int		count;
 
-	count = 0;
-	path = parse_env2(envp);
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
@@ -123,18 +63,7 @@ void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag)
 	close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	while (path[count])
-	{
-		if (!is_slash(cmd[0]))
-		{
-			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, envp);
-			free(temp2);
-		}
-		else
-			execve(cmd[0], cmd, envp);
-		count ++;
-	}
+	exe_cmd2(cmd, envp);
 	print_error(cmd[0], 1);
 }
 
@@ -157,20 +86,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd)
 			cmd_arg_c ++;
 		count ++;
 	}
-	ret = malloc(sizeof(char *) * (cmd_arg_c + 1));
-	if (!ret)
-		exit(1); //error
-	ret[cmd_arg_c] = 0;
-	count = 0;
-	cmd_arg_c = 0;
-	while (cmd_ary[count])
-	{
-		if (cmd_ary[count] -> is_cmd == 1)
-			count ++;
-		else
-			ret[cmd_arg_c ++] = cmd_ary[count] -> token;
-		count ++;
-	}
+	ret = make_cmd(cmd_ary, cmd_arg_c);
 	return (ret);
 }
 
@@ -180,7 +96,7 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd)
 
 	if (cmd_ary[count + 1] == 0)
 		print_error(0, 2);
-	//if (cmd_ary[count + 1] -> is_cmd == 1)
+	//if (cmd_ary[count + 1] -> is_cmd == 1)  syntax error?
 		//exit(1);//printerror & exit;
 	s = cmd_ary[count] -> token;
 	if (ft_strlen(s) == 1)

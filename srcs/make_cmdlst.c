@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_cmd2.c                                         :+:      :+:    :+:   */
+/*   make_cmdlst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 20:48:06 by junhjeon         ###   ########.fr       */
+/*   Created: 2022/10/14 20:54:31 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/14 21:12:00 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exe_cmd2(char **cmd, char **envp)
+char	**make_cmd(t_token **cmd_ary, int cmd_arg_c)//cmd_exe로 옮겨야하나?
 {
-	char	**path;
-	char	*temp;
 	int		count;
+	char	**ret;
 
+	ret = malloc(sizeof(char *) * (cmd_arg_c + 1));
+	if (!ret)
+		exit(1); // error
+	ret[cmd_arg_c] = 0;
 	count = 0;
-	path = parse_env2(envp);
-	while (path[count])
+	cmd_arg_c = 0;
+	while (cmd_ary[count])
 	{
-		if (!is_slash(cmd[0]))
-		{
-			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp, cmd[0]), cmd, envp);
-			free(temp2);
-		}
+		if (cmd_ary[count] -> is_cmd == 1)
+			count ++;
 		else
-			execve(cmd[0], cmd, envp);
+			ret[cmd_arg_c ++] = cmd_ary[count] -> token;
 		count ++;
 	}
+	return (ret);
 }

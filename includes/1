@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 21:39:16 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:14:31 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -172,6 +172,4 @@ char	**make_cmd(t_token **cmd_ary, int cmd_arg_c);
 void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new);
 t_cmd_make	*ft_lstnew(int c);
 void	free_cmdmake(t_mcd_make **lst);
-void	free_cmdlst(t_tokne ***lst);
-t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, t_cmd_make **start, int a, int b);
 #endif
