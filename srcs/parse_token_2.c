@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 18:05:51 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:44:42 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,12 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 						parse->i - parse->idx);
 				break ;
 			}
+            if (condition_append_token(parse, 0) == 1)
+            {
+                append_token(data->token_list, parse, &parse->s[parse->idx], \
+						parse->i - parse->idx);
+				break ;
+            }
 			parse->i++;
 		}
 	}
