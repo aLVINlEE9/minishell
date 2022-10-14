@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 16:52:48 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:11:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,8 @@ int	condition_append_token(t_parse *parse, int check)
 		else
 			return (1);
 	}
+    else if (parse->in_dollar && !parse->is_env)
+        return (2);
 	return (0);
 }
 
