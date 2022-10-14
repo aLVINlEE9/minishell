@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 15:58:44 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:52:48 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	is_dollar_option(char *str)
 	return (0);
 }
 
-int	is_end(t_parse *parse)
+int	is_end(t_parse *parse, int check)
 {
 	if (!parse->in_qout)
 	{
-		if (!parse->s[parse->i + 1])
+		if (!parse->s[parse->i + check])
 			return (1);
-		else if (parse->s[parse->i + 1] && (is_space(parse->s[parse->i + 1]) || \
+		else if (parse->s[parse->i + check] && (is_space(parse->s[parse->i + check]) || \
 				is_specifier(parse, 1)))
 			return (2);
 	}
@@ -215,7 +215,7 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 
 int	condition_backslash(t_parse *parse)
 {
-	if (parse->s[parse->i] == '\\' && !is_end(parse))
+	if (parse->s[parse->i] == '\\' && !is_end(parse, 1))
 	{
 		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
 		{
@@ -250,7 +250,7 @@ void	condition_qout(t_parse *parse)
 
 void	condition_dollar(t_data *data, t_parse *parse)
 {
-	if (is_dollar(parse->s[parse->i]) && !is_end(parse))
+	if (is_dollar(parse->s[parse->i]) && !is_end(parse, 1))
 	{
 		if (!parse->in_qout && is_quot(parse->s[parse->i + 1]))
 		{
@@ -267,9 +267,9 @@ void	condition_dollar(t_data *data, t_parse *parse)
 	}
 }
 
-int	condition_append_token(t_parse *parse)
+int	condition_append_token(t_parse *parse, int check)
 {
-	if (is_end(parse))
+	if (is_end(parse, check))
 	{
 		if (parse->in_dollar && !parse->is_env && parse->i - parse->idx == 0)
 			return (2);
@@ -289,7 +289,13 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 				continue ;
 			condition_dollar(data, parse);
 			condition_qout(parse);
-			if (condition_append_token(parse))
+            if (condition_append_token(parse, 0) == 2)
+            {
+                // parse->i++;
+                parse->idx = parse->i;
+                break ;
+            }
+			if (condition_append_token(parse, 1) == 1)
 			{
 				parse->i++;
 				append_token(data->token_list, parse, &parse->s[parse->idx], \
