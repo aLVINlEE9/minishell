@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 20:36:01 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:52:31 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	init_parse_sub(t_parse *parse)
 	parse->is_cmd = 0;
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
+    parse->is_env = FALSE;
 }
 
 void	init_parse(t_parse *parse, char *str)
@@ -107,6 +108,7 @@ void	init_parse(t_parse *parse, char *str)
 	parse->in_dollar = FALSE;
 	parse->idx = 0;
 	parse->is_cmd = 0;
+    parse->is_env = 0;
 	parse->idxq_s = 0;
 	parse->idxq_e = 0;
 	parse->idxd_s = 0;
@@ -162,9 +164,14 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 	{
 		env = search_env(data->env_list, buf_env);
 		if (!env)
-			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
+        {
+            remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
+        }
 		else
-			replace_util_sub(parse, buf_start, env->val, buf_end);
+        {
+            replace_util_sub(parse, buf_start, env->val, buf_end);
+            parse->is_env = TRUE;
+        }
 	}
 	free(buf_start);
 	free(buf_env);
@@ -196,6 +203,8 @@ int	condition_append_token(t_parse *parse)
 		parse->i += is_specifier(parse, 0); // just cmd
 		return (1);
 	}
+    else if (parse->is_env)
+        return (1);
 	else if (!parse->s[parse->i]) // null before
 	{
 		return (1);
@@ -296,7 +305,8 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
-			parse->i--;
+			if (parse->i - parse->idx != 0)
+                parse->i--;
 			break ;
 		}
 		condition_dollar(data, parse);

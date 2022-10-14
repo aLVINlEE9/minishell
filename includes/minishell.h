@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:22:32 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_parse{
 	int	in_qout;
 	int	in_dollar;
     int is_cmd;
+    int is_env;
 	int	idx;
 	int	idxq_s;
 	int	idxq_e;

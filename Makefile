@@ -6,13 +6,13 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/13 15:41:44 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/14 12:27:49 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC		= cc -g -lreadline -L/Users/seungsle/.brew/opt/readline/lib -I/Users/seungsle/.brew/opt/readline/include
-CFLAG	=
+CFLAG	= 
 SRCS 	=	./srcs/main.c		\
 			./srcs/node_env.c	\
 			./srcs/node_token.c	\
