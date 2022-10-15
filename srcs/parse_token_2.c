@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 18:44:42 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:10:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	is_end(t_parse *parse, int check)
 		if (!parse->s[parse->i + check])
 			return (1);
 		else if (parse->s[parse->i + check] && (is_space(parse->s[parse->i + check]) || \
-				is_specifier(parse, 1)))
+				is_specifier(parse, check)))
 			return (2);
 	}
 	return (0);
