@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/15 17:10:08 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:13:45 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,9 @@ int	is_specifier(t_parse *parse, int check)
 	c = parse->s[parse->i + check];
 	if (ft_strncmp(&parse->s[parse->i + check], "<<", 2) == 0 || \
 		ft_strncmp(&parse->s[parse->i + check], ">>", 2) == 0)
-	{
 		return (2);
-	}
 	else if (c == '>' || c == '<' || c == '|')
-	{
 		return (1);
-	}
 	return (0);
 }
 
@@ -269,13 +265,13 @@ int	condition_append_token(t_parse *parse, int check)
 {
 	if (is_end(parse, check))
 	{
-		if (parse->in_dollar && !parse->is_env && parse->i - parse->idx == 0)
+		if (((parse->in_dollar && !parse->is_env) || (parse->is_cmd)) && parse->i - parse->idx == 0)
 			return (2);
 		else
 			return (1);
 	}
-    else if (parse->in_dollar && !parse->is_env)
-        return (2);
+	else if (parse->in_dollar && !parse->is_env)
+		return (2);
 	return (0);
 }
 
@@ -285,16 +281,18 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 	{
 		while (parse->s[parse->i])
 		{
+			if (is_specifier(parse, 0))
+				parse->is_cmd = TRUE;
 			if (condition_backslash(parse))
 				continue ;
 			condition_dollar(data, parse);
 			condition_qout(parse);
-            if (condition_append_token(parse, 0) == 2)
-            {
-                // parse->i++;
-                parse->idx = parse->i;
-                break ;
-            }
+			if (condition_append_token(parse, 0) == 2)
+			{
+				// parse->i++;
+				parse->idx = parse->i;
+				break ;
+			}
 			if (condition_append_token(parse, 1) == 1)
 			{
 				parse->i++;
@@ -302,12 +300,12 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 						parse->i - parse->idx);
 				break ;
 			}
-            if (condition_append_token(parse, 0) == 1)
-            {
-                append_token(data->token_list, parse, &parse->s[parse->idx], \
+			if (condition_append_token(parse, 0) == 1)
+			{
+				append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
 				break ;
-            }
+			}
 			parse->i++;
 		}
 	}
