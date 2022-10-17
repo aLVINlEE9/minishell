@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_cmd2.c                                         :+:      :+:    :+:   */
+/*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 20:48:06 by junhjeon         ###   ########.fr       */
+/*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/17 21:27:56 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exe_cmd2(char **cmd, char **envp)
+int		ft_is_digit(char *cmd)
 {
-	char	**path;
-	char	*temp;
-	int		count;
-
-	count = 0;
-	path = parse_env2(envp);
-	while (path[count])
+	while (*cmd)
 	{
-		if (!is_slash(cmd[0]))
-		{
-			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp, cmd[0]), cmd, envp);
-			free(temp2);
-		}
-		else
-			execve(cmd[0], cmd, envp);
-		count ++;
+		if (*cmd < '0' || *cmd > '9')
+			return (0);
+		cmd ++;
 	}
+	return (1);
+}
+void	built_cd(void)
+{
+
 }

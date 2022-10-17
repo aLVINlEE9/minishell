@@ -6,13 +6,13 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:12:56 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 21:16:00 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/15 22:41:36 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new)
+void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new)
 {
 	t_cmd_make	*iter;
 
@@ -32,9 +32,8 @@ static void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new)
 	return ;
 }
 
-
-static t_cmd_make	*ft_lstnew(int	c)
-
+t_cmd_make	*ft_lstnew(int c)
+{
 	t_cmd_make	*p;
 
 	p = malloc(sizeof(t_cmd_make) * 1);
@@ -45,7 +44,7 @@ static t_cmd_make	*ft_lstnew(int	c)
 	return (p);
 }
 
-void free_cmdmake(t_cmd_make **lst)
+void	free_cmdmake(t_cmd_make **lst)
 {
 	t_cmd_make	*temp;
 	t_cmd_make	*save;
@@ -76,4 +75,3 @@ void	free_cmdlst(t_token ***lst)
 	}
 	free(lst);
 }
-

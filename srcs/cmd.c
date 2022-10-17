@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 20:34:51 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:14:40 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@ void	cmd_rightarrow(char *s, int *fd)
 	ft_iofile(s, fd, 0);
 }
 
-void	cmd_doub_leftarrow(char *s, int *fd)
+void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
 {
 	char	*str;
 	char	*ret;
 	int		temp[2];
+	struct	s_dollar_str	str_temp;
 
 	pipe(temp);
+	str_temp.str = str;
+	str_temp.fd_temp = &temp[0];
 	dup2(fd[3], 0);
-	cmd_heredoc_write(str, ret, &temp[0], s);
+	cmd_heredoc_write(str_temp, ret, s, data_env);
 	dup2(temp[0], 0);
 	close(temp[0]);
 	close(temp[1]);
@@ -43,31 +46,31 @@ void	cmd_doub_rightarrow(char *s, int *fd)
 	return ;
 }
 
-void	cmd_heredoc_write(char *str, char *ret, int *temp, char *s)
+void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_data_env data_env)
 {
 	while (1)
 	{
-		str = readline("> ");
-		if (str == 0)
+		t_str.str = readline("> ");
+		if (t_str.str == 0)
 		{
 			write(2, "\033[1A", 4);
 			write(2, "\033[2C", 4);
 			break ;
 		}
-		if (ft_strncmp(str, s, -1) == 0) // 비교 함수 고쳐야함.
+		if (ft_strncmp(t_str.str, s, -1) == 0)
 		{	
-			free(str);
+			free(t_str.str);
 			break ;
 		}
-		ret = dollarparsing(str, 0, 0);
+		ret = dollarparsing(t_str.str, 0, 0, data_env);
 		if (!ret)
-			write(temp[1], str, ft_strlen(str));
+			write(t_str.fd_temp[1], t_str.str, ft_strlen(t_str.str));
 		else
 		{
-			write(temp[1], ret, ft_strlen(ret));
+			write(t_str.fd_temp[1], ret, ft_strlen(ret));
 			free(ret);
 		}
-		write(temp[1], "\n", 1);
-		free(str);
+		write(t_str.fd_temp[1], "\n", 1);
+		free(t_str.str);
 	}
 }

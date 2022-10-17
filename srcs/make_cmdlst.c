@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:54:31 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/14 21:12:00 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/15 22:40:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	**make_cmd(t_token **cmd_ary, int cmd_arg_c)//cmd_exe로 옮겨야하나?
 	cmd_arg_c = 0;
 	while (cmd_ary[count])
 	{
-		if (cmd_ary[count] -> is_cmd == 1)
+		if (cmd_ary[count]->is_cmd == 1)
 			count ++;
 		else
-			ret[cmd_arg_c ++] = cmd_ary[count] -> token;
+			ret[cmd_arg_c ++] = cmd_ary[count]->token;
 		count ++;
 	}
 	return (ret);

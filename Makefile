@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/14 21:06:59 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/17 20:39:42 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,9 +27,15 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/set_signal.c\
 			./srcs/print.c\
 			./srcs/parse_dol_jh.c\
+			./srcs/parse_dol_jh2.c\
 			./srcs/monitoring.c\
 			./srcs/exe_cmd2.c\
-			./srcs/make_cmdlst.c
+			./srcs/make_cmdlst.c\
+			./srcs/make_pipe_cmdlst.c\
+			./srcs/make_pipe_cmdlst2.c\
+			./srcs/built_in.c\
+			./srcs/built_in2.c
+
 OBJS 	= ${SRCS:.c=.o}
 
 all : $(NAME)

@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitoring.c                                       :+:      :+:    :+:   */
+/*   parse_dol_jh2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:37:33 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/15 22:44:27 by junhjeon         ###   ########.fr       */
+/*   Created: 2022/10/17 16:40:33 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/17 16:59:38 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	monitoring(t_data *data, int pid, int *fd)
+int	parse_dollar_question(char **ret , struct s_data_env data_env)
 {
-	int	temp;
-	int	status;
+	char	*temp;
 
-	if (fd[2] != -1)
-		close(fd[2]);
-	while (1)
-	{
-		temp = waitpid(-1, &status, WNOHANG);
-		if (temp == -1)
-			break ;
-		if (temp == pid)
-		{
-			if ((status & 0177) == 0)
-				pid = (status >> 8);
-		}
-	}
-	close(fd[3]);
-	data -> exit_code = pid;
-	return ;
+	temp = ft_itoa(data_env.data->exit_code);
+	*ret = ft_strjoin(*ret, temp);
+	return (1);
 }

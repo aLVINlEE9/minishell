@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/14 21:39:16 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 21:37:47 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -84,6 +84,12 @@ typedef struct s_env_list{
 	t_env	*tail;
 }	t_env_list;
 
+typedef struct s_data_env
+{
+	char	**envp;
+	t_data	*data;
+}	t_data_env_jh;
+
 void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
 
@@ -106,34 +112,34 @@ void	append_env_sub(t_env_list *list, t_env *new_node);
 int	append_env(t_env_list *list, char *key, char *val);
 t_env	*create_env(char *key, char *val);
 
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *src);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_memmove(void *dst, const void *src, size_t num);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t		ft_strlen(const char *s);
+char		*ft_strdup(const char *src);
+char		*ft_strjoin(char const *s1, char const *s2);
+void		*ft_memmove(void *dst, const void *src, size_t num);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t      ft_strlcpycpy(char *dst, const char *src, size_t size);
 long long	ft_atol(const char *str);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	count_word(char const *s, char c);
-int	put_word(char **ret, char const *s, int wordn, char c);
-char	**go_free(char **ret, int wordn);
-char	**ft_make_split(char **ret, char const *s, char c);
-char	**ft_split(char const *s, char c);
-void	make_string_itoa(char *p, long long n, int len);
-int	find_len_itoa(long long n);
-char	*ft_itoa(int n);
-void	pipex(t_data *data, char **envp);
-void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, char **envp, t_data *t);
-void	exe_cmd(t_token **cmd_ary, char **envp, int *fd, int flag);
-char	**make_inout_cmd(t_token **cmd_ary, int *fd);
-void	modify_inout(t_token **cmd_ary, int count, int *fd);
-void	cmd_leftarrow(char *s, int *fd);
-void	cmd_rightarrow(char *s, int *fd);
-void	cmd_doub_leftarrow(char *s, int *fd);
-void	cmd_doub_rightarrow(char *s, int *fd);
-void	ft_iofile(char *s, int *fd, int count);
-char	*ft_strjoin_jh(char const *s1, char const *s2);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			count_word(char const *s, char c);
+int			put_word(char **ret, char const *s, int wordn, char c);
+char		**go_free(char **ret, int wordn);
+char		**ft_make_split(char **ret, char const *s, char c);
+char		**ft_split(char const *s, char c);
+void		make_string_itoa(char *p, long long n, int len);
+int			find_len_itoa(long long n);
+char		*ft_itoa(int n);
+void		pipex(t_data *data, char **envp);
+void		exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, struct s_data_env data_env);
+void		exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag);
+char		**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env);
+void		modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env);
+void		cmd_leftarrow(char *s, int *fd);
+void		cmd_rightarrow(char *s, int *fd);
+void		cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env);
+void		cmd_doub_rightarrow(char *s, int *fd);
+void		ft_iofile(char *s, int *fd, int count);
+char		*ft_strjoin_jh(char const *s1, char const *s2);
 
 typedef struct s_cmd_make
 {
@@ -152,26 +158,44 @@ typedef struct s_intset_jh
 	int	*count;
 	int	*save_c;
 }				t_intset_jh;
+
+typedef struct s_dollar_str
+{
+	char	*str;
+	int		*fd_temp;
+}				t_dollar_str_jh;
+
 void	set_termi(struct s_termi *termi);
 void	termi_old(struct s_termi termi);
 void	termi_new(struct s_termi termi);
 void	sig_handler(int signal);
 void	set_signal(void);
 void	print_error(char *s, int n);
-char	*dollarparsing(char *s, int count, int save_c);
+char	*dollarparsing(char *s, int count, int save_c, struct s_data_env data_env);
 char	*ft_substr(char const*s, unsigned int start, size_t len);
-int		parse_dollar2(char *temp, char **ret, int count, int save_c);
-void	parse_dollar(char *temp, char **ret, int *count, int *save_c);
+int		parse_dollar2(char *temp, char **ret, struct s_intset_jh save, struct s_data_env data_env);
+void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, struct s_data_env data_env);
 int		parse_dollar2_b(char *temp, char **ret, int count, int save_c);
 void	parse_backslash(char *temp, char **ret, struct s_intset_jh save, int *bs);
-void	cmd_heredoc_write(char *str, char *ret, int *temp, char *s);
+void	cmd_heredoc_write(struct s_dollar_str t, char *ret, char *s, struct s_data_env data_env);
 char	*ft_null_string(void);
 void	monitoring(t_data *data, int pid, int *fd);
-void	exe_cmd2(char **cmd, char **envp);
+void	exe_cmd2(char **cmd, struct s_data_env data_env);
 char	**make_cmd(t_token **cmd_ary, int cmd_arg_c);
 void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new);
 t_cmd_make	*ft_lstnew(int c);
-void	free_cmdmake(t_mcd_make **lst);
-void	free_cmdlst(t_tokne ***lst);
+void	free_cmdmake(t_cmd_make **lst);
+void	free_cmdlst(t_token ***lst);
 t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, t_cmd_make **start, int a, int b);
+void	whatisit(t_token_list *t, t_token ***cmd_l, t_cmd_make *start, t_token **temp_list);
+t_token	***make_cmd_list_pipe(t_token_list *t);
+//void	built_cd(void);
+void	ft_iofile2(char *s, int *fd, int count, char *filename);
+int		parse_dollar_question(char **ret, struct s_data_env data_env);
+int		check_builtin(t_token **cmd, struct s_data_env data_env);
+void	built_exit(char **cmd2);
+void	built_pwd(void);
+void	built_echo(char **cmd2);
+void	built_cd(void);
+int		ft_is_digit(char *cmd);
 #endif

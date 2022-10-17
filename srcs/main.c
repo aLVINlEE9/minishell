@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/13 21:57:03 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 21:32:45 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int main(int argc, char **argv, char **envp)
 	// printf("%s %s\n", search_env(data.env_list, "SHLVL")->val, search_env(data.env_list, "SHLVL")->key);
 	while (1)
 	{
-		
 		str = readline("minishell$ ");// 컴파일시 -lreadline 추가
 		if (str == 0)
 		{
