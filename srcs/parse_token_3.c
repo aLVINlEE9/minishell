@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 14:22:10 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:42:05 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,7 +304,7 @@ void	parse_token_sub(t_data *data, t_parse *parse)
                 parse->i++;
                 append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
-                if (parse->is_cmd)
+                if (parse->is_cmd || is_specifier(parse, 0))
                 {
                     parse->i--;
                 }
