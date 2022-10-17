@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 14:42:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:16:26 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 
 int	condition_backslash(t_parse *parse)
 {
-	if (parse->s[parse->i] == '\\' && !is_end(parse, 1))
+	if (parse->s[parse->i] == '\\')
 	{
 		if (!parse->in_qout || (parse->in_qout && parse->q == '\"'))
 		{
@@ -223,6 +223,7 @@ int	condition_backslash(t_parse *parse)
 				exit(1);
 			}
 			remove_char_from_idx(parse->s, parse->i);
+            parse->i++;
 			return (1);
 		}
 	}
@@ -326,7 +327,7 @@ void    parse_token(t_data *data, char *str)
 		parse.idx = parse.i;
 		parse_token_sub(data, &parse);
 	}
-    if (parse.is_cmd)
+    if (parse.is_cmd || is_specifier(&parse, 1))
         parse.i++;
 	while (parse.s[parse.i])
 	{
