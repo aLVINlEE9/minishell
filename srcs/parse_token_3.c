@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 15:26:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:30:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,12 +266,12 @@ int	condition_append_token(t_parse *parse, int check)
 {
 	if (is_end(parse, check))
 	{
-		if (parse->i - parse->idx == 0)
+        if (parse->in_dollar && !parse->is_env)
+				return (0);
+		else if (parse->i - parse->idx == 0)
 		{
-			if (parse->in_dollar && !parse->is_env)
+			if (parse->is_cmd)
 				return (1);
-			else if (parse->is_cmd)
-				return (3);
 			else
 				return (1);
 		}
@@ -279,7 +279,7 @@ int	condition_append_token(t_parse *parse, int check)
 			return (1);
 	}
 	else if (parse->in_dollar && !parse->is_env)
-		return (1);
+		return (0);
     else if (parse->is_cmd)
         return (1);
 	return (0);
@@ -300,6 +300,8 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 				continue ;
 			condition_dollar(data, parse);
 			condition_qout(parse);
+            if (parse->in_dollar && !parse->is_env)
+                break ;
 			if (condition_append_token(parse, 1))
             {
                 parse->i++;
