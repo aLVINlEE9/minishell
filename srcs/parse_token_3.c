@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 16:51:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:03:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ void	qout_remove(t_parse *parse)
 		parse->idxq_s = 0;
 		parse->idxq_e = 0;
 		parse->i -= 2;
+        if (parse->i == -1)
+            parse->i = 0;
 	}
 }
 
