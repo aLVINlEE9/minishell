@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 13:48:51 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:22:10 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	is_end(t_parse *parse, int check)
 {
 	if (!parse->in_qout)
 	{
-		if (!parse->s[parse->i + check])
+		if (!parse->s[parse->i + check] && ft_strlen(parse->s) == (parse->i + check))
 			return (1);
 		else if (parse->s[parse->i + check] && (is_space(parse->s[parse->i + check]) || \
 				is_specifier(parse, check)))
