@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:34:17 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 16:16:00 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:54:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	syntax_check(t_data *data)
 	t_token	*now;
 
 	now = data->token_list->head->next;
+    if (now == data->token_list->tail)
+        return ;
     if (now->is_cmd && syntax_pipe(now->token))
     {
         printf("syntax error near unexpected token `%s'\n", now->token);
