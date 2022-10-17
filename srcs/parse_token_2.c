@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/15 19:13:45 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:33:59 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	init_parse_sub(t_parse *parse)
 	parse->is_cmd = 0;
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
-    parse->is_env = FALSE;
+	parse->is_env = FALSE;
 }
 
 void	remove_char_from_idx(char *s, int idx)
@@ -153,7 +153,7 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char 
 		val = ft_itoa(data->exit_code);
 	remove_char_from_idx(parse->s, parse->i);
 	replace_util_sub(parse, buf_start, val, buf_end);
-    parse->is_env = TRUE;
+	parse->is_env = TRUE;
 }
 
 void	replace_util(t_data *data, t_parse *parse, int idx, int start)
@@ -177,15 +177,15 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 	{
 		env = search_env(data->env_list, buf_env);
 		if (!env)
-        {
-            remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
+		{
+			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 			parse->is_env = FALSE;
-        }
+		}
 		else
-        {
-            replace_util_sub(parse, buf_start, env->val, buf_end);
-            parse->is_env = TRUE;
-        }
+		{
+			replace_util_sub(parse, buf_start, env->val, buf_end);
+			parse->is_env = TRUE;
+		}
 	}
 	free(buf_start);
 	free(buf_env);
@@ -265,8 +265,15 @@ int	condition_append_token(t_parse *parse, int check)
 {
 	if (is_end(parse, check))
 	{
-		if (((parse->in_dollar && !parse->is_env) || (parse->is_cmd)) && parse->i - parse->idx == 0)
-			return (2);
+		if (parse->i - parse->idx == 0)
+		{
+			if (parse->in_dollar && !parse->is_env)
+				return (2);
+			else if (parse->is_cmd)
+				return (3);
+			else
+				return (1);
+		}
 		else
 			return (1);
 	}
@@ -293,7 +300,14 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 				parse->idx = parse->i;
 				break ;
 			}
-			if (condition_append_token(parse, 1) == 1)
+			if (condition_append_token(parse, 0) == 3)
+			{
+				parse->i++;
+				append_token(data->token_list, parse, &parse->s[parse->idx], \
+						parse->i - parse->idx);
+				break ;
+			}
+			if (parse->s[parse->i + 1] == '\0')
 			{
 				parse->i++;
 				append_token(data->token_list, parse, &parse->s[parse->idx], \
