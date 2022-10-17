@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_token_2.c                                    :+:      :+:    :+:   */
+/*   parse_token_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:27:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 13:23:43 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:42:45 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ int	condition_append_token(t_parse *parse, int check)
 		if (parse->i - parse->idx == 0)
 		{
 			if (parse->in_dollar && !parse->is_env)
-				return (2);
+				return (1);
 			else if (parse->is_cmd)
 				return (3);
 			else
@@ -278,7 +278,9 @@ int	condition_append_token(t_parse *parse, int check)
 			return (1);
 	}
 	else if (parse->in_dollar && !parse->is_env)
-		return (2);
+		return (1);
+    else if (parse->is_cmd)
+        return (1);
 	return (0);
 }
 
@@ -289,38 +291,25 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 		while (parse->s[parse->i])
 		{
 			if (is_specifier(parse, 0))
-				parse->is_cmd = TRUE;
+            {
+                parse->is_cmd = TRUE;
+                parse->i += (is_specifier(parse, 0) - 1);
+            }
 			if (condition_backslash(parse))
 				continue ;
 			condition_dollar(data, parse);
 			condition_qout(parse);
-			if (condition_append_token(parse, 0) == 2)
-			{
-				// parse->i++;
-				parse->idx = parse->i;
-				break ;
-			}
-			if (condition_append_token(parse, 0) == 3)
-			{
-				parse->i++;
-				append_token(data->token_list, parse, &parse->s[parse->idx], \
+			if (condition_append_token(parse, 1))
+            {
+                parse->i++;
+                append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
-                parse->i--;
-				break ;
-			}
-			if (parse->s[parse->i + 1] == '\0')
-			{
-				parse->i++;
-				append_token(data->token_list, parse, &parse->s[parse->idx], \
-						parse->i - parse->idx);
-				break ;
-			}
-			if (condition_append_token(parse, 0) == 1)
-			{
-				append_token(data->token_list, parse, &parse->s[parse->idx], \
-						parse->i - parse->idx);
-				break ;
-			}
+                if (parse->is_cmd)
+                {
+                    parse->i--;
+                }
+                break ;
+            }
 			parse->i++;
 		}
 	}

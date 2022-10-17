@@ -3,21 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/15 17:38:15 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/17 13:31:43 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC		= cc -g -lreadline -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include
+# CC		= cc -g -lreadline -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include
+CC		= cc -g -lreadline -L/Users/seungsle/.brew/opt/readline/lib -I/Users/seungsle/.brew/opt/readline/include
 CFLAG	= 
 SRCS 	=	./srcs/main.c			\
 			./srcs/node_env.c		\
 			./srcs/node_token.c		\
 			./srcs/parse_env.c		\
-			./srcs/parse_token_2.c	\
+			./srcs/parse_token_3.c	\
 			./srcs/utils.c			\
 			./srcs/pipex.c			\
 			./srcs/exe_cmd.c		\
