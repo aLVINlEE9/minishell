@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/17 16:37:52 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/18 12:54:16 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS 	=	./srcs/main.c			\
 			./srcs/node_env.c		\
 			./srcs/node_token.c		\
 			./srcs/parse_env.c		\
-			./srcs/parse_token_3.c	\
+			./srcs/parse_token_4.c	\
 			./srcs/utils.c			\
 			./srcs/pipex.c			\
 			./srcs/exe_cmd.c		\
