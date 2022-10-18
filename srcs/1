@@ -1,39 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in2.c                                        :+:      :+:    :+:   */
+/*   exe_cmd2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 22:04:24 by junhjeon         ###   ########.fr       */
+/*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
+/*   Updated: 2022/10/18 21:39:22 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		ft_is_digit(char *cmd)
+int	is_slash(char *s)
 {
-	while (*cmd)
-	{
-		if (*cmd < '0' || *cmd > '9')
-			return (0);
-		cmd ++;
-	}
-	return (1);
-}
-void	built_cd(char **cmd)
-{
-	int		result;
-	char	*home;
+	char	*temp;
 
-	home = getenv("HOME");
-	if (cmd[1] == 0)
-		result = chdir(home);
-	else
-		result = chdir(cmd[1]);
-	if (!result)
-		printf("cd is working\n");
-	else
-		printf("cd: %s: No such file or directory\n", cmd[1]);
+	temp = s;
+	while (*temp)
+	{
+		if (*temp == '/')
+			return (1);
+		temp ++;
+	}
+	return (0);
+}
+
+char	**parse_env2(char **env)
+{
+	int		i;
+	char	**ret;
+	char	**temp;
+
+	i = 0;
+	while (env[i])
+	{
+		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T' && \
+				env[i][3] == 'H' && env[i][4] == '=')
+		{
+			temp = ft_split(env[i], '=');
+			ret = ft_split(temp[1], ':');
+			free(temp[0]);
+			free(temp[1]);
+			free(temp);
+			return (ret);
+		}
+		i ++;
+	}
+	return (0);
+}
+
+void	exe_cmd2(char **cmd, struct s_data_env data_env)
+{
+	char	**path;
+	char	*temp2;
+	int		count;
+
+	count = 0;
+	path = parse_env2(data_env.envp);
+	while (path[count])
+	{
+		if (!is_slash(cmd[0]))
+		{
+			temp2 = ft_strjoin_jh(path[count], "/");
+			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, data_env.envp);
+			free(temp2);
+		}
+		else
+			execve(cmd[0], cmd, data_env.envp);
+		count ++;
+	}
 }

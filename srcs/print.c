@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:01:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/13 19:37:56 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:55:21 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_error(char *s, int n)
 		write(2, ": ", 2);
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
-		exit(1);
+		return ;
 	}
 	if (n == 1)
 	{

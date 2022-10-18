@@ -6,20 +6,20 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 18:14:40 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:59:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	cmd_leftarrow(char *s, int *fd)
+int	cmd_leftarrow(char *s, int *fd)
 {
-	ft_iofile(s, fd, 1);
+	return (ft_iofile(s, fd, 1));
 }
 
-void	cmd_rightarrow(char *s, int *fd)
+int	cmd_rightarrow(char *s, int *fd)
 {
-	ft_iofile(s, fd, 0);
+	return (ft_iofile(s, fd, 0));
 }
 
 void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
@@ -32,7 +32,7 @@ void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
 	pipe(temp);
 	str_temp.str = str;
 	str_temp.fd_temp = &temp[0];
-	dup2(fd[3], 0);
+	//dup2(fd[3], 0);
 	cmd_heredoc_write(str_temp, ret, s, data_env);
 	dup2(temp[0], 0);
 	close(temp[0]);
@@ -40,10 +40,9 @@ void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
 	return ;
 }
 
-void	cmd_doub_rightarrow(char *s, int *fd)
+int	cmd_doub_rightarrow(char *s, int *fd)
 {
-	ft_iofile(s, fd, 2);
-	return ;
+	return (ft_iofile(s, fd, 2));
 }
 
 void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_data_env data_env)

@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 15:58:53 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:59:16 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,21 @@ int		ft_is_digit(char *cmd)
 	return (1);
 }
 
-void	built_cd(char **cmd, struct s_data_env data)
+void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data)
 {
 	int		result;
 	char	*home;
 	char	*cwd;
 	char	*prev;
+	char	**redi;
 
+	redi = make_inout_cmd(cmd, &fd[0], data, 1);
+	free(redi);
+	if (!redi)
+		return ;
 	home = getenv("HOME");
 	cwd = getcwd(0, 1024);
-	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)
+	if (cmd2[1] == 0 || ft_strncmp(cmd2[1], "~", -1) == 0)
 	{
 		result = chdir(home);
 		change_env((data.envp), "OLDPWD", cwd);
@@ -40,14 +45,14 @@ void	built_cd(char **cmd, struct s_data_env data)
 	}
 	else
 	{
-		result = chdir(cmd[1]);
+		result = chdir(cmd2[1]);
 		change_env(data.envp, "OLDPWD", cwd);
 		free(cwd);
 		cwd = getcwd(0, 1024);
 		change_env(data.envp, "PWD", cwd);
 	}
 	if (result == -1)
-		printf("cd: %s: No such file or directory\n", cmd[1]);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
 	free(cwd);
 }
 

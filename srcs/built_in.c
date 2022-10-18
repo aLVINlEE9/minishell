@@ -6,11 +6,23 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 23:36:44 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:58:31 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_cmd2_jh(char **cmd2)
+{
+	int	len = 0;
+
+	while (cmd2[len])
+	{
+		free(cmd2[len]);
+		len ++;
+	}
+	free(cmd2[len]);
+}
 
 int		check_builtin(t_token **cmd, struct s_data_env data_env)
 {
@@ -20,37 +32,50 @@ int		check_builtin(t_token **cmd, struct s_data_env data_env)
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	fd[3] = dup(0);
-	cmd2 = make_inout_cmd(cmd, &fd[0], data_env);
+	cmd2 = make_inout_cmd(cmd, &fd[0], data_env, 0);
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
-		built_exit(cmd2);
+		built_exit(cmd2, cmd, &fd[0], data_env);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
-		built_echo(cmd2);
+		built_echo(cmd2, cmd, &fd[0], data_env);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
-		built_cd(cmd2, data_env);
+		built_cd(cmd2, cmd, &fd[0], data_env);
 	/*
 	else if (ft_strncmp(cmd[0], "env", -1) == 0)
 		built_env();
 	*/
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
-		built_pwd();
+		built_pwd(cmd, &fd[0], data_env);
 	//else if (ft_strncmp(cmd[0], "export", -1) == 0)
 	//	built_export();
 	//else if (ft_strncmp(cmd[0], "unset", -1) == 0)
 	//	built_unset();
 	else
 	{
+		free(cmd2);
 		dup2(fd[0], 0);
 		dup2(fd[1], 1);
+		close(fd[0]);
+		close(fd[1]);
+		close(fd[3]);
 		return (0);
 	}
+	free(cmd2);
 	dup2(fd[0], 0);
 	dup2(fd[1], 1);
+	close(fd[0]);
+	close(fd[1]);
+	close(fd[3]);
 	return (1);
 }
-void	built_exit(char **cmd2)
+void	built_exit(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env)
 {
 	long long	code;
+	char		**redi;
 
+	redi = make_inout_cmd(cmd, &fd[0], data_env, 1);
+	if (!redi)
+		return ;
+	free(redi);
 	code = 0;
 	if (cmd2[1] == 0)
 	{
@@ -75,10 +100,13 @@ void	built_exit(char **cmd2)
 	}
 }
 
-void	built_pwd(void)
+void	built_pwd(t_token **cmd, int *fd, struct s_data_env data_env)
 {
 	char	*ret;
-	
+	char	**redi;
+
+	redi = make_inout_cmd(cmd, &fd[0], data_env, 1);
+	free(redi);
 	ret = getenv("PWD");
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
@@ -114,10 +142,15 @@ int	check_echo_opt(char **cmd2)
 	return (opt_count);
 }
 
-void	built_echo(char **cmd2)
+void	built_echo(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env)
 {
-	int	len;
+	int		len;
+	char	**redi;
 
+	redi = make_inout_cmd(cmd, &fd[0], data_env, 1);
+	if (!redi)
+		return ;
+	free(redi);
 	len = check_echo_opt(cmd2);
 	if (len)
 	{

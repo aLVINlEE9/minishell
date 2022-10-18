@@ -1,4 +1,4 @@
-/************************************************************************* */
+/************************************************************************ */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 23:36:12 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:20:55 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -23,6 +23,8 @@
 #include <termios.h>
 #include <signal.h>
 #include <errno.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 
 # define FALSE 0
@@ -134,13 +136,13 @@ char		*ft_itoa(int n);
 void		pipex(t_data *data, char **envp);
 void		exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, struct s_data_env data_env);
 void		exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag);
-char		**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env);
-void		modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env);
-void		cmd_leftarrow(char *s, int *fd);
-void		cmd_rightarrow(char *s, int *fd);
+char		**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env, int flag);
+int			modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env);
+int			cmd_leftarrow(char *s, int *fd);
+int			cmd_rightarrow(char *s, int *fd);
 void		cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env);
-void		cmd_doub_rightarrow(char *s, int *fd);
-void		ft_iofile(char *s, int *fd, int count);
+int			cmd_doub_rightarrow(char *s, int *fd);
+int			ft_iofile(char *s, int *fd, int count);
 char		*ft_strjoin_jh(char const *s1, char const *s2);
 
 typedef struct s_cmd_make
@@ -191,15 +193,15 @@ void	free_cmdlst(t_token ***lst);
 t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, t_cmd_make **start, int a, int b);
 void	whatisit(t_token_list *t, t_token ***cmd_l, t_cmd_make *start, t_token **temp_list);
 t_token	***make_cmd_list_pipe(t_token_list *t);
-//void	built_cd(void);
-void	ft_iofile2(char *s, int *fd, int count, char *filename);
+int		ft_iofile2(char *s, int *fd, int count, char *filename);
 int		parse_dollar_question(char **ret, struct s_data_env data_env);
 int		check_builtin(t_token **cmd, struct s_data_env data_env);
-void	built_exit(char **cmd2);
-void	built_pwd(void);
-void	built_echo(char **cmd2);
-void	built_cd(char **cmd2, struct s_data_env data_env);
+void	built_exit(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env);
+void	built_pwd(t_token **cmd, int *fd, struct s_data_env data_env);
+void	built_echo(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env);
+void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env);
 int		ft_is_digit(char *cmd);
 void	change_env(char **envp, char *key, char *change_val);
 void	insert_env(char **envp, char *key, char *change_val);
+int		is_slash(char *s);
 #endif

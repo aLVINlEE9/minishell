@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 17:55:32 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:23:54 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,44 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 void	exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag)
 {
 	char	**cmd;
+	struct	stat st;
 
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
-	cmd = make_inout_cmd(cmd_ary, fd, data_env);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
+	//cmd = make_inout_cmd(cmd_ary, fd, data_env, 1);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	close(fd[0]);
 	close(fd[3]);
-	close(fd[4]);
+	//close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	//if (check_builtin(cmd))//built in command check.
-		//exit(0);
-	//else
+	cmd = make_inout_cmd(cmd_ary, fd, data_env, 1);
+	if (check_builtin(cmd_ary, data_env))
+	{
+		close(fd[1]);
+		exit(0);
+	}
 	exe_cmd2(cmd, data_env);
-	print_error(cmd[0], 1);
+	if (is_slash(cmd[0]))
+	{
+		if (stat(cmd[0], &st) != -1)
+			if (S_ISDIR(st.st_mode))
+			{
+				write(2, cmd[0], ft_strlen(cmd[0]));
+				write(2, ": is dir\n", 9);
+				exit(0);
+			}
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 1);
+		exit(0);
+	}
+	else
+		print_error(cmd[0], 1);
 }
 
-char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env)
+char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env, int flag)
 {
 	int		count;
 	int		cmd_arg_c;
@@ -83,7 +101,9 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env)
 	{
 		if (cmd_ary[count]->is_cmd == 1)
 		{
-			modify_inout(cmd_ary, count, fd, data_env);
+			if (flag != 0)
+				if (!modify_inout(cmd_ary, count, fd, data_env))
+					return (0);
 			count ++;
 		}
 		else
@@ -94,7 +114,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env)
 	return (ret);
 }
 
-void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env)
+int	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env)
 {
 	char	*s;
 
@@ -106,16 +126,16 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_
 	if (ft_strlen(s) == 1)
 	{
 		if (ft_strncmp(s, "<", -1) == 0)
-			cmd_leftarrow(cmd_ary[count + 1]->token, fd);
+			return (cmd_leftarrow(cmd_ary[count + 1]->token, fd));
 		if (ft_strncmp(s, ">", -1) == 0)
-			cmd_rightarrow(cmd_ary[count + 1]->token, fd);
+			return (cmd_rightarrow(cmd_ary[count + 1]->token, fd));
 	}
 	if (ft_strlen(s) == 2)
 	{
 		if (ft_strncmp(s, "<<", -1) == 0)
 			cmd_doub_leftarrow(cmd_ary[count + 1]->token, fd, data_env);
 		if (ft_strncmp(s, ">>", -1) == 0)
-			cmd_doub_rightarrow(cmd_ary[count + 1]->token, fd);
+			return (cmd_doub_rightarrow(cmd_ary[count + 1]->token, fd));
 	}
-	return ;
+	return (1);
 }
