@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 21:37:47 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:36:12 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -196,6 +196,8 @@ int		check_builtin(t_token **cmd, struct s_data_env data_env);
 void	built_exit(char **cmd2);
 void	built_pwd(void);
 void	built_echo(char **cmd2);
-void	built_cd(void);
+void	built_cd(char **cmd2, struct s_data_env data_env);
 int		ft_is_digit(char *cmd);
+void	change_env(char **envp, char *key, char *change_val);
+void	insert_env(char **envp, char *key, char *change_val);
 #endif

@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 21:37:49 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:36:44 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		check_builtin(t_token **cmd, struct s_data_env data_env)
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
-		built_cd();
+		built_cd(cmd2, data_env);
 	/*
 	else if (ft_strncmp(cmd[0], "env", -1) == 0)
 		built_env();

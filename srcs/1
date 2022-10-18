@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 15:58:53 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:04:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,54 +22,18 @@ int		ft_is_digit(char *cmd)
 	}
 	return (1);
 }
-
-void	built_cd(char **cmd, struct s_data_env data)
+void	built_cd(char **cmd)
 {
 	int		result;
 	char	*home;
-	char	*cwd;
-	char	*prev;
 
 	home = getenv("HOME");
-	cwd = getcwd(0, 1024);
-	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)
-	{
+	if (cmd[1] == 0)
 		result = chdir(home);
-		change_env((data.envp), "OLDPWD", cwd);
-		change_env((data.envp), "PWD", home);
-	}
 	else
-	{
 		result = chdir(cmd[1]);
-		change_env(data.envp, "OLDPWD", cwd);
-		free(cwd);
-		cwd = getcwd(0, 1024);
-		change_env(data.envp, "PWD", cwd);
-	}
-	if (result == -1)
+	if (!result)
+		printf("cd is working\n");
+	else
 		printf("cd: %s: No such file or directory\n", cmd[1]);
-	free(cwd);
-}
-
-void	change_env(char **env, char *key, char *change_val)
-{
-	int		i;
-	char	*search;
-
-	i = 0;
-	search = ft_strjoin_jh(key, "=");
-	while ((env)[i])
-	{
-		if (strncmp(env[i], search, ft_strlen(search)) == 0)
-		{
-			(env)[i] = ft_strjoin_jh(search, change_val);
-			printf("changed  : %s \n", (env)[i]);
-			free(search);
-			return ;
-		}
-		i ++;
-	}
-	printf("can't find key\n");
-	free(search);
-	return ;
 }
