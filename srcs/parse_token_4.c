@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 14:25:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:40:53 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,22 +212,22 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 
 int	condition_append_token(t_parse *parse)
 {
-	// if (!parse->in_qout)
-	// {
-	if (is_null(parse->s[parse->i]) || is_space(parse->s[parse->i]))
-		return (1);
-	else if (is_specifier(parse, 0))
+	if (!parse->in_qout)
 	{
-		parse->i += is_specifier(parse, 0);
-		parse->is_cmd = TRUE;
-		return (1);
+		if (is_null(parse->s[parse->i]) || is_space(parse->s[parse->i]))
+			return (1);
+		else if (is_specifier(parse, 0))
+		{
+			parse->i += is_specifier(parse, 0);
+			parse->is_cmd = TRUE;
+			return (1);
+		}
+		else if (is_specifier(parse, 1))
+		{
+			parse->i++;
+			return (1);
+		}
 	}
-	else if (is_specifier(parse, 1))
-	{
-		parse->i++;
-		return (1);
-	}
-	// }
 	return (0);
 }
 
@@ -265,11 +265,11 @@ int	condition_break(t_parse *parse)
 	if (!parse->was_quot && parse->i - parse->idx == 0 && \
 		parse->in_dollar && !parse->is_env)
 		return (1);
-	// if (parse->in_qout && is_null(parse->s[parse->i]))
-	// {
-	// 	printf("unclose quot\n");
-	// 	return (1);
-	// }
+	if (parse->in_qout && is_null(parse->s[parse->i]))
+	{
+		printf("unclose quot\n");
+		return (1);
+	}
 	return (0);
 }
 
