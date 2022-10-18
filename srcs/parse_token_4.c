@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 14:40:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:51:57 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	is_dollar_option(char *str)
 {
 	if (ft_strncmp(str, "$?", 2) == 0)
 		return (1);
+	else if (ft_strncmp(str, "$$", 2) == 0)
+		return (2);
 	return (0);
 }
 
