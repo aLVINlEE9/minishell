@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 23:36:44 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:28:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		check_builtin(t_token **cmd, struct s_data_env data_env)
+int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 {
 	char	**cmd2;
 	int		fd[4];
@@ -33,8 +33,8 @@ int		check_builtin(t_token **cmd, struct s_data_env data_env)
 	*/
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
 		built_pwd();
-	//else if (ft_strncmp(cmd[0], "export", -1) == 0)
-	//	built_export();
+	// else if (ft_strncmp(cmd2[0], "export", -1) == 0)
+	//  	built_export(data_env, cmd2);
 	//else if (ft_strncmp(cmd[0], "unset", -1) == 0)
 	//	built_unset();
 	else

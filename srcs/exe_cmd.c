@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 17:55:32 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:00:33 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_lstend(t_token ***cmd_lst, int count)
 }
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
-		struct s_data_env data_env)
+		struct s_data_env *data_env)
 {
 	int		fd[4];
 	int		count;
@@ -46,10 +46,10 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 		}
 		count ++;
 	}
-	monitoring(data_env.data, pid, &fd[0]);
+	monitoring(data_env->data, pid, &fd[0]);
 }
 
-void	exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag)
+void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
 {
 	char	**cmd;
 
@@ -71,7 +71,7 @@ void	exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag)
 	print_error(cmd[0], 1);
 }
 
-char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env)
+char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env *data_env)
 {
 	int		count;
 	int		cmd_arg_c;
@@ -94,7 +94,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env)
 	return (ret);
 }
 
-void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env)
+void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env *data_env)
 {
 	char	*s;
 

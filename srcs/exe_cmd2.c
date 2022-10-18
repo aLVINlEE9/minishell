@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 22:35:43 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:10:26 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,26 @@ char	**parse_env2(char **env)
 	return (0);
 }
 
-void	exe_cmd2(char **cmd, struct s_data_env data_env)
+void	exe_cmd2(char **cmd, struct s_data_env *data_env)
 {
 	char	**path;
 	char	*temp2;
+    char    **temp;
 	int		count;
 
 	count = 0;
-	path = parse_env2(data_env.envp);
+	path = parse_env2(data_env->envp);
+    // temp = update_env(data_env);
 	while (path[count])
 	{
 		if (!is_slash(cmd[0]))
 		{
 			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, data_env.envp);
+			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, data_env->envp);
 			free(temp2);
 		}
 		else
-			execve(cmd[0], cmd, data_env.envp);
+			execve(cmd[0], cmd, data_env->envp);
 		count ++;
 	}
 }

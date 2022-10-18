@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 22:50:59 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:10:29 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,4 +390,27 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	*(p + count) = '\0';
 	return (p);
+}
+
+void	*ft_memchr(const void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*s_u;
+
+	i = 0;
+	s_u = (unsigned char *)s;
+	while (i < n)
+	{
+		if (s_u[i] == (unsigned char)c)
+		{
+			return ((void *)(s_u + i));
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	return (ft_memchr(s, c, ft_strlen(s) + 1));
 }

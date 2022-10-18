@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/18 16:07:57 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/18 18:35:17 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/make_pipe_cmdlst2.c\
 			./srcs/built_in.c\
 			./srcs/built_in2.c\
-			./srcs/syntax_check.c
+			./srcs/built_in3.c\
+			./srcs/syntax_check.c\
+			./srcs/env_manage.c
 
 OBJS 	= ${SRCS:.c=.o}
 
