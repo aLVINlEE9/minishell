@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 13:24:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:42:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	init_parse(t_parse *parse, char *str)
 
 void	init_parse_sub(t_parse *parse)
 {
-	// parse->is_cmd = 0;
+	parse->is_cmd = 0;
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
 	parse->is_env = FALSE;
@@ -178,6 +178,7 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		{
 			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 			parse->is_env = FALSE;
+			parse->i--;
 		}
 		else
 		{
@@ -216,10 +217,6 @@ int	condition_append_token(t_parse *parse)
 			return (1);
 		else if (is_specifier(parse, 0))
 		{
-			// if (parse->is_cmd)
-			// {
-			// 	parse->is_cmd = FALSE;
-			// }
 			parse->i += is_specifier(parse, 0);
 			parse->is_cmd = TRUE;
 			return (1);
@@ -266,6 +263,8 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
+		if (parse->i - parse->idx == 0 && parse->in_dollar && !parse->is_env)
+			break ;
 		if (condition_append_token(parse))
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
