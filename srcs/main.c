@@ -6,13 +6,13 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 21:32:45 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:34:25 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    print_node(t_token_list *token_list)
+int    print_node(t_token_list *token_list)
 {
     t_token *now;
 
@@ -22,6 +22,7 @@ void    print_node(t_token_list *token_list)
         printf("%s dollar:%d cmd:%d\n", now->token, now->in_dollar, now->is_cmd);
         now = now->next;
     }
+    return (1);
 }
 
 // void	parse_entt(char **env)
@@ -126,9 +127,8 @@ int main(int argc, char **argv, char **envp)
 		else if (str)
 		{
 			add_history(str);
-			parse_token(&data, str);
-			print_node(data.token_list);
-			pipex(&data, envp);
+			if (parse_token(&data, str) && print_node(data.token_list))
+                pipex(&data, envp);
 			free_for_line(&data);
 		}
         free(str);

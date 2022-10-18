@@ -49,6 +49,8 @@ typedef struct s_parse{
 	int	in_qout;
 	int	in_dollar;
     int is_cmd;
+    int is_env;
+    int was_quot;
 	int	idx;
 	int	idxq_s;
 	int	idxq_e;
@@ -93,10 +95,10 @@ typedef struct s_data_env
 void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
 
-void    parse_token(t_data *data, char *str);
+int    parse_token(t_data *data, char *str);
 int	is_dollar_option(char *str);
 
-void	syntax_check(t_data *data);
+int	syntax_check(t_data *data);
 
 t_token	*search_token(t_token_list *list, char *token);
 int	create_token_list_sub(t_token_list *list);

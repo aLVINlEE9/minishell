@@ -2,6 +2,10 @@
     "files.associations": {
         "minishell.h": "c",
         "__node_handle": "c",
+<<<<<<< HEAD
         "locale": "c"
+=======
+        "__locale": "c"
+>>>>>>> seungsle
     }
 }
