@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 13:53:36 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:11:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ void	qout_remove(t_parse *parse)
 		parse->idxq_s = 0;
 		parse->idxq_e = 0;
 		parse->i -= 2;
-        if (parse->i == -1)
-            parse->i = 0;
 	}
 }
 
@@ -211,22 +209,22 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 
 int	condition_append_token(t_parse *parse)
 {
-	if (!parse->in_qout)
+	// if (!parse->in_qout)
+	// {
+	if (is_null(parse->s[parse->i]) || is_space(parse->s[parse->i]))
+		return (1);
+	else if (is_specifier(parse, 0))
 	{
-		if (is_null(parse->s[parse->i]) || is_space(parse->s[parse->i]))
-			return (1);
-		else if (is_specifier(parse, 0))
-		{
-			parse->i += is_specifier(parse, 0);
-			parse->is_cmd = TRUE;
-			return (1);
-		}
-		else if (is_specifier(parse, 1))
-		{
-			parse->i++;
-			return (1);
-		}
+		parse->i += is_specifier(parse, 0);
+		parse->is_cmd = TRUE;
+		return (1);
 	}
+	else if (is_specifier(parse, 1))
+	{
+		parse->i++;
+		return (1);
+	}
+	// }
 	return (0);
 }
 
