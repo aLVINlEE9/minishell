@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 16:29:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:12:41 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	replace_util_sub(t_parse *parse, char *first, char *val, char *last)
 		return ;
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
-	ft_strlcpycpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
+	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
 	parse->s = ret;
 }
 
@@ -147,9 +147,9 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char 
 	char	*val;
 
 	val = 0;
-	if (is_dollar_option(&parse->s[parse->i]) == 1)
+	if (is_dollar_option(&parse->s[parse->i]) == 2)
 		val = ft_itoa(getpid());
-	else if (is_dollar_option(&parse->s[parse->i]) == 2)
+	else if (is_dollar_option(&parse->s[parse->i]) == 1)
 		val = ft_itoa(data->exit_code);
 	remove_char_from_idx(parse->s, parse->i);
 	replace_util_sub(parse, buf_start, val, buf_end);
