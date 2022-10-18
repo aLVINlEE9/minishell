@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 14:11:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:25:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	init_parse_sub(t_parse *parse)
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
 	parse->is_env = FALSE;
+	parse->was_quot = FALSE;
 }
 
 void	remove_char_from_idx(char *s, int idx)
@@ -120,6 +121,7 @@ void	qout_remove(t_parse *parse)
 		parse->idxq_s = 0;
 		parse->idxq_e = 0;
 		parse->i -= 2;
+		parse->was_quot = TRUE;
 	}
 }
 
@@ -176,7 +178,8 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		{
 			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 			parse->is_env = FALSE;
-			parse->i--;
+			if (!parse->in_qout)
+				parse->i--;
 		}
 		else
 		{
@@ -259,13 +262,14 @@ void	condition_qout(t_parse *parse)
 
 int	condition_break(t_parse *parse)
 {
-	if (parse->i - parse->idx == 0 && parse->in_dollar && !parse->is_env)
+	if (!parse->was_quot && parse->i - parse->idx == 0 && \
+		parse->in_dollar && !parse->is_env)
 		return (1);
-	if (parse->in_qout && is_null(parse->s[parse->i]))
-	{
-		printf("unclose quot\n");
-		return (1);
-	}
+	// if (parse->in_qout && is_null(parse->s[parse->i]))
+	// {
+	// 	printf("unclose quot\n");
+	// 	return (1);
+	// }
 	return (0);
 }
 
