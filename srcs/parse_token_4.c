@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:50:05 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 13:42:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:51:26 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,11 +259,23 @@ void	condition_qout(t_parse *parse)
 	qout_remove(parse);
 }
 
+int	condition_break(t_parse *parse)
+{
+	if (parse->i - parse->idx == 0 && parse->in_dollar && !parse->is_env)
+		return (1);
+	if (parse->in_qout && is_null(parse->s[parse->i]))
+	{
+		printf("unclose quot\n");
+		return (1);
+	}
+	return (0);
+}
+
 void	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
-		if (parse->i - parse->idx == 0 && parse->in_dollar && !parse->is_env)
+		if (condition_break(parse))
 			break ;
 		if (condition_append_token(parse))
 		{
