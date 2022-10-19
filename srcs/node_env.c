@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 17:49:27 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:51:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	append_env(t_env_list *list, char *key, char *val, int is_val_quot)
 	}
 	else
 	{
-		printf("%d %s\n", val[0] == 0, new_node->val);
 		if (!(val[0] == 0 && new_node->val))
 		{
 			new_node->val = val;

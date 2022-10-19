@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 16:25:14 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:15:03 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_env(char **temp)
 	free(temp);
 }
 
-char    **update_env(struct s_data_env *data_env)
+char    **update_env(struct s_data_env *data_env, int flag)
 {
 	t_env_list	*env_list;
 	t_env		*env;
@@ -49,12 +49,18 @@ char    **update_env(struct s_data_env *data_env)
 	while (env != env_list->tail)
 	{
 		// printf("%s=%s\n", env->key, env->val);
+		if (env->is_val_quot && !flag)
+		{
+			env = env->next;
+			continue ;
+		}
 		temped = ft_strjoin(ft_strdup(env->key), "=");
 		if (env->val == NULL)
-			temp_list[i++] = temped;
+			temp_list[i] = temped;
 		else
-			temp_list[i++] = ft_strjoin(temped, ft_strdup(env->val));
+			temp_list[i] = ft_strjoin(temped, ft_strdup(env->val));
 		env = env->next;
+		i++;
 		// free(temped);
 	}
 	temp_list[i] = 0;

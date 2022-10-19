@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 17:34:30 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:15:44 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**sort_export(struct s_data_env *data_env)
 	int	i;
 	int	j;
 
-	envs = update_env(data_env);
+	envs = update_env(data_env, 1);
 	i = 0;
 	while (envs[i])
 	{
@@ -141,7 +141,7 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 	// printf("ft_strchr%s\n", ft_strchr(cmd2[1], '='));
     if (!ft_strchr(cmd2[1], '='))
     {
-        append_env(data_env->data->env_list, ft_strdup(cmd2[1]), ft_strdup(""), 1);
+        append_env(data_env->data->env_list, ft_strdup(cmd2[1]), NULL, 1);
 		// printf("exporting--%s\n", cmd2[1]);
     }
     else
