@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:13:01 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 11:48:07 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:59:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void    update_shlvl(t_data *data)
 {
-    t_env   *shlvl;
-    char    *val;
-    
-    shlvl = search_env(data->env_list, "SHLVL");
-    val = ft_strdup(shlvl->val);
+	t_env   *shlvl;
+	char    *val;
+
+	shlvl = search_env(data->env_list, "SHLVL");
+	val = ft_strdup(shlvl->val);
 	shlvl->val = ft_itoa((int)ft_atol(val) + 1);
-    free(val);
+	free(val);
 }
 
-void    parse_env(char **envp, t_data *data)
+void	parse_env(char **envp, t_data *data)
 {
 	int		i;
 	char	**temp;
@@ -36,6 +36,7 @@ void    parse_env(char **envp, t_data *data)
 	{
 		{
 			temp = ft_split(envp[i], '=');
+			// printf("%s=%s\n", temp[0], temp[1]);
 			append_env(data->env_list, temp[0], temp[1], 0);
 			// free(temp[0]); //key
 			// free(temp[1]); //value

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 12:16:28 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:54:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	exe_cmd2(char **cmd, struct s_data_env *data_env)
 			execve(cmd[0], cmd, temp);
 		count ++;
 	}
+	free_env(temp);
 }

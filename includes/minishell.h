@@ -113,7 +113,7 @@ int	create_env_list_sub(t_env_list *list);
 void	create_env_list(t_data *data);
 void	append_env_sub(t_env_list *list, t_env *new_node);
 int	append_env(t_env_list *list, char *key, char *val, int is_val_quot);
-t_env	*create_env(char *key, char *val);
+t_env	*create_env(char *key, char *val, int is_val_quot);
 
 size_t		ft_strlen(const char *s);
 char		*ft_strdup(const char *src);
@@ -206,5 +206,7 @@ int		ft_is_digit(char *cmd);
 void	change_env(char **envp, char *key, char *change_val);
 void	insert_env(char **envp, char *key, char *change_val);
 char    **update_env(struct s_data_env *data_env);
+void	free_env(char **temp);
 void    built_export(struct s_data_env *data_env, char	**cmd2);
+void    print_env(t_env_list *env_list);
 #endif

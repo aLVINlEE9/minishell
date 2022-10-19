@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 12:05:37 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:59:49 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv, char **envp)
 		if (str == 0)
 		{
 			printf("\033[1A");
-            printf("\033[10C");
+			printf("\033[10C");
 			printf(" exit\n");
 			exit(0);
 		}
@@ -128,12 +128,12 @@ int main(int argc, char **argv, char **envp)
 		{
 			add_history(str);
 			if (parse_token(&data, str) && print_node(data.token_list))
-                pipex(&data, envp);
+				pipex(&data, envp);
 			free_for_line(&data);
 		}
-        free(str);
+		free(str);
 	}
-    free_for_all(&data);
+	free_for_all(&data);
 }
 //env 저장
 //"", '' 파싱

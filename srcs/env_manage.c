@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 12:15:59 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:25:14 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@
 // 	}
 // }
 
+void	free_env(char **temp)
+{
+	int	i;
+
+	i = 0;
+	while(temp[i])
+		free(temp[i++]);
+	free(temp);
+}
+
 char    **update_env(struct s_data_env *data_env)
 {
 	t_env_list	*env_list;
@@ -35,10 +45,15 @@ char    **update_env(struct s_data_env *data_env)
 	env = env_list->head->next;
 	temp_list = (char **)malloc(sizeof(char *) * env_list->count + 1);
 	i = 0;
+	// print_env(env_list);
 	while (env != env_list->tail)
 	{
-		temped = ft_strjoin(env->key, "=");
-		temp_list[i++] = ft_strjoin(temped, env->val);
+		// printf("%s=%s\n", env->key, env->val);
+		temped = ft_strjoin(ft_strdup(env->key), "=");
+		if (env->val == NULL)
+			temp_list[i++] = temped;
+		else
+			temp_list[i++] = ft_strjoin(temped, ft_strdup(env->val));
 		env = env->next;
 		// free(temped);
 	}
