@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manage.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 19:36:31 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:15:59 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char    **update_env(struct s_data_env *data_env)
 
 	env_list = data_env->data->env_list;
 	env = env_list->head->next;
-	temp_list = (char **)malloc(sizeof(char *) * env_list->count);
+	temp_list = (char **)malloc(sizeof(char *) * env_list->count + 1);
 	i = 0;
 	while (env != env_list->tail)
 	{
@@ -42,6 +42,7 @@ char    **update_env(struct s_data_env *data_env)
 		env = env->next;
 		// free(temped);
 	}
+	temp_list[i] = 0;
 	// free(data_env->envp);
 	// data_env->envp = temp_list;
 	// print_envv(data_env);

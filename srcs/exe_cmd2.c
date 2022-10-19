@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 20:10:26 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:16:28 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ void	exe_cmd2(char **cmd, struct s_data_env *data_env)
 	int		count;
 
 	count = 0;
-	path = parse_env2(data_env->envp);
-    // temp = update_env(data_env);
+	temp = update_env(data_env);
+	path = parse_env2(temp);
 	while (path[count])
 	{
 		if (!is_slash(cmd[0]))
 		{
 			temp2 = ft_strjoin_jh(path[count], "/");
-			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, data_env->envp);
+			execve(ft_strjoin_jh(temp2, cmd[0]), cmd, temp);
 			free(temp2);
 		}
 		else
-			execve(cmd[0], cmd, data_env->envp);
+			execve(cmd[0], cmd, temp);
 		count ++;
 	}
 }

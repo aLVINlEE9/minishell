@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:13:01 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/16 15:31:26 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:48:07 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void    parse_env(char **envp, t_data *data)
 	{
 		{
 			temp = ft_split(envp[i], '=');
-			append_env(data->env_list, temp[0], temp[1]);
+			append_env(data->env_list, temp[0], temp[1], 0);
 			// free(temp[0]); //key
 			// free(temp[1]); //value
 			// free(temp);
