@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 22:20:55 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:27:50 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -134,7 +134,7 @@ void		make_string_itoa(char *p, long long n, int len);
 int			find_len_itoa(long long n);
 char		*ft_itoa(int n);
 void		pipex(t_data *data, char **envp);
-void		exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, struct s_data_env data_env);
+void		exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, struct s_data_env data_env, int *fd);
 void		exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag);
 char		**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env data_env, int flag);
 int			modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env data_env);
@@ -195,7 +195,7 @@ void	whatisit(t_token_list *t, t_token ***cmd_l, t_cmd_make *start, t_token **te
 t_token	***make_cmd_list_pipe(t_token_list *t);
 int		ft_iofile2(char *s, int *fd, int count, char *filename);
 int		parse_dollar_question(char **ret, struct s_data_env data_env);
-int		check_builtin(t_token **cmd, struct s_data_env data_env);
+int		check_builtin(t_token **cmd, struct s_data_env data_env, int *fd);
 void	built_exit(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env);
 void	built_pwd(t_token **cmd, int *fd, struct s_data_env data_env);
 void	built_echo(char **cmd2, t_token **cmd, int *fd, struct s_data_env data_env);

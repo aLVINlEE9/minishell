@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 22:23:54 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:15:35 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@ int	is_lstend(t_token ***cmd_lst, int count)
 }
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
-		struct s_data_env data_env)
+		struct s_data_env data_env, int *fd)
 {
-	int		fd[4];
 	int		count;
 	pid_t	pid;
 
-	fd[2] = -1;
-	fd[3] = dup(0);
 	count = 0;
 	while (cmd_lst[count])
 	{
@@ -38,6 +35,7 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 			exe_cmd(cmd_lst[count], data_env, &fd[0], is_lstend(cmd_lst, count));
 		else
 		{
+			dup2(fd[3], 0);
 			if (fd[2] != -1)
 				close(fd[2]);
 			close(fd[1]);
@@ -59,23 +57,20 @@ void	exe_cmd(t_token **cmd_ary, struct s_data_env data_env, int *fd, int flag)
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
-	//cmd = make_inout_cmd(cmd_ary, fd, data_env, 1);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	close(fd[0]);
-	close(fd[3]);
-	//close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	cmd = make_inout_cmd(cmd_ary, fd, data_env, 1);
-	if (check_builtin(cmd_ary, data_env))
+	if (check_builtin(cmd_ary, data_env, fd))
 	{
 		close(fd[1]);
-		exit(0);
+		exit(errno);
 	}
+	cmd = make_inout_cmd(cmd_ary, fd, data_env, 1);
 	exe_cmd2(cmd, data_env);
 	if (is_slash(cmd[0]))
 	{
 		if (stat(cmd[0], &st) != -1)
-			if (S_ISDIR(st.st_mode))
+			if (/*S_ISDIR(st.st_mode)*/ 0040000 & st.st_mode)
 			{
 				write(2, cmd[0], ft_strlen(cmd[0]));
 				write(2, ": is dir\n", 9);

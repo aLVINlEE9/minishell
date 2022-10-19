@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 21:59:16 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:00:54 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		ft_is_digit(char *cmd)
 void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data)
 {
 	int		result;
-	char	*home;
+	char	*next_dir;
 	char	*cwd;
 	char	*prev;
 	char	**redi;
@@ -35,13 +35,20 @@ void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data)
 	free(redi);
 	if (!redi)
 		return ;
-	home = getenv("HOME");
+	next_dir = getenv("HOME");
 	cwd = getcwd(0, 1024);
 	if (cmd2[1] == 0 || ft_strncmp(cmd2[1], "~", -1) == 0)
 	{
-		result = chdir(home);
+		result = chdir(next_dir);
 		change_env((data.envp), "OLDPWD", cwd);
-		change_env((data.envp), "PWD", home);
+		change_env((data.envp), "PWD", next_dir);
+	}
+	else if (ft_strncmp(cmd2[1], "-", -1) == 0)
+	{
+		next_dir = getenv("OLDPWD");
+		result = chdir(next_dir);
+		change_env(data.envp, "OLDPWD", cwd);
+		change_env(data.envp, "PWD", next_dir);
 	}
 	else
 	{
@@ -65,7 +72,7 @@ void	change_env(char **env, char *key, char *change_val)
 	search = ft_strjoin_jh(key, "=");
 	while ((env)[i])
 	{
-		if (strncmp(env[i], search, ft_strlen(search)) == 0)
+		if (strncmp((env)[i], search, ft_strlen(search)) == 0)
 		{
 			(env)[i] = ft_strjoin_jh(search, change_val);
 			printf("changed  : %s \n", (env)[i]);
