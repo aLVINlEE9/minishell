@@ -208,5 +208,7 @@ void	insert_env(char **envp, char *key, char *change_val);
 char    **update_env(struct s_data_env *data_env, int flag);
 void	free_env(char **temp);
 void    built_export(struct s_data_env *data_env, char	**cmd2);
+void	built_env(struct s_data_env *data_env);
+void	built_unset(struct s_data_env *data_env, char **cmd2);
 void    print_env(t_env_list *env_list);
 #endif

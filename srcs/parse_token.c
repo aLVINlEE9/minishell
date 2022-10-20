@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 17:12:41 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:32:59 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ int	condition_append_token(t_parse *parse)
 			parse->is_cmd = TRUE;
 			return (1);
 		}
-		else if (is_specifier(parse, 1))
+		else if (parse->s[parse->i] != '\"' && is_specifier(parse, 1))
 		{
 			parse->i++;
 			return (1);

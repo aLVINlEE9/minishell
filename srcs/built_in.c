@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 17:11:39 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:38:02 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,14 @@ int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
 		built_cd(cmd2, data_env);
-	/*
-	else if (ft_strncmp(cmd[0], "env", -1) == 0)
-		built_env();
-	*/
+	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
+		built_env(data_env);
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
 		built_pwd();
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
 	 	built_export(data_env, cmd2);
-	//else if (ft_strncmp(cmd[0], "unset", -1) == 0)
-	//	built_unset();
+	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
+		built_unset(data_env, cmd2);
 	else
 	{
 		dup2(fd[0], 0);
