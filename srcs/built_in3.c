@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 11:59:13 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:42:34 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,8 @@ void	print_export(struct s_data_env *data_env)
 
 void    built_export(struct s_data_env *data_env, char	**cmd2)
 {
-    char **splited;
+	char	*key;
+	char	*ptr;
 	int	i;
 
     if (!cmd2[1])
@@ -142,18 +143,21 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 	{
 		if (export_valid_check(cmd2, i))
 			return ;
-		if (!ft_strchr(cmd2[i], '='))
+		ptr = ft_strchr(cmd2[i], '=');
+		if (!ptr)
 		{
 			append_env(data_env->data->env_list, ft_strdup(cmd2[i]), NULL, 1);
 		}
 		else
 		{
-			splited = ft_split(cmd2[i], '=');
-			append_env(data_env->data->env_list, splited[0], splited[1], 0);
+			key = (char *)malloc(sizeof(char) * (ptr - cmd2[i] + 1));
+			ft_strlcpy(key, cmd2[i], ptr - cmd2[i] + 1);
+			// splited = ft_split(cmd2[i], '=');
+			append_env(data_env->data->env_list, key, ft_strdup(ptr + 1), 0);
 		}
 		i++;
 	}
-    
+
     // printf("%s\n%s\n", splited[0], splited[1]);
     // printf("%s\n%s\n%s\n", cmd2[0], cmd2[1], cmd2[2]);
 }
