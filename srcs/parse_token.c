@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 11:32:59 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:49:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,8 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		{
 			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 			parse->is_env = FALSE;
-			if (!parse->in_qout)
-				parse->i--;
+			// if (!parse->in_qout)
+			parse->i--;
 		}
 		else
 		{
@@ -205,8 +205,14 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 		idx++;
 	else
 	{
+		if (!is_alpha(parse->s[start]) && parse->s[start] != '_')
+		{
+			replace_util(data, parse, idx, start);
+			return ;
+		}
 		while (!is_space(parse->s[idx]) && !is_quot(parse->s[idx]) && \
-			!is_dollar(parse->s[idx]) && parse->s[idx])
+			!is_dollar(parse->s[idx]) && parse->s[idx] && \
+			(is_alnum(parse->s[idx]) || parse->s[idx] == '_'))
 		idx++;
 	}
 	replace_util(data, parse, idx, start);
@@ -287,8 +293,8 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 						parse->i - parse->idx);
 			break ;
 		}
-		condition_dollar(data, parse);
 		condition_qout(parse);
+		condition_dollar(data, parse);
 		parse->i++;
 	}
 }

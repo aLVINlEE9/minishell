@@ -145,6 +145,8 @@ void		ft_iofile(char *s, int *fd, int count);
 char		*ft_strjoin_jh(char const *s1, char const *s2);
 void	*ft_memchr(const void *s, int c, size_t n);
 char	*ft_strchr(const char *s, int c);
+int		is_alpha(char c);
+int		is_alnum(int c);
 
 typedef struct s_cmd_make
 {
