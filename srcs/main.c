@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 17:34:51 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:30:16 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,28 @@ void    leak_check(void)
     system("leaks minishell");
 }
 
+char    **unset_oldpath(void)
+{
+    char    **ret;
+
+    ret = (char **)malloc(sizeof(char *) * 3);
+    ret[0] = ft_strdup("unset");
+    ret[1] = ft_strdup("OLDPWD");
+    ret[2] = 0;
+    return (ret);
+}
+
+char    **export_oldpath(void)
+{
+    char    **ret;
+
+    ret = (char **)malloc(sizeof(char *) * 3);
+    ret[0] = ft_strdup("export");
+    ret[1] = ft_strdup("OLDPWD");
+    ret[2] = 0;
+    return (ret);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data      	data;
@@ -104,6 +126,8 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     // atexit(leak_check);
 	parse_env(envp, &data); // 32 leaks
+    built_unset(&data, unset_oldpath());
+    built_export(&data, export_oldpath());
     // parse_entt(envp);
 	set_termi(&termi); // 1 1eak
     // print_env(data.env_list);

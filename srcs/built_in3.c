@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 14:21:44 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:21:05 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ void	free_sort_export(char **envs)
 // 	}
 // }
 
-char	**sort_export(struct s_data_env *data_env)
+char	**sort_export(t_data *data)
 {
 	char	**envs;
 	char	*temp;
 	int	i;
 	int	j;
 
-	envs = update_env(data_env, 1);
+	envs = update_env(data, 1);
 	i = 0;
 	while (envs[i])
 	{
@@ -119,20 +119,20 @@ char	**sort_export(struct s_data_env *data_env)
 	return (envs);
 }
 
-void	print_export(struct s_data_env *data_env)
+void	print_export(t_data *data)
 {
 	char	**envs;
 	char	**splited;
 	t_env	*env;
 	int	i;
 
-	envs = sort_export(data_env);
-	print_env(data_env->data->env_list);
+	envs = sort_export(data);
+	print_env(data->env_list);
 	i = 0;
 	while (envs[i])
 	{
 		splited = ft_split(envs[i], '=');
-		env = search_env(data_env->data->env_list, splited[0]);
+		env = search_env(data->env_list, splited[0]);
 		printf("declare -x ");
 		if (env->is_val_quot)
 		{
@@ -161,7 +161,7 @@ void	print_export(struct s_data_env *data_env)
 	// free_sort_export(envs);
 }
 
-void    built_export(struct s_data_env *data_env, char	**cmd2)
+void    built_export(t_data *data, char	**cmd2)
 {
 	char	*key;
 	char	*ptr;
@@ -169,7 +169,7 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 
     if (!cmd2[1])
     {
-        print_export(data_env);
+        print_export(data);
         return ;
     }
 	i = 1;
@@ -180,14 +180,14 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 			return ;
 		if (!ptr)
 		{
-			append_env(data_env->data->env_list, ft_strdup(cmd2[i]), NULL, 1);
+			append_env(data->env_list, ft_strdup(cmd2[i]), NULL, 1);
 		}
 		else
 		{
 			key = (char *)malloc(sizeof(char) * (ptr - cmd2[i] + 1));
 			ft_strlcpy(key, cmd2[i], ptr - cmd2[i] + 1);
 			// splited = ft_split(cmd2[i], '=');
-			append_env(data_env->data->env_list, key, ft_strdup(ptr + 1), 0);
+			append_env(data->env_list, key, ft_strdup(ptr + 1), 0);
 		}
 		i++;
 	}

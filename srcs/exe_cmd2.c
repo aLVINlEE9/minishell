@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 17:21:44 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:40:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	exe_cmd2(char **cmd, struct s_data_env *data_env)
 	int		count;
 
 	count = 0;
-	temp = update_env(data_env, 0);
+	temp = update_env(data, 0);
 	path = parse_env2(temp);
 	while (path[count])
 	{

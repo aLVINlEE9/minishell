@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 18:01:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:22:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,51 +25,83 @@ int		ft_is_digit(char *cmd)
 
 void	built_cd(char **cmd, struct s_data_env *data)
 {
+	t_env	*env;
+	t_env	*env_t;
+	char	*temp;
 	int		result;
 	char	*home;
 	char	*cwd;
 	char	*prev;
 
-	home = getenv("HOME");
+	env = search_env(data->data->env_list, "HOME");
+	home = env->val;
+	// home = getenv("HOME"); // search env
 	cwd = getcwd(0, 1024);
 	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)
 	{
 		result = chdir(home);
-		change_env((data->envp), "OLDPWD", cwd);
-		change_env((data->envp), "PWD", home);
+		change_env(data->data->env_list, search_env(data->data->env_list, "OLDPWD"), cwd);
+		change_env(data->data->env_list, search_env(data->data->env_list, "PWD"), home);
+		// change_env(data->data->env_list, (data->envp), "OLDPWD", cwd);
+		// change_env(data->data->env_list, (data->envp), "PWD", home);
+	}
+	else if (ft_strncmp(cmd[1], "-", -1) == 0)
+	{
+		env = search_env(data->data->env_list, "OLDPWD");
+		if (!env->val)
+		{
+			printf("cd: OLDPWD not set\n");
+			free(cwd);
+			return ;
+		}
+		result = chdir(env->val);
+		env_t = search_env(data->data->env_list, "PWD");
+		temp = env->val;
+		env->val = env_t->val;
+		env_t->val = temp;
 	}
 	else
 	{
 		result = chdir(cmd[1]);
-		change_env(data->envp, "OLDPWD", cwd);
+		if (result == -1)
+		{
+			printf("cd: %s: No such file or directory\n", cmd[1]);
+			free(cwd);
+			return ;
+		}
+		change_env(data->data->env_list, search_env(data->data->env_list, "OLDPWD"), cwd);
+		// change_env(data->data->env_list, data->envp, "OLDPWD", cwd);
 		free(cwd);
 		cwd = getcwd(0, 1024);
-		change_env(data->envp, "PWD", cwd);
+		change_env(data->data->env_list, search_env(data->data->env_list, "PWD"), cwd);
+		// change_env(data->data->env_list, data->envp, "PWD", cwd);
 	}
 	if (result == -1)
 		printf("cd: %s: No such file or directory\n", cmd[1]);
 	free(cwd);
 }
 
-void	change_env(char **env, char *key, char *change_val)
+void	change_env(t_env_list *env_list, t_env *env, char *change_val)
 {
-	int		i;
-	char	*search;
+	free(env->val);
+	env->val = ft_strdup(change_val);
+	// int		i;
+	// char	*search;
 
-	i = 0;
-	search = ft_strjoin_jh(key, "=");
-	while ((env)[i])
-	{
-		if (strncmp(env[i], search, ft_strlen(search)) == 0)
-		{
-			(env)[i] = ft_strjoin_jh(search, change_val);
-			printf("changed  : %s \n", (env)[i]);
-			free(search);
-			return ;
-		}
-		i ++;
-	}
-	printf("can't find key\n");
-	free(search);
-	return ;
+	// i = 0;
+	// search = ft_strjoin_jh(key, "=");
+	// while ((env)[i])
+	// {
+	// 	if (strncmp(env[i], search, ft_strlen(search)) == 0)
+	// 	{
+	// 		(env)[i] = ft_strjoin_jh(search, change_val);
+	// 		printf("changed  : %s \n", (env)[i]);
+	// 		free(search);
+	// 		return ;
+	// 	}
+	// 	i ++;
+	// }
+	// printf("can't find key\n");
+	// free(search);
+	// return ;
 }
