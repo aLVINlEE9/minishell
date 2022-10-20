@@ -6,18 +6,18 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 12:02:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:29:38 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	built_env(struct s_data_env *data_env)
+void	built_env(t_data *data)
 {
 	char	**temp;
 	int	i;
 
-	temp = update_env(data_env, 0);
+	temp = update_env(data, 0);
 	i = 0;
 	while (temp[i])
 	{
@@ -25,7 +25,7 @@ void	built_env(struct s_data_env *data_env)
 	}
 }
 
-void	built_unset(struct s_data_env *data_env, char **cmd2)
+void	built_unset(t_data *data, char **cmd2)
 {
 	t_env	*env;
 	t_env	*temp;
@@ -38,7 +38,7 @@ void	built_unset(struct s_data_env *data_env, char **cmd2)
 		{
 			continue ;
 		}
-		env = search_env(data_env->data->env_list, cmd2[i]);
+		env = search_env(data->env_list, cmd2[i]);
 		if (!env)
 			continue ;
 		else

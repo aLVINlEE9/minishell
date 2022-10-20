@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 18:15:03 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:19:51 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_env(char **temp)
 	free(temp);
 }
 
-char    **update_env(struct s_data_env *data_env, int flag)
+char    **update_env(t_data *data, int flag)
 {
 	t_env_list	*env_list;
 	t_env		*env;
@@ -41,7 +41,7 @@ char    **update_env(struct s_data_env *data_env, int flag)
 	char		*temp;
 	int			i;
 
-	env_list = data_env->data->env_list;
+	env_list = data->env_list;
 	env = env_list->head->next;
 	temp_list = (char **)malloc(sizeof(char *) * env_list->count + 1);
 	i = 0;
