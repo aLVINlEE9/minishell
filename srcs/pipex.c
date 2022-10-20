@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 20:15:27 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:50:10 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ void	pipex(t_data *data, char **envp)
 	struct s_env_list		*env_lst;
 	t_token					***cmd_lst;
 	struct s_data_env		data_env;
-	int						fd[4];
+	int						fd[5];
 
 	fd[2] = -1;
-	fd[3] = dup(0);
+	//fd[3] = dup(0);
+	fd[4] = -1;
+	printf("fd[3] : %d\n", fd[3]);
 	token_lst = data -> token_list;
 	env_lst = data -> env_list;
 	cmd_lst = make_cmd_list_pipe(token_lst);

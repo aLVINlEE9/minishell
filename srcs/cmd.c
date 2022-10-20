@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 20:20:02 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:51:35 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,19 @@ void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
 	struct	s_dollar_str	str_temp;
 	int		temp[2];
 
+	str = 0;
+	/*if (fd[4] != -1)
+	{
+		close(fd[4]);
+		fd[4] = -1;
+	}*/
+	dup2(fd[3], 0);
 	pipe(&temp[0]);
+	printf("%d %d\n", temp[0], temp[1]);
 	str_temp.str = str;
 	str_temp.fd_temp = &temp[0];
 	cmd_heredoc_write(str_temp, ret, s, data_env);
+	//fd[4] = dup(temp[0]);
 	dup2(temp[0], 0);
 	close(temp[0]);
 	close(temp[1]);
