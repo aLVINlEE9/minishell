@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 16:29:05 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:00:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int	is_dollar_option(char *str)
 		return (1);
 	else if (ft_strncmp(str, "$$", 2) == 0)
 		return (2);
+	return (0);
+}
+
+int	is_num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
 	return (0);
 }
 
@@ -138,7 +145,7 @@ void	replace_util_sub(t_parse *parse, char *first, char *val, char *last)
 		return ;
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
-	ft_strlcpycpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
+	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
 	parse->s = ret;
 }
 
@@ -147,9 +154,9 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char 
 	char	*val;
 
 	val = 0;
-	if (is_dollar_option(&parse->s[parse->i]) == 1)
+	if (is_dollar_option(&parse->s[parse->i]) == 2)
 		val = ft_itoa(getpid());
-	else if (is_dollar_option(&parse->s[parse->i]) == 2)
+	else if (is_dollar_option(&parse->s[parse->i]) == 1)
 		val = ft_itoa(data->exit_code);
 	remove_char_from_idx(parse->s, parse->i);
 	replace_util_sub(parse, buf_start, val, buf_end);
@@ -180,8 +187,8 @@ void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 		{
 			remove_string(parse->s, parse->i, parse->i + buf_env_len - 1);
 			parse->is_env = FALSE;
-			if (!parse->in_qout)
-				parse->i--;
+			// if (!parse->in_qout)
+			parse->i--;
 		}
 		else
 		{
@@ -205,8 +212,15 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 		idx++;
 	else
 	{
+		if (!is_alpha(parse->s[start]) && parse->s[start] != '_')
+		{
+			if (is_num(parse->s[start]))
+				replace_util(data, parse, idx + 1, start);
+			return ;
+		}
 		while (!is_space(parse->s[idx]) && !is_quot(parse->s[idx]) && \
-			!is_dollar(parse->s[idx]) && parse->s[idx])
+			!is_dollar(parse->s[idx]) && parse->s[idx] && \
+			(is_alnum(parse->s[idx]) || parse->s[idx] == '_'))
 		idx++;
 	}
 	replace_util(data, parse, idx, start);
@@ -224,7 +238,7 @@ int	condition_append_token(t_parse *parse)
 			parse->is_cmd = TRUE;
 			return (1);
 		}
-		else if (is_specifier(parse, 1))
+		else if (parse->s[parse->i] != '\"' && is_specifier(parse, 1))
 		{
 			parse->i++;
 			return (1);
@@ -287,8 +301,8 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 						parse->i - parse->idx);
 			break ;
 		}
-		condition_dollar(data, parse);
 		condition_qout(parse);
+		condition_dollar(data, parse);
 		parse->i++;
 	}
 }

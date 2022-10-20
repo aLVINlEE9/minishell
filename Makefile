@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
+#    By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/18 17:04:01 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/19 18:24:59 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,10 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/make_pipe_cmdlst2.c\
 			./srcs/built_in.c\
 			./srcs/built_in2.c\
-			./srcs/syntax_check.c
+			./srcs/built_in3.c\
+			./srcs/built_in4.c\
+			./srcs/syntax_check.c\
+			./srcs/env_manage.c
 
 OBJS 	= ${SRCS:.c=.o}
 

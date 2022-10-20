@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 15:50:10 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:59:04 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	pipex(t_data *data, char **envp)
 	cmd_lst = make_cmd_list_pipe(token_lst);
 	data_env.envp = envp;
 	data_env.data = data;
-	if (cmd_lst[1] == 0 && check_builtin(cmd_lst[0], data_env, &fd[0]))
-		printf("built in working\n");
+	if (cmd_lst[1] == 0 && check_builtin(cmd_lst[0], &data_env))//built in one line case
+		;
 	else
-		exe_fork(cmd_lst, env_lst, data_env, &fd[0]);
+		exe_fork(cmd_lst, env_lst, &data_env);
 	free_cmdlst(cmd_lst);
 }
 

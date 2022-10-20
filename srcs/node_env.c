@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/11 18:32:10 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:42:51 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,36 @@ void	append_env_sub(t_env_list *list, t_env *new_node)
 	list->count++;
 }
 
-int	append_env(t_env_list *list, char *key, char *val)
+int	append_env(t_env_list *list, char *key, char *val, int is_val_quot)
 {
 	t_env		*new_node;
 
-	new_node = 0;
-	new_node = create_env(key, val);
-	if (new_node == 0)
-		return (1);
-	append_env_sub(list, new_node);
+	new_node = search_env(list, key);
+	if (!new_node)
+	{
+		new_node = create_env(key, val, is_val_quot);
+		if (new_node == 0)
+			return (1);
+		append_env_sub(list, new_node);
+	}
+	else
+	{
+		if (!val)
+		{
+			free(key);
+			return (1);
+		}
+		if (!(val[0] == 0 && new_node->val))
+		{
+			new_node->val = val;
+			new_node->is_val_quot = is_val_quot;
+		}
+	}
+	// print_env(list);
 	return (0);
 }
 
-t_env	*create_env(char *key, char *val)
+t_env	*create_env(char *key, char *val, int is_val_quot)
 {
 	t_env	*new_node;
 
@@ -95,5 +112,6 @@ t_env	*create_env(char *key, char *val)
 	new_node->val = val;
 	new_node->next = 0;
 	new_node->prev = 0;
+    new_node->is_val_quot = is_val_quot;
 	return (new_node);
 }

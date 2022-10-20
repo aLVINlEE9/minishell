@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 15:51:35 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:54:55 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	cmd_rightarrow(char *s, int *fd)
 	return (ft_iofile(s, fd, 0));
 }
 
-void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env data_env)
+void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env *data_env)
 {
 	char	*str;
 	char	*ret;
@@ -53,7 +53,7 @@ int	cmd_doub_rightarrow(char *s, int *fd)
 	return (ft_iofile(s, fd, 2));
 }
 
-void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_data_env data_env)
+void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_data_env *data_env)
 {
 	while (1)
 	{

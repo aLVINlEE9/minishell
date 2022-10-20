@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dol_jh.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:32:26 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/17 16:57:20 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:55:21 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*dollarparsing(char *s, int count, int save_c, struct s_data_env data_env)
+char	*dollarparsing(char *s, int count, int save_c, struct s_data_env *data_env)
 {
 	char				*save;
 	char				*ret;
@@ -32,7 +32,7 @@ char	*dollarparsing(char *s, int count, int save_c, struct s_data_env data_env)
 	return (ret);
 }
 
-void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, struct s_data_env data_env)
+void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, struct s_data_env *data_env)
 {
 	int					back_slash;
 
@@ -93,7 +93,7 @@ int	parse_dollar2_b(char *temp, char **ret, int count, int save_c)
 	return (ct);
 }
 
-int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, struct s_data_env data_env)
+int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, struct s_data_env *data_env)
 {
 	char	*pathvar;
 	char	*find_str;

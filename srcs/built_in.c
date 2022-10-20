@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 20:10:28 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:38:02 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	free_cmd2_jh(char **cmd2)
-{
-	int	len = 0;
-
-	while (cmd2[len])
-	{
-		free(cmd2[len]);
-		len ++;
-	}
-	free(cmd2[len]);
-}
-
-int		check_builtin(t_token **cmd, struct s_data_env data_env, int *fd)
+int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 {
 	char	**cmd2;
 
@@ -34,17 +22,15 @@ int		check_builtin(t_token **cmd, struct s_data_env data_env, int *fd)
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2, cmd, &fd[0], data_env);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
-		built_cd(cmd2, cmd, &fd[0], data_env);
-	/*
-	else if (ft_strncmp(cmd[0], "env", -1) == 0)
-		built_env();
-	*/
+		built_cd(cmd2, data_env);
+	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
+		built_env(data_env);
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
-		built_pwd(cmd, &fd[0], data_env);
-	//else if (ft_strncmp(cmd[0], "export", -1) == 0)
-	//	built_export();
-	//else if (ft_strncmp(cmd[0], "unset", -1) == 0)
-	//	built_unset();
+		built_pwd();
+	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
+	 	built_export(data_env, cmd2);
+	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
+		built_unset(data_env, cmd2);
 	else
 	{
 		free(cmd2);

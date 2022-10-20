@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 18:00:54 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:01:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		ft_is_digit(char *cmd)
 	return (1);
 }
 
-void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data)
+void	built_cd(char **cmd, struct s_data_env *data)
 {
 	int		result;
 	char	*next_dir;
@@ -39,24 +39,17 @@ void	built_cd(char **cmd2, t_token **cmd, int *fd, struct s_data_env data)
 	cwd = getcwd(0, 1024);
 	if (cmd2[1] == 0 || ft_strncmp(cmd2[1], "~", -1) == 0)
 	{
-		result = chdir(next_dir);
-		change_env((data.envp), "OLDPWD", cwd);
-		change_env((data.envp), "PWD", next_dir);
-	}
-	else if (ft_strncmp(cmd2[1], "-", -1) == 0)
-	{
-		next_dir = getenv("OLDPWD");
-		result = chdir(next_dir);
-		change_env(data.envp, "OLDPWD", cwd);
-		change_env(data.envp, "PWD", next_dir);
+		result = chdir(home);
+		change_env((data->envp), "OLDPWD", cwd);
+		change_env((data->envp), "PWD", home);
 	}
 	else
 	{
-		result = chdir(cmd2[1]);
-		change_env(data.envp, "OLDPWD", cwd);
+		result = chdir(cmd[1]);
+		change_env(data->envp, "OLDPWD", cwd);
 		free(cwd);
 		cwd = getcwd(0, 1024);
-		change_env(data.envp, "PWD", cwd);
+		change_env(data->envp, "PWD", cwd);
 	}
 	if (result == -1)
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
