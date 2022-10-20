@@ -1,3 +1,5 @@
 unset PATH -> ls
 
 No such file or directory
+
+export | grep SHLVL
