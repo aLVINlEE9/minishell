@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 18:15:44 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:59:13 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	is_alpha(char c)
 	return (0);
 }
 
-int	export_valid_check(char **cmd2)
+int	export_valid_check(char **cmd2, int i)
 {
-	if (is_alpha(cmd2[1][0]))
+	if (is_alpha(cmd2[i][0]))
         return (0) ;
     else
 	{
-		printf("export: `%c': not a valid identifier\n", cmd2[1][0]);
+		printf("export: `%c': not a valid identifier\n", cmd2[i][0]);
 		return (1);
 	}
 }
@@ -130,26 +130,30 @@ void	print_export(struct s_data_env *data_env)
 void    built_export(struct s_data_env *data_env, char	**cmd2)
 {
     char **splited;
+	int	i;
 
     if (!cmd2[1])
     {
         print_export(data_env);
         return ;
     }
-    if (export_valid_check(cmd2))
-		return ;
-	// printf("ft_strchr%s\n", ft_strchr(cmd2[1], '='));
-    if (!ft_strchr(cmd2[1], '='))
-    {
-        append_env(data_env->data->env_list, ft_strdup(cmd2[1]), NULL, 1);
-		// printf("exporting--%s\n", cmd2[1]);
-    }
-    else
-    {
-        splited = ft_split(cmd2[1], '=');
-        append_env(data_env->data->env_list, splited[0], splited[1], 0);
-		// printf("exporting--%s %s\n", splited[0], splited[1]);
-    }
+	i = 1;
+	while (cmd2[i])
+	{
+		if (export_valid_check(cmd2, i))
+			return ;
+		if (!ft_strchr(cmd2[i], '='))
+		{
+			append_env(data_env->data->env_list, ft_strdup(cmd2[i]), NULL, 1);
+		}
+		else
+		{
+			splited = ft_split(cmd2[i], '=');
+			append_env(data_env->data->env_list, splited[0], splited[1], 0);
+		}
+		i++;
+	}
+    
     // printf("%s\n%s\n", splited[0], splited[1]);
     // printf("%s\n%s\n%s\n", cmd2[0], cmd2[1], cmd2[2]);
 }
