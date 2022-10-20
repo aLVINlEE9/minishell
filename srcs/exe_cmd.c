@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 17:18:18 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:49:49 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_lstend(t_token ***cmd_lst, int count)
 }
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
-		struct s_data_env *data_env)
+		t_data *data)
 {
 	int		fd[4];
 	int		count;
@@ -35,7 +35,7 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 			exit(1);
 		pid = fork();
 		if (pid == 0)
-			exe_cmd(cmd_lst[count], data_env, &fd[0], is_lstend(cmd_lst, count));
+			exe_cmd(cmd_lst[count], data, &fd[0], is_lstend(cmd_lst, count));
 		else
 		{
 			if (fd[2] != -1)
@@ -46,10 +46,10 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 		}
 		count ++;
 	}
-	monitoring(data_env->data, pid, &fd[0]);
+	monitoring(data, pid, &fd[0]);
 }
 
-void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
+void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 {
 	char		**cmd;
 	struct stat	st;
@@ -58,16 +58,16 @@ void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
-	cmd = make_inout_cmd(cmd_ary, fd, data_env);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
+	cmd = make_inout_cmd(cmd_ary, fd, data);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
 	close(fd[0]);
 	close(fd[3]);
 	close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	if (chk_builtin_infork(cmd, data_env))//built in command check.
+	if (chk_builtin_infork(cmd, data))//built in command check.
 		exit(0);
 	else
-		exe_cmd2(cmd, data_env);
+		exe_cmd2(cmd, data);
 	if (is_slash(cmd[0]))
 	{
 		if (stat(cmd[0], &st) != -1)
@@ -85,7 +85,7 @@ void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
 		print_error(cmd[0], 1);
 }
 
-char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env *data_env)
+char	**make_inout_cmd(t_token **cmd_ary, int *fd, t_data *data)
 {
 	int		count;
 	int		cmd_arg_c;
@@ -97,7 +97,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env *data_env)
 	{
 		if (cmd_ary[count]->is_cmd == 1)
 		{
-			modify_inout(cmd_ary, count, fd, data_env);
+			modify_inout(cmd_ary, count, fd, data);
 			count ++;
 		}
 		else
@@ -108,7 +108,7 @@ char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env *data_env)
 	return (ret);
 }
 
-void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env *data_env)
+void	modify_inout(t_token **cmd_ary, int count, int *fd, t_data *data)
 {
 	char	*s;
 
@@ -127,7 +127,7 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd, struct s_data_env *data
 	if (ft_strlen(s) == 2)
 	{
 		if (ft_strncmp(s, "<<", -1) == 0)
-			cmd_doub_leftarrow(cmd_ary[count + 1]->token, fd, data_env);
+			cmd_doub_leftarrow(cmd_ary[count + 1]->token, fd, data);
 		if (ft_strncmp(s, ">>", -1) == 0)
 			cmd_doub_rightarrow(cmd_ary[count + 1]->token, fd);
 	}

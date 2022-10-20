@@ -6,13 +6,13 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:40:48 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:46:13 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int		check_builtin(t_token **cmd, struct s_data_env *data_env)
+int		check_builtin(t_token **cmd, t_data *data)
 {
 	char	**cmd2;
 	char	*first_cmd;
@@ -24,21 +24,21 @@ int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	fd[3] = dup(0);
-	cmd2 = make_inout_cmd(cmd, &fd[0], data_env);
+	cmd2 = make_inout_cmd(cmd, &fd[0], data);
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
-		built_cd(cmd2, data_env);
+		built_cd(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
-		built_env(data_env->data);
+		built_env(data);
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
-		built_pwd(data_env);
+		built_pwd(data);
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
-	 	built_export(data_env->data, cmd2);
+	 	built_export(data, cmd2);
 	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
-		built_unset(data_env->data, cmd2);
+		built_unset(data, cmd2);
 	else
 	{
 		dup2(fd[0], 0);
@@ -77,12 +77,12 @@ void	built_exit(char **cmd2)
 	}
 }
 
-void	built_pwd(struct s_data_env *data_env)
+void	built_pwd(t_data *data)
 {
 	t_env	*env;
 	char	*ret;
 	
-	env = search_env(data_env->data->env_list, "PWD");
+	env = search_env(data->env_list, "PWD");
 	ret = env->val;
 	// ret = getenv("PWD");
 	write(1, ret, ft_strlen(ret));

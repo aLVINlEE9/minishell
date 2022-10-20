@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:40:40 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:53:43 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,28 @@ char	**parse_env2(char **env)
 	return (0);
 }
 
-int	chk_builtin_infork(char **cmd2, struct s_data_env *data_env)
+int	chk_builtin_infork(char **cmd2, t_data *data)
 {
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
-		built_cd(cmd2, data_env);
+		built_cd(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
-		built_env(data_env);
+		built_env(data);
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
-		built_pwd();
+		built_pwd(data);
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
-	 	built_export(data_env, cmd2);
+	 	built_export(data, cmd2);
 	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
-		built_unset(data_env, cmd2);
+		built_unset(data, cmd2);
 	else
 		return (0);
 	return (1);
 }
 
-void	exe_cmd2(char **cmd, struct s_data_env *data_env)
+void	exe_cmd2(char **cmd, t_data *data)
 {
 	char	**path;
 	char	*temp2;

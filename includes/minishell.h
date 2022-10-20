@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string.h>
 
 
 # define FALSE 0
@@ -216,7 +217,7 @@ void	built_env(t_data *data);
 void	built_unset(t_data *data, char **cmd2);
 void    print_env(t_env_list *env_list);
 int		is_slash(char *s);
-int		chk_builtin_infork(char **cmd, struct s_data_env *data_env);
+int		chk_builtin_infork(char **cmd, t_data *data);
 char	*find_first_cmd(t_token **cmd);
 int		is_firstcmd_builtin(char *s);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 17:20:47 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:51:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,14 @@ void	pipex(t_data *data, char **envp)
 	struct s_token_list		*token_lst;
 	struct s_env_list		*env_lst;
 	t_token					***cmd_lst;
-	struct s_data_env		data_env;
 
 	token_lst = data -> token_list;
 	env_lst = data -> env_list;
 	cmd_lst = make_cmd_list_pipe(token_lst);
-	data_env.envp = envp;
-	data_env.data = data;
-	if (cmd_lst[1] == 0 && check_builtin(cmd_lst[0], &data_env))//built in one line case
+	if (cmd_lst[1] == 0 && check_builtin(cmd_lst[0], data))//built in one line case
 		;
 	else
-		exe_fork(cmd_lst, env_lst, &data_env);
+		exe_fork(cmd_lst, env_lst, data);
 	free_cmdlst(cmd_lst);
 }
 

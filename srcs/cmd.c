@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 17:54:55 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:48:43 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	cmd_rightarrow(char *s, int *fd)
 	ft_iofile(s, fd, 0);
 }
 
-void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env *data_env)
+void	cmd_doub_leftarrow(char *s, int *fd, t_data *data)
 {
 	char	*str;
 	char	*ret;
@@ -33,7 +33,7 @@ void	cmd_doub_leftarrow(char *s, int *fd, struct s_data_env *data_env)
 	str_temp.str = str;
 	str_temp.fd_temp = &temp[0];
 	dup2(fd[3], 0);
-	cmd_heredoc_write(str_temp, ret, s, data_env);
+	cmd_heredoc_write(str_temp, ret, s, data);
 	dup2(temp[0], 0);
 	close(temp[0]);
 	close(temp[1]);
@@ -46,7 +46,7 @@ void	cmd_doub_rightarrow(char *s, int *fd)
 	return ;
 }
 
-void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_data_env *data_env)
+void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, t_data *data)
 {
 	while (1)
 	{
@@ -62,7 +62,7 @@ void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, struct s_d
 			free(t_str.str);
 			break ;
 		}
-		ret = dollarparsing(t_str.str, 0, 0, data_env);
+		ret = dollarparsing(t_str.str, 0, 0, data);
 		if (!ret)
 			write(t_str.fd_temp[1], t_str.str, ft_strlen(t_str.str));
 		else

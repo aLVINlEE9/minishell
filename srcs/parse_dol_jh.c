@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dol_jh.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:32:26 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 17:55:21 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:50:15 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*dollarparsing(char *s, int count, int save_c, struct s_data_env *data_env)
+char	*dollarparsing(char *s, int count, int save_c, t_data *data)
 {
 	char				*save;
 	char				*ret;
@@ -22,7 +22,7 @@ char	*dollarparsing(char *s, int count, int save_c, struct s_data_env *data_env)
 	ret = 0;
 	intset.count = &count;
 	intset.save_c = &save_c;
-	parse_dollar(s, &ret, intset, data_env);
+	parse_dollar(s, &ret, intset, data);
 	temp = s;
 	if (save_c != count)
 	{
@@ -32,7 +32,7 @@ char	*dollarparsing(char *s, int count, int save_c, struct s_data_env *data_env)
 	return (ret);
 }
 
-void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, struct s_data_env *data_env)
+void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 {
 	int					back_slash;
 
@@ -44,7 +44,7 @@ void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, struct s_data
 		else if (temp[*(save.count)] == '$')
 		{
 			if (back_slash == 0)
-				*(save.count) += parse_dollar2(temp, ret, save, data_env) + 1;
+				*(save.count) += parse_dollar2(temp, ret, save, data) + 1;
 			else
 				*(save.count) += parse_dollar2_b(temp, ret, *(save.count), *(save.save_c)) + 1;
 			*(save.save_c) = *(save.count);
@@ -93,7 +93,7 @@ int	parse_dollar2_b(char *temp, char **ret, int count, int save_c)
 	return (ct);
 }
 
-int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, struct s_data_env *data_env)
+int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 {
 	char	*pathvar;
 	char	*find_str;
@@ -109,7 +109,7 @@ int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, struct s_data
 		*ret = ft_strjoin(*ret, ft_substr(temp, *(save.save_c), *(save.count) - *(save.save_c)));
 	ct = 0;
 	if (temp[count + 1] == '?')
-		return (parse_dollar_question(ret, data_env));
+		return (parse_dollar_question(ret, data));
 	while (temp[ct + count + 1] != ' ' && (temp[ct + count + 1]) \
 			&& temp[ct + count + 1] != '"' && temp[ct + count + 1] != '\'' \
 			&& temp[ct + count + 1] != '\\')
