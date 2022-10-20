@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 12:42:34 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:21:44 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,23 @@
 // {
 
 // }
+int	is_alnum(int c)
+{
+	if (c >= 'a' && c <= 'z')
+	{
+		return (1);
+	}
+	else if (c >= 'A' && c <= 'Z')
+	{
+		return (1);
+	}
+	else if (c >= '0' && c <= '9')
+	{
+		return (1);
+	}
+	return (0);
+}
+
 int	is_alpha(char c)
 {
 	if (c >= 'a' && c <= 'z')
@@ -25,15 +42,32 @@ int	is_alpha(char c)
 	return (0);
 }
 
-int	export_valid_check(char **cmd2, int i)
+int	export_valid_check(char **cmd2, int i, char *ptr)
 {
-	if (is_alpha(cmd2[i][0]))
-        return (0) ;
-    else
+	int	j;
+
+	j = 1;
+	if (!is_alpha(cmd2[i][0]) && cmd2[i][0] != '_')
 	{
-		printf("export: `%c': not a valid identifier\n", cmd2[i][0]);
+		printf("export: `%s': not a valid identifier\n", cmd2[i]);
 		return (1);
 	}
+	while (cmd2[i][j] && ptr != &cmd2[i][j])
+	{
+		if (!is_alnum(cmd2[i][j]) && cmd2[i][j] != '_')
+		{
+			printf("export: `%s': not a valid identifier\n", cmd2[i]);
+			return (1);
+		}
+		j++;
+	}
+	return (0);
+	// if (is_alpha(cmd2[i][0]))
+    //     return (0) ;
+    // else
+	// {
+	// 	return (1);
+	// }
 }
 
 void	free_sort_export(char **envs)
@@ -141,9 +175,9 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 	i = 1;
 	while (cmd2[i])
 	{
-		if (export_valid_check(cmd2, i))
-			return ;
 		ptr = ft_strchr(cmd2[i], '=');
+		if (export_valid_check(cmd2, i, ptr))
+			return ;
 		if (!ptr)
 		{
 			append_env(data_env->data->env_list, ft_strdup(cmd2[i]), NULL, 1);
@@ -157,7 +191,6 @@ void    built_export(struct s_data_env *data_env, char	**cmd2)
 		}
 		i++;
 	}
-
     // printf("%s\n%s\n", splited[0], splited[1]);
     // printf("%s\n%s\n%s\n", cmd2[0], cmd2[1], cmd2[2]);
 }
