@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 14:49:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:00:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ int	is_dollar_option(char *str)
 		return (1);
 	else if (ft_strncmp(str, "$$", 2) == 0)
 		return (2);
+	return (0);
+}
+
+int	is_num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
 	return (0);
 }
 
@@ -207,7 +214,8 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 	{
 		if (!is_alpha(parse->s[start]) && parse->s[start] != '_')
 		{
-			replace_util(data, parse, idx, start);
+			if (is_num(parse->s[start]))
+				replace_util(data, parse, idx + 1, start);
 			return ;
 		}
 		while (!is_space(parse->s[idx]) && !is_quot(parse->s[idx]) && \
