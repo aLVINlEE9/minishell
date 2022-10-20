@@ -201,7 +201,7 @@ void	ft_iofile2(char *s, int *fd, int count, char *filename);
 int		parse_dollar_question(char **ret, struct s_data_env *data_env);
 int		check_builtin(t_token **cmd, struct s_data_env *data_env);
 void	built_exit(char **cmd2);
-void	built_pwd(void);
+void	built_pwd(struct s_data_env *data_env);
 void	built_echo(char **cmd2);
 void	built_cd(char **cmd2, struct s_data_env *data_env);
 int		ft_is_digit(char *cmd);

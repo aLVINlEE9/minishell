@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 18:38:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:45:53 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
 		built_env(data_env);
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
-		built_pwd();
+		built_pwd(data_env);
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
 	 	built_export(data_env, cmd2);
 	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
@@ -73,11 +73,14 @@ void	built_exit(char **cmd2)
 	}
 }
 
-void	built_pwd(void)
+void	built_pwd(struct s_data_env *data_env)
 {
+	t_env	*env;
 	char	*ret;
 	
-	ret = getenv("PWD");
+	env = search_env(data_env->data->env_list, "PWD");
+	ret = env->val;
+	// ret = getenv("PWD");
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
 }
