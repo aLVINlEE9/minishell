@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/18 18:00:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:18:18 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 
 void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
 {
-	char	**cmd;
-
+	char		**cmd;
+	struct stat	st;
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
@@ -64,11 +64,25 @@ void	exe_cmd(t_token **cmd_ary, struct s_data_env *data_env, int *fd, int flag)
 	close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	//if (check_builtin(cmd))//built in command check.
-		//exit(0);
-	//else
-	exe_cmd2(cmd, data_env);
-	print_error(cmd[0], 1);
+	if (chk_builtin_infork(cmd, data_env))//built in command check.
+		exit(0);
+	else
+		exe_cmd2(cmd, data_env);
+	if (is_slash(cmd[0]))
+	{
+		if (stat(cmd[0], &st) != -1)
+			if (/*S_ISDIR(st.st_mode)*/ 0040000 & st.st_mode)
+			{
+				write(2, cmd[0], ft_strlen(cmd[0]));
+				write(2, ": is dir\n", 9);
+				exit(0);
+			}
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 1);
+		exit(0);
+	}
+	else
+		print_error(cmd[0], 1);
 }
 
 char	**make_inout_cmd(t_token **cmd_ary, int *fd, struct s_data_env *data_env)

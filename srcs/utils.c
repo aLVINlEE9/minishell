@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 19:10:29 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:49:14 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,4 +413,38 @@ void	*ft_memchr(const void *s, int c, size_t n)
 char	*ft_strchr(const char *s, int c)
 {
 	return (ft_memchr(s, c, ft_strlen(s) + 1));
+}
+
+char	*find_first_cmd(t_token **cmd_ary)
+{
+	int	count;
+
+	count = 0;
+	while (cmd_ary[count])
+	{
+		if (cmd_ary[count]->is_cmd != 1)
+			return (cmd_ary[count]->token);
+		count ++;
+	}
+	return (0);
+}
+
+int	is_firstcmd_builtin(char *s)
+{
+	if (ft_strncmp(s, "exit", -1) == 0)
+		return (1);
+	else if (ft_strncmp(s, "echo", -1) == 0)
+		return (1);
+	else if (ft_strncmp(s, "cd", -1) == 0)
+		return (1);
+	else if (ft_strncmp(s, "env", -1) == 0)
+		return (1);
+	else if (ft_strncmp(s, "pwd", -1) == 0)
+		return (1);
+	else if (ft_strncmp(s, "export", -1) == 0)
+	 	return (1);
+	else if (ft_strncmp(s, "unset", -1) == 0)
+		return (1);
+	else
+		return (0);
 }

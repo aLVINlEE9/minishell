@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/17 23:36:12 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:49:19 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -23,6 +23,8 @@
 #include <termios.h>
 #include <signal.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 
 # define FALSE 0
@@ -213,4 +215,8 @@ void    built_export(struct s_data_env *data_env, char	**cmd2);
 void	built_env(struct s_data_env *data_env);
 void	built_unset(struct s_data_env *data_env, char **cmd2);
 void    print_env(t_env_list *env_list);
+int		is_slash(char *s);
+int		chk_builtin_infork(char **cmd, struct s_data_env *data_env);
+char	*find_first_cmd(t_token **cmd);
+int		is_firstcmd_builtin(char *s);
 #endif

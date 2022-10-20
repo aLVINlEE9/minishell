@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/19 18:38:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:49:17 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 int		check_builtin(t_token **cmd, struct s_data_env *data_env)
 {
 	char	**cmd2;
+	char	*first_cmd;
 	int		fd[4];
 
+	first_cmd = find_first_cmd(cmd);
+	if (!is_firstcmd_builtin(first_cmd))
+		return (0);
 	fd[0] = dup(0);
 	fd[1] = dup(1);
 	fd[3] = dup(0);
