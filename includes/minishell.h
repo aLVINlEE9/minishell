@@ -90,11 +90,57 @@ typedef struct s_env_list{
 	t_env	*tail;
 }	t_env_list;
 
-typedef struct s_data_env
-{
-	char	**envp;
-	t_data	*data;
-}	t_data_env_jh;
+/*
+** node
+*/
+t_env	*search_env(t_env_list *list, char *key);
+int		create_env_list_sub(t_env_list *list);
+void	create_env_list(t_data *data);
+void	append_env_sub(t_env_list *list, t_env *new_node);
+int		append_env(t_env_list *list, char *key, char *val, int is_val_quot);
+t_env	*create_env(char *key, char *val, int is_val_quot);
+t_token	*search_token(t_token_list *list, char *token);
+int		create_token_list_sub(t_token_list *list);
+void	create_token_list(t_data *data);
+void	append_token_sub(t_token_list *list, t_token *new_node);
+int		append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
+t_token	*create_token(char *token, t_parse *parse);
+
+/*
+** parse
+*/
+void	replace_util_sub(t_parse *parse, char *first, char *val, char *last);
+void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end);
+void	replace_util(t_data *data, t_parse *parse, int idx, int start);
+void	replace_dollar_to_env(t_data *data, t_parse *parse);
+void    update_shlvl(t_data *data);
+void	parse_env(char **envp, t_data *data);
+int		condition_append_token(t_parse *parse);
+void	condition_dollar(t_data *data, t_parse *parse);
+void	condition_qout(t_parse *parse);
+int		condition_break(t_parse *parse);
+int		is_space(char c);
+int		is_null(char c);
+int 	is_quot(char c);
+int		is_dollar(char c);
+int		is_num(char c);
+int		is_dollar_option(char *str);
+int		is_specifier(t_parse *parse, int check);
+int		is_end(t_parse *parse);
+void	remove_char_from_idx(char *s, int idx);
+void	remove_string(char *s, int idx_s, int idx_e);
+void	qout_remove(t_parse *parse);
+void	init_parse(t_parse *parse, char *str);
+void	init_parse_sub(t_parse *parse);
+void	parse_token_sub(t_data *data, t_parse *parse);
+int		parse_token(t_data *data, char *str);
+int 	syntax_newline(char *token);
+int 	syntax_pipe(char *token);
+int		syntax_check(t_data *data);
+
+/*
+** utils
+*/
 
 void    update_shlvl(t_data *data);
 void    parse_env(char **envp, t_data *data);
@@ -111,9 +157,6 @@ void	append_token_sub(t_token_list *list, t_token *new_node);
 int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
 t_token	*create_token(char *token, t_parse *parse);
 
-t_env	*search_env(t_env_list *list, char *key);
-int	create_env_list_sub(t_env_list *list);
-void	create_env_list(t_data *data);
 void	append_env_sub(t_env_list *list, t_env *new_node);
 int	append_env(t_env_list *list, char *key, char *val, int is_val_quot);
 t_env	*create_env(char *key, char *val, int is_val_quot);
