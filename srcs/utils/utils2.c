@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:14:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 13:26:16 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:04:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (temp);
 }
 
-size_t  ft_strlcpycpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpycpy(char *dst, const char *src, size_t size)
 {
-    size_t	i;
+	size_t	i;
 	size_t	temp;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:16:22 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:17:16 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:05:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,8 @@ char	**ft_make_split(char **ret, char const *s, char c)
 char	**ft_split(char const *s, char c)
 {
 	int		wordn;
-	// int		temp;
 	char	**ret;
 
-	// temp = 0;
 	if (!s)
 		return (0);
 	wordn = count_word(s, c);

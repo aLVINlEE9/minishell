@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 13:30:30 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:04:20 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*ft_strjoin_jh(char const *s1, char const *s2)
 	return (ret);
 }
 
-
 int	is_firstcmd_builtin(char *s)
 {
 	if (ft_strncmp(s, "exit", -1) == 0)
@@ -94,7 +93,7 @@ int	is_firstcmd_builtin(char *s)
 	else if (ft_strncmp(s, "pwd", -1) == 0)
 		return (1);
 	else if (ft_strncmp(s, "export", -1) == 0)
-	 	return (1);
+		return (1);
 	else if (ft_strncmp(s, "unset", -1) == 0)
 		return (1);
 	else
