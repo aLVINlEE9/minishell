@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 18:38:35 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/20 22:05:21 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,6 +424,25 @@ char	*find_first_cmd(t_token **cmd_ary)
 	{
 		if (cmd_ary[count]->is_cmd != 1)
 			return (cmd_ary[count]->token);
+		count ++;
+	}
+	return (0);
+}
+
+int	is_heredoc_here(t_token **cmd_ary)
+{
+	int		count;
+	char	*temp;
+
+	count = 0;
+	while (cmd_ary[count])
+	{
+		if (cmd_ary[count]->is_cmd == 1)
+		{
+			temp = cmd_ary[count]->token;
+			if (strncmp(temp, "<<", -1) == 0)
+				return (1);
+		}
 		count ++;
 	}
 	return (0);

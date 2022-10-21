@@ -6,13 +6,13 @@
 #    By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/20 18:55:13 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/20 22:44:11 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC		= cc -g -lreadline -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include
-# CC		= cc -g -lreadline -L/Users/seungsle/.brew/opt/readline/lib -I/Users/seungsle/.brew/opt/readline/include
+#CC		= cc -g -lreadline -L/opt/homebrew/opt/readline/lib -I/opt/homebrew/opt/readline/include
+ CC		= cc -g -lreadline -L/Users/junhjeon/.brew/opt/readline/lib -I/Users/junhjeon/.brew/opt/readline/include
 CFLAG	=
 SRCS 	=	./srcs/main.c		\
 			./srcs/node_env.c	\
@@ -39,7 +39,8 @@ SRCS 	=	./srcs/main.c		\
 			./srcs/built_in3.c\
 			./srcs/built_in4.c\
 			./srcs/syntax_check.c\
-			./srcs/env_manage.c
+			./srcs/env_manage.c\
+			./srcs/set_signal_fork.c
 
 OBJS 	= ${SRCS:.c=.o}
 

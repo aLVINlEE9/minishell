@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:53:43 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:55:18 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**parse_env2(char **env)
 int	chk_builtin_infork(char **cmd2, t_data *data)
 {
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
-		built_exit(cmd2);
+		built_exit(cmd2, 0, data);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
@@ -81,6 +81,9 @@ void	exe_cmd2(char **cmd, t_data *data)
 	count = 0;
 	temp = update_env(data, 0);
 	path = parse_env2(temp);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGTERM, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	while (path[count])
 	{
 		if (!is_slash(cmd[0]))

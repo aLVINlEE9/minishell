@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:49:49 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:03:30 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 	int		fd[4];
 	int		count;
 	pid_t	pid;
+	int		exitcode;
 
 	fd[2] = -1;
 	fd[3] = dup(0);
 	count = 0;
+	termi_old(data->termi, 0);
 	while (cmd_lst[count])
 	{
+		if (is_heredoc_here(cmd_lst[count]))
+			data -> heredoc_is_still_alive = 1;
 		if (pipe(fd) == -1)
 			exit(1);
 		pid = fork();
@@ -43,6 +47,12 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 			close(fd[1]);
 			fd[2] = dup(fd[0]);
 			close(fd[0]);
+			if (data->heredoc_is_still_alive == 1)
+			{
+				wait(&exitcode);
+				data->exit_code = (unsigned char)(exitcode);
+				data->heredoc_is_still_alive = 0;
+			}
 		}
 		count ++;
 	}
@@ -53,6 +63,7 @@ void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 {
 	char		**cmd;
 	struct stat	st;
+
 	if (fd[2] != -1)
 	{
 		dup2(fd[2], 0);
@@ -79,7 +90,7 @@ void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 			}
 		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		write(2, "\n", 1);
-		exit(0);
+		exit(127);
 	}
 	else
 		print_error(cmd[0], 1);

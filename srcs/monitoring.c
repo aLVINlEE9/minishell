@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:37:33 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/15 22:44:27 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:51:41 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	monitoring(t_data *data, int pid, int *fd)
 
 	if (fd[2] != -1)
 		close(fd[2]);
+	signal(SIGINT, sig_handler_fork_c);
+	signal(SIGQUIT, sig_handler_fork_b);
 	while (1)
 	{
 		temp = waitpid(-1, &status, WNOHANG);
@@ -28,6 +30,8 @@ void	monitoring(t_data *data, int pid, int *fd)
 		{
 			if ((status & 0177) == 0)
 				pid = (status >> 8);
+			if (WIFSIGNALED(status))
+				pid = WTERMSIG(status) + 128;
 		}
 	}
 	close(fd[3]);

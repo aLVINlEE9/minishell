@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:46:13 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:37:03 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		check_builtin(t_token **cmd, t_data *data)
 	fd[3] = dup(0);
 	cmd2 = make_inout_cmd(cmd, &fd[0], data);
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
-		built_exit(cmd2);
+		built_exit(cmd2, 1, data);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
 		built_echo(cmd2);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
@@ -49,14 +49,16 @@ int		check_builtin(t_token **cmd, t_data *data)
 	dup2(fd[1], 1);
 	return (1);
 }
-void	built_exit(char **cmd2)
+void	built_exit(char **cmd2, int flag, t_data *data)
 {
 	long long	code;
 
 	code = 0;
 	if (cmd2[1] == 0)
 	{
-		write(2, "exit\n", 5);
+		if (flag == 1)
+			write(2, "exit\n", 5);
+		termi_old(data->termi, 0);
 		exit(0);
 	}
 	else
@@ -65,14 +67,19 @@ void	built_exit(char **cmd2)
 		{
 			if (cmd2[2] != 0)
 			{
-				write(2, "exit\n", 5);
-				write(2, "too many args\n", 14);
+				if (flag == 1)
+				{
+					write(2, "exit\n", 5);
+					write(2, "too many args\n", 14);
+				}
 				return ;
 			}
 			code = ft_atol(cmd2[1]);
+			termi_old(data->termi, 0);
 			exit((unsigned char)code);
 		}
 		write(2, "numeric arg required\n", 21);
+		termi_old(data->termi, 0);
 		exit(255);
 	}
 }

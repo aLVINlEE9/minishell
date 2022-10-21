@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 18:30:16 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:54:34 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,24 +129,29 @@ int main(int argc, char **argv, char **envp)
     built_unset(&data, unset_oldpath());
     built_export(&data, export_oldpath());
     // parse_entt(envp);
+	//
 	set_termi(&termi); // 1 1eak
+	data.termi = termi;
+	//
     // print_env(data.env_list);
 	update_shlvl(&data); // 1 leak
 	// tcgetattr(0, &termi);
 	// termi.c_lflag &= ~(ECHOCTL);
 	// termi.c_lflag &= ~(ECHO);
 	// tcsetattr(0, TCSANOW, &termi);
-	set_signal();
 	// printf("%s %s\n", search_env(data.env_list, "SHLVL")->val, search_env(data.env_list, "SHLVL")->key);
 	while (1)
 	{
+		set_signal();
+		termi_new(data.termi, 0);
+		data.heredoc_is_still_alive = 0;
 		str = readline("minishell$ ");// 컴파일시 -lreadline 추가
 		if (str == 0)
 		{
 			printf("\033[1A");
 			printf("\033[10C");
 			printf(" exit\n");
-			exit(0);
+			break ;
 		}
 		else if (str)
 		{
@@ -157,6 +162,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		free(str);
 	}
+	termi_old(data.termi, 0);
 	free_for_all(&data);
 }
 //env 저장

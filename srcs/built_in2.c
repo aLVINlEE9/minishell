@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 19:09:43 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/20 21:51:33 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	built_cd(char **cmd, t_data *data)
 	home = env->val;
 	// home = getenv("HOME"); // search env
 	cwd = getcwd(0, 1024);
-	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)
+	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)// ~ 치환해줘야함
 	{
 		result = chdir(home);
 		change_env(data->env_list, search_env(data->env_list, "OLDPWD"), cwd);

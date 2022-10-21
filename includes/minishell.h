@@ -1,4 +1,4 @@
-/************************************************************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 17:49:19 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:36:11 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/13 19:58:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -37,10 +37,18 @@ enum e_around{
     NO = 22
 } ;
 
+typedef struct s_termi
+{
+	struct termios	*save_t;
+	struct termios	*new_t;
+}				t_termi;
+
 typedef struct s_data{
 	struct s_token_list	*token_list;
 	struct s_env_list	*env_list;
+	struct s_termi		termi;
 	int					exit_code;
+	int					heredoc_is_still_alive;
 }	t_data;
 
 typedef struct s_parse{
@@ -157,12 +165,6 @@ typedef struct s_cmd_make
 	struct s_cmd_make	*next;
 }					t_cmd_make;
 
-typedef struct s_termi
-{
-	struct termios	*save_t;
-	struct termios	*new_t;
-}				t_termi;
-
 typedef struct s_intset_jh
 {
 	int	*count;
@@ -176,8 +178,8 @@ typedef struct s_dollar_str
 }				t_dollar_str_jh;
 
 void	set_termi(struct s_termi *termi);
-void	termi_old(struct s_termi termi);
-void	termi_new(struct s_termi termi);
+void	termi_old(struct s_termi termi, int fd);
+void	termi_new(struct s_termi termi, int fd);
 void	sig_handler(int signal);
 void	set_signal(void);
 void	print_error(char *s, int n);
@@ -199,11 +201,10 @@ void	free_cmdlst(t_token ***lst);
 t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, t_cmd_make **start, int a, int b);
 void	whatisit(t_token_list *t, t_token ***cmd_l, t_cmd_make *start, t_token **temp_list);
 t_token	***make_cmd_list_pipe(t_token_list *t);
-//void	built_cd(void);
 void	ft_iofile2(char *s, int *fd, int count, char *filename);
 int		parse_dollar_question(char **ret, t_data *data);
 int		check_builtin(t_token **cmd, t_data *data);
-void	built_exit(char **cmd2);
+void	built_exit(char **cmd2, int flag, t_data *data);
 void	built_pwd(t_data *data);
 void	built_echo(char **cmd2);
 void	built_cd(char **cmd2, t_data *data);
@@ -220,4 +221,8 @@ int		is_slash(char *s);
 int		chk_builtin_infork(char **cmd, t_data *data);
 char	*find_first_cmd(t_token **cmd);
 int		is_firstcmd_builtin(char *s);
+int		is_heredoc_here(t_token **cmd_ary);
+void	sig_handler_fork_c(int signal);
+void	sig_handler_fork_d(int signal);
+void	sig_handler_fork_b(int signal);
 #endif
