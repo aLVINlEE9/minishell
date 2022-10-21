@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_token_utils.c                                :+:      :+:    :+:   */
+/*   parse_token_utils1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:35:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 11:36:01 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:18:57 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_null(char c)
 	return (0);
 }
 
-int is_quot(char c)
+int	is_quot(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (1);

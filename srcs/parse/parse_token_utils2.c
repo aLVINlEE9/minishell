@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:37:35 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 11:38:19 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:19:12 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	is_dollar_option(char *str)
 		return (2);
 	return (0);
 }
-
 
 int	is_specifier(t_parse *parse, int check)
 {

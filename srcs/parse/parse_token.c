@@ -6,13 +6,13 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:01:21 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:20:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	init_parse(t_parse *parse, char *str)
+void	init_parse(t_data *data, t_parse *parse, char *str)
 {
 	parse->s = str;
 	parse->q = 0;
@@ -26,6 +26,8 @@ void	init_parse(t_parse *parse, char *str)
 	parse->idxq_e = 0;
 	parse->idxd_s = 0;
 	parse->idxd_e = 0;
+	parse->buf_env_len = 0;
+	parse->data = data;
 }
 
 void	init_parse_sub(t_parse *parse)
@@ -35,6 +37,7 @@ void	init_parse_sub(t_parse *parse)
 	parse->in_dollar = FALSE;
 	parse->is_env = FALSE;
 	parse->was_quot = FALSE;
+	parse->buf_env_len = 0;
 }
 
 void	parse_token_sub(t_data *data, t_parse *parse)
@@ -59,9 +62,9 @@ int	parse_token(t_data *data, char *str)
 {
 	t_parse	parse;
 
-	init_parse(&parse, str);
+	init_parse(data, &parse, str);
 	create_token_list(data);
-	while(parse.s[parse.i])
+	while (parse.s[parse.i])
 	{
 		parse.idx = parse.i;
 		init_parse_sub(&parse);
@@ -71,6 +74,6 @@ int	parse_token(t_data *data, char *str)
 			parse.i++;
 	}
 	if (syntax_check(data))
-        return (0);
-    return (1);
+		return (0);
+	return (1);
 }

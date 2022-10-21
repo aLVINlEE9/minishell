@@ -46,8 +46,6 @@ typedef struct s_data{
 typedef struct s_parse{
 	char	*s;
 	char	q;
-    int unclose_quot;
-    int unclose_slash;
 	int	i;
 	int	in_qout;
 	int	in_dollar;
@@ -59,6 +57,8 @@ typedef struct s_parse{
 	int	idxq_e;
 	int	idxd_s;
 	int	idxd_e;
+    size_t  buf_env_len;
+    t_data  *data;
 }	t_parse;
 
 typedef struct s_token{
@@ -109,10 +109,11 @@ t_token	    *create_token(char *token, t_parse *parse);
 /*
 *** parse ***
 */
-void	    replace_util_sub(t_parse *parse, char *first, char *val, char *last);
+void		replace_util_sub1(t_parse *parse, char *first, char *val, char *last);
+void		replace_util_sub2(t_parse *parse, char *buf_start, char *buf_env, char *buf_end);
 void	    replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end);
-void	    replace_util(t_data *data, t_parse *parse, int idx, int start);
-void	    replace_dollar_to_env(t_data *data, t_parse *parse);
+void		replace_util(t_data *data, t_parse *parse, int idx, int start);
+void		replace_dollar_to_env(t_data *data, t_parse *parse);
 void        update_shlvl(t_data *data);
 void	    parse_env(char **envp, t_data *data);
 int		    condition_append_token(t_parse *parse);
@@ -130,7 +131,7 @@ int		    is_end(t_parse *parse);
 void	    remove_char_from_idx(char *s, int idx);
 void	    remove_string(char *s, int idx_s, int idx_e);
 void	    qout_remove(t_parse *parse);
-void	    init_parse(t_parse *parse, char *str);
+void        init_parse(t_data *data, t_parse *parse, char *str);
 void	    init_parse_sub(t_parse *parse);
 void	    parse_token_sub(t_data *data, t_parse *parse);
 int		    parse_token(t_data *data, char *str);

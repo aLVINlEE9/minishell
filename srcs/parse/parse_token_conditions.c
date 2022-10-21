@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token_conditions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:36:35 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 11:37:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:18:28 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	condition_append_token(t_parse *parse)
 {
 	if (!parse->in_qout)
 	{
-		if ((is_null(parse->s[parse->i]) && ft_strlen(parse->s) == (parse->i)) || is_space(parse->s[parse->i]))
+		if ((is_null(parse->s[parse->i]) && ft_strlen(parse->s) == (parse->i)) \
+			|| is_space(parse->s[parse->i]))
 			return (1);
 		else if (is_specifier(parse, 0))
 		{
