@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 16:34:17 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/18 16:22:21 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:32:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int syntax_newline(char *token)
 {

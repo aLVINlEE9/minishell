@@ -6,80 +6,11 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 15:00:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:38:26 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int	is_space(char c)
-{
-	if (c == ' ')
-		return (1);
-	return (0);
-}
-
-int	is_null(char c)
-{
-	if (c == '\0')
-		return (1);
-	return (0);
-}
-
-int is_quot(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0);
-}
-
-int	is_dollar(char c)
-{
-	if (c == '$')
-		return (1);
-	return (0);
-}
-
-int	is_dollar_option(char *str)
-{
-	if (ft_strncmp(str, "$?", 2) == 0)
-		return (1);
-	else if (ft_strncmp(str, "$$", 2) == 0)
-		return (2);
-	return (0);
-}
-
-int	is_num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
-int	is_specifier(t_parse *parse, int check)
-{
-	char	c;
-
-	c = parse->s[parse->i + check];
-	if (ft_strncmp(&parse->s[parse->i + check], "<<", 2) == 0 || \
-		ft_strncmp(&parse->s[parse->i + check], ">>", 2) == 0)
-		return (2);
-	else if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
-}
-
-int	is_end(t_parse *parse)
-{
-	if (!parse->in_qout)
-	{
-		if (is_null(parse->s[parse->i + 1]) || \
-			is_space(parse->s[parse->i + 1]) || \
-			is_specifier(parse, 1))
-			return (1);
-	}
-	return (0);
-}
+#include "../../includes/minishell.h"
 
 void	init_parse(t_parse *parse, char *str)
 {
@@ -224,69 +155,6 @@ void	replace_dollar_to_env(t_data *data, t_parse *parse)
 		idx++;
 	}
 	replace_util(data, parse, idx, start);
-}
-
-int	condition_append_token(t_parse *parse)
-{
-	if (!parse->in_qout)
-	{
-		if ((is_null(parse->s[parse->i]) && ft_strlen(parse->s) == (parse->i)) || is_space(parse->s[parse->i]))
-			return (1);
-		else if (is_specifier(parse, 0))
-		{
-			parse->i += is_specifier(parse, 0);
-			parse->is_cmd = TRUE;
-			return (1);
-		}
-		else if (parse->s[parse->i] != '\"' && is_specifier(parse, 1))
-		{
-			parse->i++;
-			return (1);
-		}
-	}
-	return (0);
-}
-
-void	condition_dollar(t_data *data, t_parse *parse)
-{
-	if (is_dollar(parse->s[parse->i]) && !is_end(parse))
-	{
-		if (!parse->in_qout && is_quot(parse->s[parse->i + 1]))
-			remove_char_from_idx(parse->s, parse->i);
-		else if (!(parse->in_qout && parse->q == '\''))
-		{
-			parse->in_dollar++;
-			replace_dollar_to_env(data, parse);
-		}
-	}
-}
-
-void	condition_qout(t_parse *parse)
-{
-	if (!parse->in_qout && is_quot(parse->s[parse->i]))
-	{
-		parse->in_qout = TRUE;
-		parse->idxq_s = parse->i;
-		parse->q = parse->s[parse->i];
-	}
-	else if (parse->in_qout && parse->q == parse->s[parse->i])
-	{
-		parse->idxq_e = parse->i;
-	}
-	qout_remove(parse);
-}
-
-int	condition_break(t_parse *parse)
-{
-	if (!parse->was_quot && parse->i - parse->idx == 0 && \
-		parse->in_dollar && !parse->is_env)
-		return (1);
-	if (parse->in_qout && is_null(parse->s[parse->i]))
-	{
-		printf("unclose quot\n");
-		return (1);
-	}
-	return (0);
 }
 
 void	parse_token_sub(t_data *data, t_parse *parse)

@@ -6,12 +6,12 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/15 19:13:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:33:00 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_token	*search_token(t_token_list *list, char *token)
 {

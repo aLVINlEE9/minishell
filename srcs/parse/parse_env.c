@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:13:01 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/19 15:59:40 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 11:31:59 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void    update_shlvl(t_data *data)
 {

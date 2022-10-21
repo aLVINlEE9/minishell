@@ -64,7 +64,7 @@ typedef struct s_parse{
 typedef struct s_token{
 	char			*token;
 	int				in_dollar;
-    int             is_cmd;
+	int				is_cmd;
 	int				around;
 	struct s_token	*prev;
 	struct s_token	*next;
