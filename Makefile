@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/21 18:50:25 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/21 20:33:04 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SOURCES 	=	main.c\
 			set_signal_fork.c\
 			env_manage.c
 
-SRCS		:=	$(addprefix $(SRCS_DIR), $(SOURCES))
+SRCS		=	$(addprefix $(SRCS_DIR), $(SOURCES))
 
 
 OBJS 	= ${SRCS:.c=.o}
@@ -75,7 +75,8 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) -o $@ $(OBJS) $(CFLAG) $(LIBRARY) $(HEADERS)
 
-.c.o:
+# $(OBJS_DIR)%.o : $(SRCS_DIR)%.c $(INCS_DIR)*.h
+.c.o: 
 	$(CC) -c $< -o $@ $(CFLAG) $(HEADERS)
 
 clean :

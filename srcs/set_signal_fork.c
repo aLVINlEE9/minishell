@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 22:40:45 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 19:37:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 20:32:35 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	sig_handler_fork_c(int signal)
 {

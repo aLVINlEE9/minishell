@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 19:17:52 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 20:26:55 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ char	    *find_first_cmd(t_token **cmd_ary);
 
 
 
+// void	sig1_handler_fork_c(int signal, int test);
 void	sig_handler_fork_c(int signal);
 void	sig_handler_fork_d(int signal);
 void	sig_handler_fork_b(int signal);
