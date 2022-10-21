@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 21:51:33 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:00 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int		ft_is_digit(char *cmd)
 {
@@ -37,9 +37,18 @@ void	built_cd(char **cmd, t_data *data)
 	home = env->val;
 	// home = getenv("HOME"); // search env
 	cwd = getcwd(0, 1024);
-	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)// ~ 치환해줘야함
+	if (cmd[1] == 0 || cmd[1][0] == '~')
 	{
-		result = chdir(home);
+		if (cmd[1][1] == '/')
+		{
+			home = ft_strjoin_jh(home, &cmd[1][1]);
+			result = chdir(home);
+			free(home);
+		}
+		else
+		{
+			result = chdir(home);
+		}
 		change_env(data->env_list, search_env(data->env_list, "OLDPWD"), cwd);
 		change_env(data->env_list, search_env(data->env_list, "PWD"), home);
 		// change_env(data->data->env_list, (data->envp), "OLDPWD", cwd);

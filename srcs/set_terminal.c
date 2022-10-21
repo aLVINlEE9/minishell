@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:08:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 17:04:13 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:50 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	set_termi(struct s_termi *termi)
 {

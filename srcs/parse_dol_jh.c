@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dol_jh.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:32:26 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:50:15 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:39:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 char	*dollarparsing(char *s, int count, int save_c, t_data *data)
 {
@@ -95,15 +95,16 @@ int	parse_dollar2_b(char *temp, char **ret, int count, int save_c)
 
 int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 {
-	char	*pathvar;
+	t_env	*env;
 	char	*find_str;
 	int		ct;
 	int		count;
 
 	count = *(save.count);
-	if (count == 0)
-		;
-	else if (!(*ret))
+	//printf("count : %d\n", count);
+	//if (count == 0)
+		//;
+	/*else*/ if (!(*ret))
 		*ret = ft_substr(temp, 0, count);
 	else
 		*ret = ft_strjoin(*ret, ft_substr(temp, *(save.save_c), *(save.count) - *(save.save_c)));
@@ -115,7 +116,10 @@ int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 			&& temp[ct + count + 1] != '\\')
 		ct ++;
 	find_str = ft_substr(temp, count + 1, ct);
-	pathvar = getenv(find_str);
-	*ret = ft_strjoin(*ret, pathvar);
+	env = search_env(data->env_list, find_str);
+	if (env)
+		*ret = ft_strjoin(*ret, env->val);
+	else
+		*ret = ft_strjoin(*ret, "");
 	return (ct);
 }

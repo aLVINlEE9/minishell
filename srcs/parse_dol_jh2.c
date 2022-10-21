@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dol_jh2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:40:33 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 18:50:30 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	parse_dollar_question(char **ret , t_data *data)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:37:33 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 17:51:41 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:34 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	monitoring(t_data *data, int pid, int *fd)
 {

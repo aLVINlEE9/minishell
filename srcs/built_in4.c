@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/20 18:29:38 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	built_env(t_data *data)
 {

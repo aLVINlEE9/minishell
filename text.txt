@@ -3,3 +3,6 @@ unset PATH -> ls
 No such file or directory
 
 export | grep SHLVL
+
+$HOME"$SHLVL$SHLV"  $HOME
+bash: /Users/seungsle2: No such file or directory

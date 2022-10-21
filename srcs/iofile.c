@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/15 22:35:24 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	ft_iofile(char *s, int *fd, int count)
 {

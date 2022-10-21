@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 17:03:30 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:16 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	is_lstend(t_token ***cmd_lst, int count)
 {

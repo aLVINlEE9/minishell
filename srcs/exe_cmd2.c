@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cmd2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 17:55:18 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:21 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	is_slash(char *s)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 17:54:34 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:11:06 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int    print_node(t_token_list *token_list)
 {
@@ -156,7 +156,7 @@ int main(int argc, char **argv, char **envp)
 		else if (str)
 		{
 			add_history(str);
-			if (parse_token(&data, str) && print_node(data.token_list))
+			if (parse_token(&data, str))
 				pipex(&data, envp);
 			free_for_line(&data);
 		}

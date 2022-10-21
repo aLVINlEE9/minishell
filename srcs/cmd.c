@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 21:16:59 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:27:46 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	cmd_leftarrow(char *s, int *fd)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   set_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:44:14 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 22:46:46 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:06:44 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	sig_handler_c(int signal)
 {

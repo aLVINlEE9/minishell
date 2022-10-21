@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seungsle <seungsle@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 17:37:03 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:05:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int		check_builtin(t_token **cmd, t_data *data)
 {
