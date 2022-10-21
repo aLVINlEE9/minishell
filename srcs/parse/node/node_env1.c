@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:01:42 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:49:10 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 t_env	*search_env(t_env_list *list, char *key)
 {
-    t_env   *now;
+	t_env	*now;
 
-    if (is_dollar_option(key))
-        return (0);
-    now = list->head->next;
-    while (now != list->tail)
-    {
-        if (ft_strncmp(now->key, key, -1) == 0)
-            return (now);
-        now = now->next;
-    }
-    return (0);
+	if (is_dollar_option(key))
+		return (0);
+	now = list->head->next;
+	while (now != list->tail)
+	{
+		if (ft_strncmp(now->key, key, -1) == 0)
+			return (now);
+		now = now->next;
+	}
+	return (0);
 }
 
 int	create_env_list_sub(t_env_list *list)

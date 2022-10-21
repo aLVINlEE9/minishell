@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:00:44 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:02:03 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:50:20 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_token	*create_token(char *token, t_parse *parse)
 	new_node->token = token;
 	new_node->in_dollar = parse->in_dollar;
 	new_node->around = -1;
-    new_node->is_cmd = parse->is_cmd;
+	new_node->is_cmd = parse->is_cmd;
 	new_node->next = 0;
 	new_node->prev = 0;
 	return (new_node);

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 12:29:41 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:01:52 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:50:05 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 t_token	*search_token(t_token_list *list, char *token)
 {
-    t_token   *now;
+	t_token	*now;
 
-    now = list->head->next;
-    while (now != list->tail)
-    {
-        if (ft_strncmp(now->token, token, -1) == 0)
-            return (now);
-        now = now->next;
-    }
-    return (0);
+	now = list->head->next;
+	while (now != list->tail)
+	{
+		if (ft_strncmp(now->token, token, -1) == 0)
+			return (now);
+		now = now->next;
+	}
+	return (0);
 }
 
 int	create_token_list_sub(t_token_list *list)
