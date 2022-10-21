@@ -91,93 +91,86 @@ typedef struct s_env_list{
 }	t_env_list;
 
 /*
-** node
+*** node ***
 */
-t_env	*search_env(t_env_list *list, char *key);
-int		create_env_list_sub(t_env_list *list);
-void	create_env_list(t_data *data);
-void	append_env_sub(t_env_list *list, t_env *new_node);
-int		append_env(t_env_list *list, char *key, char *val, int is_val_quot);
-t_env	*create_env(char *key, char *val, int is_val_quot);
-t_token	*search_token(t_token_list *list, char *token);
-int		create_token_list_sub(t_token_list *list);
-void	create_token_list(t_data *data);
-void	append_token_sub(t_token_list *list, t_token *new_node);
-int		append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
-t_token	*create_token(char *token, t_parse *parse);
+t_env	    *search_env(t_env_list *list, char *key);
+int		    create_env_list_sub(t_env_list *list);
+void	    create_env_list(t_data *data);
+void	    append_env_sub(t_env_list *list, t_env *new_node);
+int		    append_env(t_env_list *list, char *key, char *val, int is_val_quot);
+t_env	    *create_env(char *key, char *val, int is_val_quot);
+t_token	    *search_token(t_token_list *list, char *token);
+int		    create_token_list_sub(t_token_list *list);
+void	    create_token_list(t_data *data);
+void	    append_token_sub(t_token_list *list, t_token *new_node);
+int		    append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
+t_token	    *create_token(char *token, t_parse *parse);
 
 /*
-** parse
+*** parse ***
 */
-void	replace_util_sub(t_parse *parse, char *first, char *val, char *last);
-void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end);
-void	replace_util(t_data *data, t_parse *parse, int idx, int start);
-void	replace_dollar_to_env(t_data *data, t_parse *parse);
-void    update_shlvl(t_data *data);
-void	parse_env(char **envp, t_data *data);
-int		condition_append_token(t_parse *parse);
-void	condition_dollar(t_data *data, t_parse *parse);
-void	condition_qout(t_parse *parse);
-int		condition_break(t_parse *parse);
-int		is_space(char c);
-int		is_null(char c);
-int 	is_quot(char c);
-int		is_dollar(char c);
-int		is_num(char c);
-int		is_dollar_option(char *str);
-int		is_specifier(t_parse *parse, int check);
-int		is_end(t_parse *parse);
-void	remove_char_from_idx(char *s, int idx);
-void	remove_string(char *s, int idx_s, int idx_e);
-void	qout_remove(t_parse *parse);
-void	init_parse(t_parse *parse, char *str);
-void	init_parse_sub(t_parse *parse);
-void	parse_token_sub(t_data *data, t_parse *parse);
-int		parse_token(t_data *data, char *str);
-int 	syntax_newline(char *token);
-int 	syntax_pipe(char *token);
-int		syntax_check(t_data *data);
+void	    replace_util_sub(t_parse *parse, char *first, char *val, char *last);
+void	    replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, char *buf_end);
+void	    replace_util(t_data *data, t_parse *parse, int idx, int start);
+void	    replace_dollar_to_env(t_data *data, t_parse *parse);
+void        update_shlvl(t_data *data);
+void	    parse_env(char **envp, t_data *data);
+int		    condition_append_token(t_parse *parse);
+void	    condition_dollar(t_data *data, t_parse *parse);
+void	    condition_qout(t_parse *parse);
+int		    condition_break(t_parse *parse);
+int		    is_space(char c);
+int		    is_null(char c);
+int 	    is_quot(char c);
+int		    is_dollar(char c);
+int		    is_num(char c);
+int		    is_dollar_option(char *str);
+int		    is_specifier(t_parse *parse, int check);
+int		    is_end(t_parse *parse);
+void	    remove_char_from_idx(char *s, int idx);
+void	    remove_string(char *s, int idx_s, int idx_e);
+void	    qout_remove(t_parse *parse);
+void	    init_parse(t_parse *parse, char *str);
+void	    init_parse_sub(t_parse *parse);
+void	    parse_token_sub(t_data *data, t_parse *parse);
+int		    parse_token(t_data *data, char *str);
+int 	    syntax_newline(char *token);
+int 	    syntax_pipe(char *token);
+int		    syntax_check(t_data *data);
 
 /*
-** utils
+*** utils ***
 */
 
-void    update_shlvl(t_data *data);
-void    parse_env(char **envp, t_data *data);
-
-int    parse_token(t_data *data, char *str);
-int	is_dollar_option(char *str);
-
-int	syntax_check(t_data *data);
-
-t_token	*search_token(t_token_list *list, char *token);
-int	create_token_list_sub(t_token_list *list);
-void	create_token_list(t_data *data);
-void	append_token_sub(t_token_list *list, t_token *new_node);
-int	append_token(t_token_list *list, t_parse *parse, char *token, size_t size);
-t_token	*create_token(char *token, t_parse *parse);
-
-void	append_env_sub(t_env_list *list, t_env *new_node);
-int	append_env(t_env_list *list, char *key, char *val, int is_val_quot);
-t_env	*create_env(char *key, char *val, int is_val_quot);
-
-size_t		ft_strlen(const char *s);
-char		*ft_strdup(const char *src);
-char		*ft_strjoin(char const *s1, char const *s2);
-void		*ft_memmove(void *dst, const void *src, size_t num);
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	    ft_strlen(const char *s);
+char	    *ft_strdup(const char *src);
+char	    *ft_strjoin(char const *s1, char const *s2);
+char	    *ft_strjoin_jh(char const *s1, char const *s2);
+int	        is_firstcmd_builtin(char *s);
+void	    *ft_memmove(void *dst, const void *src, size_t num);
+int	        ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t	    ft_strlcpy(char *dst, const char *src, size_t size);
 size_t      ft_strlcpycpy(char *dst, const char *src, size_t size);
+int	        count_word(char const *s, char c);
+int	        put_word(char **ret, char const *s, int wordn, char c);
+char	    **go_free(char **ret, int wordn);
+char	    **ft_make_split(char **ret, char const *s, char c);
+char	    **ft_split(char const *s, char c);
 long long	ft_atol(const char *str);
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
-int			count_word(char const *s, char c);
-int			put_word(char **ret, char const *s, int wordn, char c);
-char		**go_free(char **ret, int wordn);
-char		**ft_make_split(char **ret, char const *s, char c);
-char		**ft_split(char const *s, char c);
-void		make_string_itoa(char *p, long long n, int len);
-int			find_len_itoa(long long n);
-char		*ft_itoa(int n);
+void	    make_string_itoa(char *p, long long n, int len);
+int	        find_len_itoa(long long n);
+char	    *ft_itoa(int n);
+char	    *ft_0_string(void);
+char	    *ft_substr(char const *s, unsigned int start, size_t len);
+void	    *ft_memchr(const void *s, int c, size_t n);
+char	    *ft_strchr(const char *s, int c);
+char	    *find_first_cmd(t_token **cmd_ary);
+
+
+
+
+
+
 void		pipex(t_data *data, char **envp);
 void		exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, t_data *data);
 void		exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag);
