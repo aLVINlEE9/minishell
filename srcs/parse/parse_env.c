@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:13:01 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:59:14 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	update_shlvl(t_data *data)
 
 	shlvl = search_env(data->env_list, "SHLVL");
 	val = ft_strdup(shlvl->val);
+	free(shlvl->val);
 	shlvl->val = ft_itoa((int)ft_atol(val) + 1);
 	free(val);
 }
@@ -37,6 +38,7 @@ void	parse_env(char **envp, t_data *data)
 		{
 			temp = ft_split(envp[i], '=');
 			append_env(data->env_list, temp[0], temp[1], 0);
+			free(temp);
 		}
 		i ++;
 	}

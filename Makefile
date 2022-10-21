@@ -6,12 +6,12 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/21 18:10:17 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/21 18:50:25 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC		= cc
+CC		= cc -g
 # CFLAG	= -Werror -Wextra -Wall
 
 RDLINE_DIR	=	/Users/seungsle/.brew/opt/readline/lib/

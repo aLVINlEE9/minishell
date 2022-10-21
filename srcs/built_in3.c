@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:21:27 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,16 @@ int	export_valid_check(char **cmd2, int i, char *ptr)
 	j = 1;
 	if (!is_alpha(cmd2[i][0]) && cmd2[i][0] != '_')
 	{
-		printf("export: `%s': not a valid identifier\n", cmd2[i]);
+		print_built_error("export: `", cmd2[i], "': not a valid identifier");
+		// printf("export: `%s': not a valid identifier\n", cmd2[i]);
 		return (1);
 	}
 	while (cmd2[i][j] && ptr != &cmd2[i][j])
 	{
 		if (!is_alnum(cmd2[i][j]) && cmd2[i][j] != '_')
 		{
-			printf("export: `%s': not a valid identifier\n", cmd2[i]);
+			print_built_error("export: `", cmd2[i], "': not a valid identifier");
+			// printf("export: `%s': not a valid identifier\n", cmd2[i]);
 			return (1);
 		}
 		j++;
@@ -127,7 +129,7 @@ void	print_export(t_data *data)
 	int	i;
 
 	envs = sort_export(data);
-	print_env(data->env_list);
+	// print_env(data->env_list);
 	i = 0;
 	while (envs[i])
 	{

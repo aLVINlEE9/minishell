@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 18:10:33 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:17:52 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ void	termi_new(struct s_termi termi, int fd);
 void	sig_handler(int signal);
 void	set_signal(void);
 void	print_error(char *s, int n);
+void	print_built_error(char *s1, char *s2, char *s3);
 char	*dollarparsing(char *s, int count, int save_c, t_data *data);
 char	*ft_substr(char const*s, unsigned int start, size_t len);
 int		parse_dollar2(char *temp, char **ret, struct s_intset_jh save, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:01:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:17:47 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ void	print_error(char *s, int n)
 		write(2, "syntax error\n", 12);
 		exit(258);
 	}
+}
+
+void	print_built_error(char *s1, char *s2, char *s3)
+{
+	write(2, s1, ft_strlen(s1));
+	write(2, s2, ft_strlen(s2));
+	write(2, s3, ft_strlen(s3));
+	write(2, "\n", 1);
 }

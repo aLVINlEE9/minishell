@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:56:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	built_unset(t_data *data, char **cmd2)
 			env->next->prev = env->prev;
 			env->next = 0;
 			env->prev = 0;
+			free(env->val);
+			free(env->key);
 			free(env);	
 		}
 	}

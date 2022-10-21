@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 18:11:06 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:48:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,17 @@ char    **export_oldpath(void)
     return (ret);
 }
 
+void	free_cmd(char **cmd)
+{
+	free(cmd[0]);
+	free(cmd[1]);
+	free(cmd);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data      	data;
+	char			**cmd;
 	char        	*str;
 	int				ch;
 	struct s_termi	termi;
@@ -126,8 +134,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
     // atexit(leak_check);
 	parse_env(envp, &data); // 32 leaks
-    built_unset(&data, unset_oldpath());
-    built_export(&data, export_oldpath());
+	cmd = unset_oldpath();
+    built_unset(&data, cmd);
+	free_cmd(cmd);
+	cmd = export_oldpath();
+    built_export(&data, cmd);
+	free_cmd(cmd);
     // parse_entt(envp);
 	//
 	set_termi(&termi); // 1 1eak
