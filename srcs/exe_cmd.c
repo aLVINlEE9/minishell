@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:06:16 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 20:01:51 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 	fd[3] = dup(0);
 	count = 0;
 	termi_old(data->termi, 0);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (cmd_lst[count])
 	{
 		if (is_heredoc_here(cmd_lst[count]))
