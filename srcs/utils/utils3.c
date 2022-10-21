@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:16:22 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 15:05:23 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	count_word(char const *s, char c)
 {

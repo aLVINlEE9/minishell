@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:56:58 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 14:16:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	replace_util_sub1(t_parse *parse, char *first, char *val, char *last)
 {

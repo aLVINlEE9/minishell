@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:59:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 13:49:41 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:50 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 void	append_env_sub(t_env_list *list, t_env *new_node)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   make_pipe_cmdlst2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:16:09 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/15 22:44:04 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, \
 		t_cmd_make **start, int cmd_count, int token_count)

@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:30:17 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 12:40:06 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 long long	ft_atol(const char *str)
 {

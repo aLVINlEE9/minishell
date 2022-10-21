@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 12:00:44 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 13:50:20 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:50 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 void	append_token_sub(t_token_list *list, t_token *new_node)
 {

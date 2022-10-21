@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   make_cmdlst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:54:31 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/20 17:49:21 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 char	**make_cmd(t_token **cmd_ary, int cmd_arg_c)//cmd_exe로 옮겨야하나?
 {

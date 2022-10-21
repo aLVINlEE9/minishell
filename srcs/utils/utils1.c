@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:36:51 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 15:04:20 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 size_t	ft_strlen(const char *s)
 {

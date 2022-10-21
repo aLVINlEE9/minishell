@@ -6,11 +6,11 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 16:24:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 13:49:10 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:22:34 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*search_env(t_env_list *list, char *key)
 {
