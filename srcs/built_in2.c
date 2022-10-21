@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:02:40 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,18 @@ void	built_cd(char **cmd, t_data *data)
 	home = env->val;
 	// home = getenv("HOME"); // search env
 	cwd = getcwd(0, 1024);
-	if (cmd[1] == 0 || ft_strncmp(cmd[1], "~", -1) == 0)
+	if (cmd[1] == 0 || cmd[1][0] == '~')
 	{
-		result = chdir(home);
+		if (cmd[1][1] == '/')
+		{
+			home = ft_strjoin_jh(home, &cmd[1][1]);
+			result = chdir(home);
+			free(home);
+		}
+		else
+		{
+			result = chdir(home);
+		}
 		change_env(data->env_list, search_env(data->env_list, "OLDPWD"), cwd);
 		change_env(data->env_list, search_env(data->env_list, "PWD"), home);
 		// change_env(data->data->env_list, (data->envp), "OLDPWD", cwd);
