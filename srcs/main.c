@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 15:44:56 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:25:15 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,20 @@ void	free_cmd(char **cmd)
 	free(cmd);
 }
 
+void	update_home(t_data *data)
+{
+	t_env	*env;
+	char	*pwd;
+	char	*oldpwd;
+	char	*home;
+
+	env = search_env(data->env_list, "HOME");
+	if (env)
+		data->home = ft_strdup(env->val);
+	data->oldpwd = NULL;
+	data->pwd = getcwd(NULL, 0);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data      	data;
@@ -147,6 +161,7 @@ int main(int argc, char **argv, char **envp)
 	//
     // print_env(data.env_list);
 	update_shlvl(&data); // 1 leak
+	update_home(&data);
 	// tcgetattr(0, &termi);
 	// termi.c_lflag &= ~(ECHOCTL);
 	// termi.c_lflag &= ~(ECHO);

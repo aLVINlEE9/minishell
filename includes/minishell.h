@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 15:08:36 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:08:30 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ typedef struct s_data{
 	struct s_termi		termi;
 	int					exit_code;
 	int					heredoc_is_still_alive;
+	char				*pwd;
+	char				*oldpwd;
+	char				*home;
 }	t_data;
 
 typedef struct s_parse{
@@ -248,7 +251,7 @@ int		parse_dollar_question(char **ret, t_data *data);
 int		check_builtin(t_token **cmd, t_data *data);
 void	built_exit(char **cmd2, int flag, t_data *data);
 void	built_pwd(t_data *data);
-void	built_echo(char **cmd2);
+void	built_echo(char **cmd2, t_data *data);
 void	built_cd(char **cmd2, t_data *data);
 int		ft_is_digit(char *cmd);
 void	change_env(t_env_list *env_list, t_env *env, char *change_val);

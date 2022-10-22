@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:05:40 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:13:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		check_builtin(t_token **cmd, t_data *data)
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2, 1, data);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
-		built_echo(cmd2);
+		built_echo(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
 		built_cd(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
@@ -89,11 +89,13 @@ void	built_pwd(t_data *data)
 	t_env	*env;
 	char	*ret;
 	
-	env = search_env(data->env_list, "PWD");
-	ret = env->val;
-	// ret = getenv("PWD");
+	// env = search_env(data->env_list, "PWD");
+	// ret = env->val;
+	ret = getcwd(NULL, 0);
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
+	free(ret);
+	data->exit_code = 0;
 }
 
 int	check_echo_opt(char **cmd2)
@@ -126,7 +128,7 @@ int	check_echo_opt(char **cmd2)
 	return (opt_count);
 }
 
-void	built_echo(char **cmd2)
+void	built_echo(char **cmd2, t_data *data)
 {
 	int	len;
 
@@ -153,4 +155,5 @@ void	built_echo(char **cmd2)
 		}
 		write(1, "\n", 1);
 	}
+	data->exit_code = 0;
 }

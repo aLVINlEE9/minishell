@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 16:10:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:05:43 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	chk_builtin_infork(char **cmd2, t_data *data)
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2, 0, data);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
-		built_echo(cmd2);
+		built_echo(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "cd", -1) == 0)
 		built_cd(cmd2, data);
 	else if (ft_strncmp(cmd2[0], "env", -1) == 0)
