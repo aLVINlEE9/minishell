@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 16:02:20 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:18:55 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ int	is_lstend(t_token ***cmd_lst, int count)
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 		t_data *data)
 {
-	int		fd[4];
+	int		fd[5];
 	int		count;
 	pid_t	pid;
 	int		exitcode;
 
 	fd[2] = -1;
 	fd[3] = dup(0);
+	fd[4] = dup(1);
+	printf("%d, %d\n", fd[3], fd[4]);
 	count = 0;
 	termi_old(data->termi, 0);
 	signal(SIGINT, SIG_IGN);
@@ -72,20 +74,18 @@ void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 		dup2(fd[2], 0);
 		close(fd[2]);
 	}
-	cmd = make_inout_cmd(cmd_ary, fd, data);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
-	close(fd[0]);
-	close(fd[3]);
-	close(fd[4]);
 	if (flag == 0)
 		dup2(fd[1], 1);
-	if (chk_builtin_infork(cmd, data))//built in command check.
+	if (check_builtin(cmd_ary, data))
 		exit(0);
 	else
-		exe_cmd2(cmd, data);
+		cmd = make_inout_cmd(cmd_ary, fd, data);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
+	close(fd[0]);
+	exe_cmd2(cmd, data);
 	if (is_slash(cmd[0]))
 	{
 		if (stat(cmd[0], &st) != -1)
-			if (/*S_ISDIR(st.st_mode)*/ 0040000 & st.st_mode)
+			if (S_ISDIR(st.st_mode))
 			{
 				write(2, cmd[0], ft_strlen(cmd[0]));
 				write(2, ": is dir\n", 9);
@@ -128,8 +128,6 @@ void	modify_inout(t_token **cmd_ary, int count, int *fd, t_data *data)
 
 	if (cmd_ary[count + 1] == 0)
 		print_error(0, 2);
-	//if (cmd_ary[count + 1] -> is_cmd == 1)  syntax error?
-		//exit(1);//printerror & exit;
 	s = cmd_ary[count]->token;
 	if (ft_strlen(s) == 1)
 	{

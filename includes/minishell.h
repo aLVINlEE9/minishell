@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 15:08:36 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:57:33 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,4 +267,7 @@ int		is_heredoc_here(t_token **cmd_ary);
 void	sig_handler_fork_c(int signal);
 void	sig_handler_fork_d(int signal);
 void	sig_handler_fork_b(int signal);
+void	set_signal_fork(void);
+void	exe_cmd3(char *temp2, char **temp, char **cmd, char **path);
+int		monitoring_pid(int last_pid, int ret);
 #endif

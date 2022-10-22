@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 16:10:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:44:34 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	chk_builtin_infork(char **cmd2, t_data *data)
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
 		built_pwd(data);
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
-	 	built_export(data, cmd2);
+		built_export(data, cmd2);
 	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
 		built_unset(data, cmd2);
 	else
@@ -75,15 +75,11 @@ void	exe_cmd2(char **cmd, t_data *data)
 {
 	char	**path;
 	char	*temp2;
-    char    **temp;
-	int		count;
+	char	**temp;
 
-	count = 0;
 	temp = update_env(data, 0);
 	path = parse_env2(temp);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
-	signal(SIGQUIT, sig_handler_fork_b);
+	set_signal_fork();
 	if (is_slash(cmd[0]))
 		execve(cmd[0], cmd, temp);
 	if (!path)
@@ -94,6 +90,15 @@ void	exe_cmd2(char **cmd, t_data *data)
 		print_error(cmd[0], 3);
 		return ;
 	}
+	exe_cmd3(temp2, temp, cmd, path);
+	free_env(temp);
+}
+
+void	exe_cmd3(char *temp2, char **temp, char **cmd, char **path)
+{
+	int	count;
+
+	count = 0;
 	while (path[count])
 	{
 		if (!is_slash(cmd[0]))
@@ -106,5 +111,4 @@ void	exe_cmd2(char **cmd, t_data *data)
 			execve(cmd[0], cmd, temp);
 		count ++;
 	}
-	free_env(temp);
 }

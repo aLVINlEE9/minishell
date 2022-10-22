@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 22:40:45 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 20:32:35 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:01:53 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,12 @@ void	sig_handler_fork_d(int signal)
 void	sig_handler_fork_b(int signal)
 {
 	write(2, "Quit: 3\n", 8);
+}
+
+void	set_signal_fork(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGTERM, SIG_DFL);
+	signal(SIGQUIT, sig_handler_fork_b);
+
 }
