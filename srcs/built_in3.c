@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 15:32:08 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:35:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ void    built_export(t_data *data, char	**cmd2)
 			key = (char *)malloc(sizeof(char) * (ptr - cmd2[i] + 1));
 			ft_strlcpy(key, cmd2[i], ptr - cmd2[i] + 1);
 			// splited = ft_split(cmd2[i], '=');
+			// printf("append  %s\n", ft_strdup(ptr + 1));
 			append_env(data->env_list, key, ft_strdup(ptr + 1), 0);
 		}
 		i++;
