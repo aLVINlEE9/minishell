@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:36:35 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:05:53 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	condition_break(t_parse *parse)
 	if (parse->in_qout && is_null(parse->s[parse->i]))
 	{
 		printf("unclose quot\n");
-		return (1);
+		return (2);
 	}
 	return (0);
 }

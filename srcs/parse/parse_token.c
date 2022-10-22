@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:09:16 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void	init_parse_sub(t_parse *parse)
 	parse->buf_env_len = 0;
 }
 
-void	parse_token_sub(t_data *data, t_parse *parse)
+int	parse_token_sub(t_data *data, t_parse *parse)
 {
 	while (1)
 	{
-		if (condition_break(parse))
+		if (condition_break(parse) == 2)
+			return (1) ;
+		if (condition_break(parse) == 1)
 			break ;
 		if (condition_append_token(parse))
 		{
@@ -56,6 +58,7 @@ void	parse_token_sub(t_data *data, t_parse *parse)
 		condition_dollar(data, parse);
 		parse->i++;
 	}
+	return (0);
 }
 
 int	parse_token(t_data *data, char *str)
@@ -69,7 +72,8 @@ int	parse_token(t_data *data, char *str)
 		parse.idx = parse.i;
 		init_parse_sub(&parse);
 		if (!is_space(parse.s[parse.i]))
-			parse_token_sub(data, &parse);
+			if (parse_token_sub(data, &parse))
+				return (0);
 		if (is_space(parse.s[parse.i]))
 			parse.i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 20:26:55 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:08:36 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	    remove_string(char *s, int idx_s, int idx_e);
 void	    qout_remove(t_parse *parse);
 void        init_parse(t_data *data, t_parse *parse, char *str);
 void	    init_parse_sub(t_parse *parse);
-void	    parse_token_sub(t_data *data, t_parse *parse);
+int			parse_token_sub(t_data *data, t_parse *parse);
 int		    parse_token(t_data *data, char *str);
 int 	    syntax_newline(char *token);
 int 	    syntax_pipe(char *token);
