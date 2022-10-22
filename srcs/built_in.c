@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:05:40 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:28:42 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	built_pwd(t_data *data)
 	// ret = getenv("PWD");
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
+	data->exit_code = 0;
 }
 
 int	check_echo_opt(char **cmd2)
