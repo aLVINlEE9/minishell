@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:39:41 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char    **update_env(t_data *data, int flag)
 		if (env->val == NULL)
 			temp_list[i] = temped;
 		else
-			temp_list[i] = ft_strjoin(temped, ft_strdup(env->val));
+			temp_list[i] = ft_strjoin_ss(temped, ft_strdup(env->val));
 		env = env->next;
 		i++;
 		// free(temped);

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 17:08:30 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:39:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ char	    *ft_substr(char const *s, unsigned int start, size_t len);
 void	    *ft_memchr(const void *s, int c, size_t n);
 char	    *ft_strchr(const char *s, int c);
 char	    *find_first_cmd(t_token **cmd_ary);
-
+char		*ft_strjoin_ss(char const *s1, char const *s2);
 
 
 

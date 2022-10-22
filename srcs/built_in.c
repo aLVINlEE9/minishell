@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:13:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:59:31 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ int		check_builtin(t_token **cmd, t_data *data)
 		built_unset(data, cmd2);
 	else
 	{
+		free(cmd2);
 		//dup2(fd[0], 0);
 		//dup2(fd[1], 1);
 		return (0);
 	}
+	free(cmd2);
 	//close(fd[0]);
 	//close(fd[1]);
 	//close(fd[3]);

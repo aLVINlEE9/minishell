@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/22 16:27:22 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/22 19:39:33 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME	= minishell
 CC		= cc -g
 # CFLAG	= -Werror -Wextra -Wall
 
-RDLINE_DIR	=	/Users/junhjeon/.brew/opt/readline/lib/
-RDLINE_INC	=	/Users/junhjeon/.brew/opt/readline/include/
+RDLINE_DIR	=	/Users/seungsle/.brew/opt/readline/lib/
+RDLINE_INC	=	/Users/seungsle/.brew/opt/readline/include/
 
 INC_DIR		=	./includes/
 
@@ -42,6 +42,7 @@ SOURCES 	=	main.c\
 			utils/utils3.c\
 			utils/utils4.c\
 			utils/utils5.c\
+			utils/utils.c\
 			pipex.c\
 			exe_cmd.c\
 			cmd.c\

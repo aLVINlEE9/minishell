@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:24:02 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 20:03:36 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	built_cd(char **cmd, t_data *data)
 	char	*oldpwd;
 	char	*prev;
 
+	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
 	home = data->home;
 	pwd = data->pwd;
@@ -65,10 +66,12 @@ void	built_cd(char **cmd, t_data *data)
 			{
 				print_built_error("cd: ", cmd[1], ": No such file or directory");
 				data->exit_code = 1;
+				free(home_slash);
 				return ;
 			}
 			change_env(data->env_list, env_oldpwd, pwd);
 			change_env(data->env_list, env_pwd, home_slash);
+			free(home_slash);
 		}
 	}
 	else if (ft_strncmp(cmd[1], "-", -1) == 0)

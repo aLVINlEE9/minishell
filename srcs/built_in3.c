@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:35:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:45:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ void	print_export(t_data *data)
 		{
 			printf("%s=\"%s\"\n", env->key, env->val);
 		}
+		free(splited[0]);
+		free(splited[1]);
 		free(splited);
 		i++;
 	}

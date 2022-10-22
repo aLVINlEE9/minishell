@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:18:55 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/22 19:34:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 	fd[2] = -1;
 	fd[3] = dup(0);
 	fd[4] = dup(1);
-	printf("%d, %d\n", fd[3], fd[4]);
 	count = 0;
 	termi_old(data->termi, 0);
 	signal(SIGINT, SIG_IGN);
