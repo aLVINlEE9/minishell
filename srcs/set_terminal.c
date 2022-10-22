@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:08:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:06:50 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:37:18 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	set_termi(struct s_termi *termi)
 	save = malloc(sizeof(struct termios) * 1);
 	new_term = malloc(sizeof(struct termios) * 1);
 	if (!new_term || !save)
-		return ;//exit
+		exit(1);
 	tcgetattr(0, save);
 	tcgetattr(0, new_term);
 	new_term -> c_lflag &= ~(ECHOCTL);

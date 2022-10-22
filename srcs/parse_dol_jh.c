@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:32:26 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:39:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:33:54 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*dollarparsing(char *s, int count, int save_c, t_data *data)
 	return (ret);
 }
 
-void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, t_data *data)
+void	parse_dollar(char *temp, char **ret, \
+		struct s_intset_jh save, t_data *data)
 {
 	int					back_slash;
 
@@ -46,7 +47,8 @@ void	parse_dollar(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 			if (back_slash == 0)
 				*(save.count) += parse_dollar2(temp, ret, save, data) + 1;
 			else
-				*(save.count) += parse_dollar2_b(temp, ret, *(save.count), *(save.save_c)) + 1;
+				*(save.count) += parse_dollar2_b(temp, \
+				ret, *(save.count), *(save.save_c)) + 1;
 			*(save.save_c) = *(save.count);
 		}
 		else
@@ -101,13 +103,11 @@ int	parse_dollar2(char *temp, char **ret, struct s_intset_jh save, t_data *data)
 	int		count;
 
 	count = *(save.count);
-	//printf("count : %d\n", count);
-	//if (count == 0)
-		//;
-	/*else*/ if (!(*ret))
+	if (!(*ret))
 		*ret = ft_substr(temp, 0, count);
 	else
-		*ret = ft_strjoin(*ret, ft_substr(temp, *(save.save_c), *(save.count) - *(save.save_c)));
+		*ret = ft_strjoin(*ret, ft_substr(temp, \
+					*(save.save_c), *(save.count) - *(save.save_c)));
 	ct = 0;
 	if (temp[count + 1] == '?')
 		return (parse_dollar_question(ret, data));

@@ -21,9 +21,9 @@ int		check_builtin(t_token **cmd, t_data *data)
 	first_cmd = find_first_cmd(cmd);
 	if (!is_firstcmd_builtin(first_cmd))
 		return (0);
-	fd[0] = dup(0);
-	fd[1] = dup(1);
-	fd[3] = dup(0);
+	//fd[0] = dup(0);
+	//fd[1] = dup(1);
+	//fd[3] = dup(0);
 	cmd2 = make_inout_cmd(cmd, &fd[0], data);
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2, 1, data);
@@ -41,12 +41,13 @@ int		check_builtin(t_token **cmd, t_data *data)
 		built_unset(data, cmd2);
 	else
 	{
-		dup2(fd[0], 0);
-		dup2(fd[1], 1);
+		//dup2(fd[0], 0);
+		//dup2(fd[1], 1);
 		return (0);
 	}
-	dup2(fd[0], 0);
-	dup2(fd[1], 1);
+	//close(fd[0]);
+	//close(fd[1]);
+	//close(fd[3]);
 	return (1);
 }
 void	built_exit(char **cmd2, int flag, t_data *data)

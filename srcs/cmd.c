@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 18:27:46 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 18:14:47 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,21 @@ void	cmd_rightarrow(char *s, int *fd)
 
 void	cmd_doub_leftarrow(char *s, int *fd, t_data *data)
 {
-	char	*str;
-	char	*ret;
-	int		temp[2];
-	struct	s_dollar_str	str_temp;
+	char				*str;
+	char				*ret;
+	int					temp[3];
+	struct s_dollar_str	str_temp;
 
 	pipe(temp);
 	str_temp.str = str;
 	str_temp.fd_temp = &temp[0];
+	temp[2] = dup(1);
+	dup2(fd[4], 1);
 	dup2(fd[3], 0);
 	cmd_heredoc_write(str_temp, ret, s, data);
 	dup2(temp[0], 0);
+	dup2(temp[2], 1);
+	close(temp[2]);
 	close(temp[0]);
 	close(temp[1]);
 	return ;
@@ -46,7 +50,8 @@ void	cmd_doub_rightarrow(char *s, int *fd)
 	return ;
 }
 
-void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, char *s, t_data *data)
+void	cmd_heredoc_write(struct s_dollar_str t_str, char *ret, \
+		char *s, t_data *data)
 {
 	while (1)
 	{

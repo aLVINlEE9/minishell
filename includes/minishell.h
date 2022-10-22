@@ -270,4 +270,7 @@ int		is_heredoc_here(t_token **cmd_ary);
 void	sig_handler_fork_c(int signal);
 void	sig_handler_fork_d(int signal);
 void	sig_handler_fork_b(int signal);
+void	set_signal_fork(void);
+void	exe_cmd3(char *temp2, char **temp, char **cmd, char **path);
+int		monitoring_pid(int last_pid, int ret);
 #endif
