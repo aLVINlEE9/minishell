@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 20:32:35 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:44:56 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void    print_env(t_env_list *env_list)
     now = env_list->head->next;
     while (now != env_list->tail)
     {
-        printf("%s\n", now->key);
+        printf("%s ====  %s\n", now->key, now->val);
         now = now->next;
     }
 }
@@ -156,6 +156,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		set_signal();
 		termi_new(data.termi, 0);
+		// print_env(data.env_list);
 		data.heredoc_is_still_alive = 0;
 		str = readline("minishell$ ");// 컴파일시 -lreadline 추가
 		if (str == 0)

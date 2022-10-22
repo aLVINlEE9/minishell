@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:01:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 19:17:47 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:03:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ void	print_error(char *s, int n)
 	{
 		write(2, "syntax error\n", 12);
 		exit(258);
+	}
+	if (n == 3)
+	{
+		write(2, s, ft_strlen(s));
+		write(2, ": No such file or directory", 27);
+		write(2, "\n", 1);
+		exit(127);
 	}
 }
 

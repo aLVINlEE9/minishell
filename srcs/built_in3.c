@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 19:21:27 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:32:08 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,10 @@ void    built_export(t_data *data, char	**cmd2)
 	{
 		ptr = ft_strchr(cmd2[i], '=');
 		if (export_valid_check(cmd2, i, ptr))
+		{
+			data->exit_code = 1;
 			return ;
+		}
 		if (!ptr)
 		{
 			append_env(data->env_list, ft_strdup(cmd2[i]), NULL, 1);
@@ -193,6 +196,7 @@ void    built_export(t_data *data, char	**cmd2)
 		}
 		i++;
 	}
+	data->exit_code = 0;
     // printf("%s\n%s\n", splited[0], splited[1]);
     // printf("%s\n%s\n%s\n", cmd2[0], cmd2[1], cmd2[2]);
 }

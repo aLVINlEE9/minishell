@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 20:10:24 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:10:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,16 @@ void	exe_cmd2(char **cmd, t_data *data)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGTERM, SIG_DFL);
 	signal(SIGQUIT, sig_handler_fork_b);
+	if (is_slash(cmd[0]))
+		execve(cmd[0], cmd, temp);
+	if (!path)
+	{
+		free(temp);
+		if (is_slash(cmd[0]))
+			return ;
+		print_error(cmd[0], 3);
+		return ;
+	}
 	while (path[count])
 	{
 		if (!is_slash(cmd[0]))

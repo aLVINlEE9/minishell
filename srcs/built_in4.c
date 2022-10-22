@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 18:20:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 18:56:23 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:27:24 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	built_env(t_data *data)
 	{
 		printf("%s\n", temp[i++]);
 	}
+	data->exit_code = 0;
 }
 
 void	built_unset(t_data *data, char **cmd2)

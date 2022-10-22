@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 20:38:40 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 19:19:51 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:21:10 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	built_cd(char **cmd, t_data *data)
 	cwd = getcwd(0, 1024);
 	if (cmd[1] == 0 || cmd[1][0] == '~')
 	{
-		if (cmd[1][1] == '/')
+		if (cmd[1] == 0)
+		{
+			result = chdir(home);
+		}
+		else if (cmd[1][1] == '/')
 		{
 			home = ft_strjoin_jh(home, &cmd[1][1]);
 			result = chdir(home);
 			free(home);
-		}
-		else
-		{
-			result = chdir(home);
 		}
 		change_env(data->env_list, search_env(data->env_list, "OLDPWD"), cwd);
 		change_env(data->env_list, search_env(data->env_list, "PWD"), home);
@@ -58,6 +58,7 @@ void	built_cd(char **cmd, t_data *data)
 		{
 			print_built_error("cd: ", "OLDPWD not set", "");
 			free(cwd);
+			data->exit_code = 1;
 			return ;
 		}
 		result = chdir(env->val);
@@ -73,6 +74,7 @@ void	built_cd(char **cmd, t_data *data)
 		{
 			print_built_error("cd: ", cmd[1], ": No such file or directory");
 			// printf("cd: %s: No such file or directory\n", cmd[1]);
+			data->exit_code = 1;
 			free(cwd);
 			return ;
 		}
@@ -84,7 +86,13 @@ void	built_cd(char **cmd, t_data *data)
 		// change_env(data->data->env_list, data->envp, "PWD", cwd);
 	}
 	if (result == -1)
+	{
 		print_built_error("cd: ", cmd[1], ": No such file or directory");
+		data->exit_code = 1;
+		free(cwd);
+		return ;
+	}
+	data->exit_code = 0;
 	free(cwd);
 }
 
