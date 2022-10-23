@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 15:09:39 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 15:09:46 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:13:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,28 @@ void	built_exit(char **cmd2, int flag, t_data *data)
 		exit(0);
 	}
 	else
+		built_exit_args(cmd2, flag, data, code);
+}
+
+void	built_exit_args(char **cmd2, int flag, t_data *data, long long code)
+{
+	if (ft_is_digit(cmd2[1]))
 	{
-		if (ft_is_digit(cmd2[1]))
+		if (cmd2[2] != 0)
 		{
-			if (cmd2[2] != 0)
+			if (flag == 1)
 			{
-				if (flag == 1)
-				{
-					write(2, "exit\n", 5);
-					write(2, "too many args\n", 14);
-				}
-				return ;
+				write(2, "exit\n", 5);
+				write(2, "too many args\n", 14);
+				data->exit_code = 1;
 			}
-			code = ft_atol(cmd2[1]);
-			termi_old(data->termi, 0);
-			exit((unsigned char)code);
+			return ;
 		}
-		write(2, "numeric arg required\n", 21);
+		code = ft_atol(cmd2[1]);
 		termi_old(data->termi, 0);
-		exit(255);
+		exit((unsigned char)code);
 	}
+	write(2, "numeric arg required\n", 21);
+	termi_old(data->termi, 0);
+	exit(255);
 }

@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/23 15:15:50 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/23 16:18:37 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,13 @@ INC_DIR		=	./includes/
 SRCS_DIR	=	./srcs/
 
 SOURCES 	=	main.c\
-			built_in/built_cd.c\
+			built_in/built_cd1.c\
+			built_in/built_cd2.c\
 			built_in/built_echo.c\
 			built_in/built_env.c\
 			built_in/built_exit.c\
-			built_in/built_export.c\
+			built_in/built_export1.c\
+			built_in/built_export2.c\
 			built_in/built_in.c\
 			built_in/built_pwd.c\
 			built_in/built_unset.c\
