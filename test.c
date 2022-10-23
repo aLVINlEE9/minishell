@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -181,3 +182,11 @@ clear_screen();
 
 	return (0);
 }
+=======
+int	main()
+{
+	while (1)
+		;
+	return (0);
+}
+>>>>>>> junho3

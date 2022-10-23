@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:44:14 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 19:35:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 21:42:56 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ void	sig_handler_d(int signal)
 
 void	set_signal(void)
 {
-	signal(SIGINT, sig_handler_c);// c
-	signal(SIGQUIT, sig_handler_b);//b
-	signal(SIGTERM, SIG_IGN);
+	signal(SIGINT, sig_handler_c);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTERM, sig_handler_b);
+}
+
+void	set_signal_ign(void)
+{
+	signal(SIGINT, sig_handler_fork_c);
+	signal(SIGQUIT, sig_handler_fork_c);
+	signal(SIGTERM, sig_handler_fork_c);
 }

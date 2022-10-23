@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 14:39:06 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:32:12 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,13 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 	while (1)
 	{
 		if (condition_break(parse) == 2)
-			return (1) ;
+			return (1);
 		if (condition_break(parse) == 1)
 			break ;
 		if (condition_append_token(parse))
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
-			// if (!(parse->is_dollar_option && parse->is_env))
-			// 	free(parse->s);
 			break ;
 		}
 		condition_qout(parse);

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:16:09 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:21:52 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_token	***make_t_cmd_make_lst(t_token_list *tok_lst, \
 	}
 	cmd_list = malloc(sizeof(struct s_token **) * (cmd_count + 1));
 	if (!(cmd_list))
-		exit(1); //error
+		exit(1);
 	cmd_list[cmd_count] = 0;
 	return (cmd_list);
 }
@@ -58,7 +58,7 @@ void	whatisit(t_token_list *tok_lst, t_token ***cmd_list, \
 			start = start -> next;
 			temp_list = malloc(sizeof(struct s_token) * ((start -> count) + 1));
 			if (!temp_list)
-				exit(1);//error
+				exit(1);
 			temp_list[start -> count] = 0;
 			cmd_count ++;
 			cmd_list[cmd_count] = temp_list;
@@ -69,13 +69,3 @@ void	whatisit(t_token_list *tok_lst, t_token ***cmd_list, \
 		now = now -> next;
 	}
 }
-/*t_token	**make_t_token_lst(t_cmd_make *start, )
-{
-	t_token	**temp_list;
-
-	temp_list = malloc(sizeof(struct s_token*) * ((start -> count) + 1));
-	if (!temp_list)
-		exit(1);//error
-	temp_list[start -> count] = 0;
-	cmd_list[cmd_count] = temp_list;
-}*/

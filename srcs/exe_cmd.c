@@ -6,18 +6,15 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/22 19:34:56 by seungsle         ###   ########.fr       */
+=======
+/*   Updated: 2022/10/23 14:18:24 by junhjeon         ###   ########.fr       */
+>>>>>>> junho3
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_lstend(t_token ***cmd_lst, int count)
-{
-	if (cmd_lst[count + 1] == 0)
-		return (1);
-	return (0);
-}
 
 void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 		t_data *data)
@@ -32,41 +29,13 @@ void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
 	fd[4] = dup(1);
 	count = 0;
 	termi_old(data->termi, 0);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	while (cmd_lst[count])
-	{
-		if (is_heredoc_here(cmd_lst[count]))
-			data -> heredoc_is_still_alive = 1;
-		if (pipe(fd) == -1)
-			exit(1);
-		pid = fork();
-		if (pid == 0)
-			exe_cmd(cmd_lst[count], data, &fd[0], is_lstend(cmd_lst, count));
-		else
-		{
-			if (fd[2] != -1)
-				close(fd[2]);
-			close(fd[1]);
-			fd[2] = dup(fd[0]);
-			close(fd[0]);
-			if (data->heredoc_is_still_alive == 1)
-			{
-				wait(&exitcode);
-				data->exit_code = (unsigned char)(exitcode);
-				data->heredoc_is_still_alive = 0;
-			}
-		}
-		count ++;
-	}
+	pid = exe_fork2(cmd_lst, data, 0, &fd[0]);
 	monitoring(data, pid, &fd[0]);
 }
 
 void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 {
 	char		**cmd;
-	struct stat	st;
 
 	if (fd[2] != -1)
 	{
@@ -78,24 +47,10 @@ void	exe_cmd(t_token **cmd_ary, t_data *data, int *fd, int flag)
 	if (check_builtin(cmd_ary, data))
 		exit(0);
 	else
-		cmd = make_inout_cmd(cmd_ary, fd, data);// 읽어내고 리다이렉션에 따라 fd를 조정한다.
+		cmd = make_inout_cmd(cmd_ary, fd, data);
 	close(fd[0]);
 	exe_cmd2(cmd, data);
-	if (is_slash(cmd[0]))
-	{
-		if (stat(cmd[0], &st) != -1)
-			if (S_ISDIR(st.st_mode))
-			{
-				write(2, cmd[0], ft_strlen(cmd[0]));
-				write(2, ": is dir\n", 9);
-				exit(0);
-			}
-		write(2, strerror(errno), ft_strlen(strerror(errno)));
-		write(2, "\n", 1);
-		exit(127);
-	}
-	else
-		print_error(cmd[0], 1);
+	is_dir(cmd);
 }
 
 char	**make_inout_cmd(t_token **cmd_ary, int *fd, t_data *data)
