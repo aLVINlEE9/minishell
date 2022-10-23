@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 17:08:30 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/22 21:11:23 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,14 @@ char	    *ft_substr(char const *s, unsigned int start, size_t len);
 void	    *ft_memchr(const void *s, int c, size_t n);
 char	    *ft_strchr(const char *s, int c);
 char	    *find_first_cmd(t_token **cmd_ary);
+void		free_for_all(t_data *data);
+void		free_for_line(t_data *data);
+void		print_env(t_env_list *env_list);
+int			print_node(t_token_list *token_list);
+char		**unset_oldpath(void);
+char		**export_oldpath(void);
+void		free_cmd(char **cmd);
+void		update_home(t_data *data);
 
 
 
@@ -236,7 +244,7 @@ int		parse_dollar2_b(char *temp, char **ret, int count, int save_c);
 void	parse_backslash(char *temp, char **ret, struct s_intset_jh save, int *bs);
 void	cmd_heredoc_write(struct s_dollar_str t, char *ret, char *s, t_data *data);
 char	*ft_null_string(void);
-void	monitoring(t_data *data, int pid, int *fd);
+void	monitoring(t_data *data, pid_t pid, int *fd);
 void	exe_cmd2(char **cmd, t_data *data);
 char	**make_cmd(t_token **cmd_ary, int cmd_arg_c);
 void	ft_lstadd_back(t_cmd_make **lst, t_cmd_make *new);
@@ -272,5 +280,9 @@ void	sig_handler_fork_d(int signal);
 void	sig_handler_fork_b(int signal);
 void	set_signal_fork(void);
 void	exe_cmd3(char *temp2, char **temp, char **cmd, char **path);
-int		monitoring_pid(int last_pid, int ret);
+int		monitoring_pid(pid_t last_pid, int ret);
+pid_t	exe_fork2(t_token ***cmd_lst, t_data *data, int count, int *fd);
+void	parent_p(t_data *data, int *fd);
+void	is_dir(char **cmd);
+void	set_signal_ign(void);
 #endif

@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/22 16:27:22 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/23 14:02:50 by junhjeon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SOURCES 	=	main.c\
 			utils/utils3.c\
 			utils/utils4.c\
 			utils/utils5.c\
+			utils/utils6.c\
+			utils/utils7.c\
 			pipex.c\
 			exe_cmd.c\
 			cmd.c\
@@ -53,6 +55,7 @@ SOURCES 	=	main.c\
 			parse_dol_jh2.c\
 			monitoring.c\
 			exe_cmd2.c\
+			exe_cmd3.c\
 			make_cmdlst.c\
 			make_pipe_cmdlst.c\
 			make_pipe_cmdlst2.c\

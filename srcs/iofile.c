@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:36:48 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/21 16:22:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:19:06 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_iofile2(char *s, int *fd, int count, char *filename)
 		fd_iofile = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_iofile == -1 || access(filename, W_OK) == -1)
 			print_error(s, 1);
-		dup2(fd_iofile, 1); // 나중엔 풀어줘야함 
+		dup2(fd_iofile, 1);
 		free(filename);
 	}
 	return ;

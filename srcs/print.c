@@ -6,11 +6,28 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 19:01:37 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:36:26 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:24:19 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_error2(char *s, int n)
+{
+	if (n == 2)
+	{
+		write(2, "syntax error\n", 12);
+		exit(258);
+	}
+	if (n == 3)
+	{
+		write(2, s, ft_strlen(s));
+		write(2, ": No such file or directory", 27);
+		write(2, "\n", 1);
+		exit(127);
+	}
+	return ;
+}
 
 void	print_error(char *s, int n)
 {
@@ -29,18 +46,9 @@ void	print_error(char *s, int n)
 		write(2, "\n", 1);
 		exit(127);
 	}
-	if (n == 2)
-	{
-		write(2, "syntax error\n", 12);
-		exit(258);
-	}
-	if (n == 3)
-	{
-		write(2, s, ft_strlen(s));
-		write(2, ": No such file or directory", 27);
-		write(2, "\n", 1);
-		exit(127);
-	}
+	if (n == 2 || n == 3)
+		print_error2(s, n);
+	return ;
 }
 
 void	print_built_error(char *s1, char *s2, char *s3)
