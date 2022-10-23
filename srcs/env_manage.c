@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 18:04:24 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 15:41:20 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:36:55 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	**update_env(t_data *data, int flag)
 	t_env_list	*env_list;
 	t_env		*env;
 	char		**temp_list;
-	char		*temp;
 
 	env_list = data->env_list;
 	env = env_list->head->next;

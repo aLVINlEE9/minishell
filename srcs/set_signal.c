@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:44:14 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:22:36 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:38:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	sig_handler_c(int signal)
 
 void	sig_handler_b(int signal)
 {
-	if(signal == SIGQUIT)
+	if (signal == SIGQUIT)
 		;
 	rl_redisplay();
 	return ;
@@ -33,7 +33,7 @@ void	sig_handler_b(int signal)
 
 void	sig_handler_d(int signal)
 {
-	if(signal == SIGTERM)
+	if (signal == SIGTERM)
 		;
 	exit(0);
 }

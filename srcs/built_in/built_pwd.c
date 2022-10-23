@@ -1,38 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_signal_fork.c                                  :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 22:40:45 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:36:38 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/23 15:10:06 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/23 16:35:10 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_handler_fork_c(int signal)
+void	built_pwd(t_data *data)
 {
-	(void)signal;
-	return ;
-}
+	char	*ret;
 
-void	sig_handler_fork_d(int signal)
-{
-	(void)signal;
-	return ;
-}
-
-void	sig_handler_fork_b(int signal)
-{
-	(void)signal;
-	return ;
-}
-
-void	set_signal_fork(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	ret = getcwd(NULL, 0);
+	write(1, ret, ft_strlen(ret));
+	write(1, "\n", 1);
+	free(ret);
+	data->exit_code = 0;
 }

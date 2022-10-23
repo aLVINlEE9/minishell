@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_signal_fork.c                                  :+:      :+:    :+:   */
+/*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/20 22:40:45 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:36:38 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/23 15:12:42 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/23 16:35:19 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	sig_handler_fork_c(int signal)
+void	built_unset(t_data *data, char **cmd2)
 {
-	(void)signal;
-	return ;
-}
+	t_env	*env;
+	int		i;
 
-void	sig_handler_fork_d(int signal)
-{
-	(void)signal;
-	return ;
-}
-
-void	sig_handler_fork_b(int signal)
-{
-	(void)signal;
-	return ;
-}
-
-void	set_signal_fork(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	i = 0;
+	while (cmd2[i++])
+	{
+		if (!cmd2[i])
+			continue ;
+		env = search_env(data->env_list, cmd2[i]);
+		if (!env)
+			continue ;
+		else
+		{
+			env->prev->next = env->next;
+			env->next->prev = env->prev;
+			env->next = 0;
+			env->prev = 0;
+			free(env->val);
+			free(env->key);
+			free(env);
+		}
+	}
+	data->exit_code = 0;
 }

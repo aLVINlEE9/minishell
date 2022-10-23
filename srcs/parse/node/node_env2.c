@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:59:49 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 14:31:15 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 15:05:23 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	append_env(t_env_list *list, char *key, char *val, int is_val_quot)
 		free(key);
 		if (!val)
 			return (1);
+		free(new_node->val);
 		new_node->val = val;
 		new_node->is_val_quot = is_val_quot;
 	}

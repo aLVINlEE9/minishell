@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: junhjeon <seungsle@student.42.fr>          +#+  +:+       +#+         #
+#    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/23 16:04:09 by junhjeon         ###   ########.fr        #
+#    Updated: 2022/10/23 16:31:19 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME	= minishell
 CC		= cc -g -Wall -Wextra -Werror
 # CFLAG	= -Werror -Wextra -Wall
 
-RDLINE_DIR	=	/Users/junhjeon/.brew/opt/readline/lib/
-RDLINE_INC	=	/Users/junhjeon/.brew/opt/readline/include/
+RDLINE_DIR	=	/Users/seungsle/.brew/opt/readline/lib/
+RDLINE_INC	=	/Users/seungsle/.brew/opt/readline/include/
 
 INC_DIR		=	./includes/
 
@@ -24,6 +24,16 @@ INC_DIR		=	./includes/
 SRCS_DIR	=	./srcs/
 
 SOURCES 	=	main.c\
+			built_in/built_cd1.c\
+			built_in/built_cd2.c\
+			built_in/built_echo.c\
+			built_in/built_env.c\
+			built_in/built_exit.c\
+			built_in/built_export1.c\
+			built_in/built_export2.c\
+			built_in/built_in.c\
+			built_in/built_pwd.c\
+			built_in/built_unset.c\
 			parse/node/node_env1.c\
 			parse/node/node_env2.c\
 			parse/node/node_token1.c\
@@ -60,10 +70,6 @@ SOURCES 	=	main.c\
 			make_cmdlst.c\
 			make_pipe_cmdlst.c\
 			make_pipe_cmdlst2.c\
-			built_in.c\
-			built_in2.c\
-			built_in3.c\
-			built_in4.c\
 			set_signal_fork.c\
 			env_manage.c
 

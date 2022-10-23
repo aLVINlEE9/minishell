@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:19:02 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 16:11:57 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:40:18 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,44 @@ typedef struct s_env_list{
 	t_env	*tail;
 }	t_env_list;
 
+/*
+*** built_in ***
+*/
+
+void		change_env(t_env *env, char *change_val);
+int			ft_is_digit(char *cmd);
+int			cd_check_dash(t_data *data, t_env *env_oldpwd, \
+					t_env *env_pwd);
+int			check_cd_error(t_data *data, char **cmd, int result);
+void		built_cd(char **cmd, t_data *data);
+int			cd_check_tils(t_data *data, char **cmd, \
+			t_env *env_oldpwd, t_env *env_pwd);
+int			cd_check_til(t_data *data, char **cmd, \
+			t_env *env_oldpwd, t_env *env_pwd);
+int			cd_check_after_til(t_data *data, char **cmd, t_env *env_oldpwd, \
+					t_env *env_pwd);
+int			cd_check_else(t_data *data, char **cmd, t_env *env_oldpwd, \
+					t_env *env_pwd);
+void		cd_check_else_sub(char *pwd, t_env *env_oldpwd, \
+					t_env *env_pwd);
+void		built_echo(char **cmd2, t_data *data);
+int			check_echo_opt(char **cmd2, int len);
+void		built_env(t_data *data);
+void		built_exit(char **cmd2, int flag, t_data *data);
+void		built_exit_args(char **cmd2, int flag, t_data *data, \
+			long long code);
+void		free_sort_export(char **envs);
+char		**sort_export(t_data *data);
+void		print_export(t_data *data);
+void		built_export_sub(char *ptr, t_data *data, char **cmd2, int i);
+void		built_export(t_data *data, char	**cmd2);
+int			is_alnum(int c);
+int			is_alpha(char c);
+int			export_valid_check(char **cmd2, int i, char *ptr);
+int			check_builtin_sub(char **cmd2, t_data *data);
+int			check_builtin(t_token **cmd, t_data *data);
+void		built_pwd(t_data *data);
+void		built_unset(t_data *data, char **cmd2);
 /*
 *** node ***
 */
@@ -276,8 +314,6 @@ void		built_pwd(t_data *data);
 void		built_echo(char **cmd2, t_data *data);
 void		built_cd(char **cmd2, t_data *data);
 int			ft_is_digit(char *cmd);
-void		change_env(t_env_list *env_list, t_env *env, \
-		char *change_val);
 void		insert_env(char **envp, char *key, char *change_val);
 char		**update_env(t_data *data, int flag);
 void		free_env(char **temp);
