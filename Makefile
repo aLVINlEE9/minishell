@@ -6,11 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/10/22 19:39:33 by seungsle         ###   ########.fr        #
-=======
-#    Updated: 2022/10/23 14:02:50 by junhjeon         ###   ########.fr        #
->>>>>>> junho3
+#    Updated: 2022/10/23 15:01:04 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +42,9 @@ SOURCES 	=	main.c\
 			utils/utils3.c\
 			utils/utils4.c\
 			utils/utils5.c\
-<<<<<<< HEAD
 			utils/utils.c\
-=======
 			utils/utils6.c\
 			utils/utils7.c\
->>>>>>> junho3
 			pipex.c\
 			exe_cmd.c\
 			cmd.c\
