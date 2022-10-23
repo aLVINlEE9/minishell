@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in4.c                                        :+:      :+:    :+:   */
+/*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 18:20:50 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 20:07:30 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/23 15:13:16 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/23 15:13:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,4 @@ void	built_env(t_data *data)
 	}
 	data->exit_code = 0;
 	free_env(temp);
-}
-
-void	built_unset(t_data *data, char **cmd2)
-{
-	t_env	*env;
-	t_env	*temp;
-	int	i;
-
-	i = 0;
-	while (cmd2[i++])
-	{
-		if (!cmd2[i])
-		{
-			continue ;
-		}
-		env = search_env(data->env_list, cmd2[i]);
-		if (!env)
-			continue ;
-		else
-		{
-			env->prev->next = env->next;
-			env->next->prev = env->prev;
-			env->next = 0;
-			env->prev = 0;
-			free(env->val);
-			free(env->key);
-			free(env);	
-		}
-	}
-	data->exit_code = 0;
 }

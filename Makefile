@@ -6,7 +6,7 @@
 #    By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/06 12:17:29 by seungsle          #+#    #+#              #
-#    Updated: 2022/10/23 15:01:04 by seungsle         ###   ########.fr        #
+#    Updated: 2022/10/23 15:15:50 by seungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,14 @@ INC_DIR		=	./includes/
 SRCS_DIR	=	./srcs/
 
 SOURCES 	=	main.c\
+			built_in/built_cd.c\
+			built_in/built_echo.c\
+			built_in/built_env.c\
+			built_in/built_exit.c\
+			built_in/built_export.c\
+			built_in/built_in.c\
+			built_in/built_pwd.c\
+			built_in/built_unset.c\
 			parse/node/node_env1.c\
 			parse/node/node_env2.c\
 			parse/node/node_token1.c\
@@ -60,10 +68,6 @@ SOURCES 	=	main.c\
 			make_cmdlst.c\
 			make_pipe_cmdlst.c\
 			make_pipe_cmdlst2.c\
-			built_in.c\
-			built_in2.c\
-			built_in3.c\
-			built_in4.c\
 			set_signal_fork.c\
 			env_manage.c
 

@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in3.c                                        :+:      :+:    :+:   */
+/*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/17 23:28:13 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 19:45:08 by seungsle         ###   ########.fr       */
+/*   Created: 2022/10/23 15:11:51 by seungsle          #+#    #+#             */
+/*   Updated: 2022/10/23 15:14:25 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	insert_env(char **envp, char *key, char *change_val)
-// {
-
-// }
 int	is_alnum(int c)
 {
 	if (c >= 'a' && c <= 'z')
@@ -50,7 +46,6 @@ int	export_valid_check(char **cmd2, int i, char *ptr)
 	if (!is_alpha(cmd2[i][0]) && cmd2[i][0] != '_')
 	{
 		print_built_error("export: `", cmd2[i], "': not a valid identifier");
-		// printf("export: `%s': not a valid identifier\n", cmd2[i]);
 		return (1);
 	}
 	while (cmd2[i][j] && ptr != &cmd2[i][j])
@@ -58,18 +53,11 @@ int	export_valid_check(char **cmd2, int i, char *ptr)
 		if (!is_alnum(cmd2[i][j]) && cmd2[i][j] != '_')
 		{
 			print_built_error("export: `", cmd2[i], "': not a valid identifier");
-			// printf("export: `%s': not a valid identifier\n", cmd2[i]);
 			return (1);
 		}
 		j++;
 	}
 	return (0);
-	// if (is_alpha(cmd2[i][0]))
-    //     return (0) ;
-    // else
-	// {
-	// 	return (1);
-	// }
 }
 
 void	free_sort_export(char **envs)
@@ -84,15 +72,6 @@ void	free_sort_export(char **envs)
 	}
 	free(envs);
 }
-
-// void	print_envs(char **envs)
-// {
-// 	int i = 1;
-// 	while (envs[i])
-// 	{
-// 		printf("%s %d\n", envs[i], i);
-// 	}
-// }
 
 char	**sort_export(t_data *data)
 {
@@ -129,7 +108,6 @@ void	print_export(t_data *data)
 	int	i;
 
 	envs = sort_export(data);
-	// print_env(data->env_list);
 	i = 0;
 	while (envs[i])
 	{
@@ -144,14 +122,6 @@ void	print_export(t_data *data)
 		{
 			printf("%s=\"\"\n", env->key);
 		}
-		// if (!env->val)
-		// {
-		// 	// printf("in %d\n", env->is_val_quot);
-		// 	if (env->is_val_quot == 0)
-		// 		printf("%s=\"\"\n", env->key);
-		// 	else
-				
-		// }
 		else
 		{
 			printf("%s=\"%s\"\n", env->key, env->val);
@@ -162,7 +132,6 @@ void	print_export(t_data *data)
 		i++;
 	}
 	free_env(envs);
-	// free_sort_export(envs);
 }
 
 void    built_export(t_data *data, char	**cmd2)
@@ -193,13 +162,9 @@ void    built_export(t_data *data, char	**cmd2)
 		{
 			key = (char *)malloc(sizeof(char) * (ptr - cmd2[i] + 1));
 			ft_strlcpy(key, cmd2[i], ptr - cmd2[i] + 1);
-			// splited = ft_split(cmd2[i], '=');
-			// printf("append  %s\n", ft_strdup(ptr + 1));
 			append_env(data->env_list, key, ft_strdup(ptr + 1), 0);
 		}
 		i++;
 	}
 	data->exit_code = 0;
-    // printf("%s\n%s\n", splited[0], splited[1]);
-    // printf("%s\n%s\n%s\n", cmd2[0], cmd2[1], cmd2[2]);
 }
