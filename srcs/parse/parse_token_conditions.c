@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:36:35 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 15:05:53 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:55:17 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	condition_dollar(t_data *data, t_parse *parse)
 	if (is_dollar(parse->s[parse->i]) && !is_end(parse))
 	{
 		if (!parse->in_qout && is_quot(parse->s[parse->i + 1]))
+		{
 			remove_char_from_idx(parse->s, parse->i);
+			parse->i--;
+		}
 		else if (!(parse->in_qout && parse->q == '\''))
 		{
 			parse->in_dollar++;

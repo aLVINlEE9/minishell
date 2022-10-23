@@ -6,25 +6,14 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 19:59:31 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:28:29 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_builtin(t_token **cmd, t_data *data)
+int	check_builtin_sub(char **cmd2, t_data *data)
 {
-	char	**cmd2;
-	char	*first_cmd;
-	int		fd[4];
-
-	first_cmd = find_first_cmd(cmd);
-	if (!is_firstcmd_builtin(first_cmd))
-		return (0);
-	//fd[0] = dup(0);
-	//fd[1] = dup(1);
-	//fd[3] = dup(0);
-	cmd2 = make_inout_cmd(cmd, &fd[0], data);
 	if (ft_strncmp(cmd2[0], "exit", -1) == 0)
 		built_exit(cmd2, 1, data);
 	else if (ft_strncmp(cmd2[0], "echo", -1) == 0)
@@ -36,21 +25,34 @@ int		check_builtin(t_token **cmd, t_data *data)
 	else if (ft_strncmp(cmd2[0], "pwd", -1) == 0)
 		built_pwd(data);
 	else if (ft_strncmp(cmd2[0], "export", -1) == 0)
-	 	built_export(data, cmd2);
+		built_export(data, cmd2);
 	else if (ft_strncmp(cmd2[0], "unset", -1) == 0)
 		built_unset(data, cmd2);
 	else
+		return (0);
+	return (1);
+}
+
+int	check_builtin(t_token **cmd, t_data *data)
+{
+	char	**cmd2;
+	char	*first_cmd;
+	int		fd[4];
+
+	first_cmd = find_first_cmd(cmd);
+	if (!is_firstcmd_builtin(first_cmd))
+		return (0);
+	cmd2 = make_inout_cmd(cmd, &fd[0], data);
+	if (check_builtin_sub(cmd2, data))
 	{
 		free(cmd2);
-		//dup2(fd[0], 0);
-		//dup2(fd[1], 1);
+		return (1);
+	}
+	else
+	{
+		free(cmd2);
 		return (0);
 	}
-	free(cmd2);
-	//close(fd[0]);
-	//close(fd[1]);
-	//close(fd[3]);
-	return (1);
 }
 void	built_exit(char **cmd2, int flag, t_data *data)
 {
@@ -92,8 +94,6 @@ void	built_pwd(t_data *data)
 	t_env	*env;
 	char	*ret;
 	
-	// env = search_env(data->env_list, "PWD");
-	// ret = env->val;
 	ret = getcwd(NULL, 0);
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);

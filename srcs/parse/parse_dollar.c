@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:56:58 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/21 16:23:09 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 13:40:28 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, \
 		val = ft_itoa(data->exit_code);
 	remove_char_from_idx(parse->s, parse->i);
 	replace_util_sub1(parse, buf_start, val, buf_end);
+	free(val);
 	parse->is_env = TRUE;
 }
 
