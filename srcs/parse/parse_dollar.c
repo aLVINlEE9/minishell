@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:56:58 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 13:40:28 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:33:58 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	replace_util_sub1(t_parse *parse, char *first, char *val, char *last)
 	ft_strlcpycpy(ret, first, ft_strlen(first) + 1);
 	ft_strlcpycpy(&ret[ft_strlen(first)], val, ft_strlen(val) + 1);
 	ft_strlcpy(&ret[ft_strlen(first) + ft_strlen(val)], last, len + 1);
+	free(parse->s);
 	parse->s = ret;
 }
 
@@ -59,6 +60,7 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, \
 	remove_char_from_idx(parse->s, parse->i);
 	replace_util_sub1(parse, buf_start, val, buf_end);
 	free(val);
+	parse->is_dollar_option = TRUE;
 	parse->is_env = TRUE;
 }
 

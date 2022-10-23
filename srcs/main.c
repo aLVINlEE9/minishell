@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 18:25:15 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:22:51 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int main(int argc, char **argv, char **envp)
 			printf("\033[1A");
 			printf("\033[10C");
 			printf(" exit\n");
+			free(str);
 			break ;
 		}
 		else if (str)
@@ -188,7 +189,7 @@ int main(int argc, char **argv, char **envp)
 				pipex(&data, envp);
 			free_for_line(&data);
 		}
-		free(str);
+		// free(str);
 	}
 	termi_old(data.termi, 0);
 	free_for_all(&data);

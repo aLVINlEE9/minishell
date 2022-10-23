@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:23:00 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/22 15:09:16 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 14:39:06 by seungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_parse(t_data *data, t_parse *parse, char *str)
 	parse->i = 0;
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
+	parse->is_dollar_option = FALSE;
 	parse->idx = 0;
 	parse->is_cmd = 0;
 	parse->is_env = 0;
@@ -36,6 +37,7 @@ void	init_parse_sub(t_parse *parse)
 	parse->in_qout = FALSE;
 	parse->in_dollar = FALSE;
 	parse->is_env = FALSE;
+	parse->is_dollar_option = FALSE;
 	parse->was_quot = FALSE;
 	parse->buf_env_len = 0;
 }
@@ -52,6 +54,8 @@ int	parse_token_sub(t_data *data, t_parse *parse)
 		{
 			append_token(data->token_list, parse, &parse->s[parse->idx], \
 						parse->i - parse->idx);
+			// if (!(parse->is_dollar_option && parse->is_env))
+			// 	free(parse->s);
 			break ;
 		}
 		condition_qout(parse);
@@ -77,6 +81,7 @@ int	parse_token(t_data *data, char *str)
 		if (is_space(parse.s[parse.i]))
 			parse.i++;
 	}
+	free(parse.s);
 	if (syntax_check(data))
 		return (0);
 	return (1);
