@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:12:06 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:21:19 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/23 14:18:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ void	exe_fork(t_token ***cmd_lst, t_data *data)
 	fd[3] = dup(0);
 	fd[4] = dup(1);
 	count = 0;
-	termi_old(data->termi, 0);
+	termi_old(data->termi);
 	pid = exe_fork2(cmd_lst, data, 0, &fd[0]);
 	monitoring(data, pid, &fd[0]);
 }

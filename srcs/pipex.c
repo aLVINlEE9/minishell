@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:08:33 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:15:06 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	pipex(t_data *data)
 	if (cmd_lst[1] == 0 && check_builtin(cmd_lst[0], data))
 		;
 	else
-		exe_fork(cmd_lst, env_lst, data);
+		exe_fork(cmd_lst, data);
 	free_cmdlst(cmd_lst);
 }
 

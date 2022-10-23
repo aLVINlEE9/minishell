@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:32:26 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:33:54 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:23:03 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	*dollarparsing(char *s, int count, int save_c, t_data *data)
 {
-	char				*save;
 	char				*ret;
 	char				*temp;
 	struct s_intset_jh	intset;

@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:37:33 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 14:22:13 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:23:20 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	monitoring(t_data *data, int pid, int *fd)
 int	monitoring_pid(pid_t last_pid, int ret)
 {
 	int		status;
-	int		pid;
 	pid_t	temp;
 
 	while (1)

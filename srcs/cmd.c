@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:30:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:14:47 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:18:22 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	cmd_doub_leftarrow(char *s, int *fd, t_data *data)
 	struct s_dollar_str	str_temp;
 
 	pipe(temp);
+	str = 0;
+	ret = 0;
 	str_temp.str = str;
 	str_temp.fd_temp = &temp[0];
 	temp[2] = dup(1);

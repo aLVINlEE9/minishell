@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:08:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 18:37:18 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:19:56 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	set_termi(struct s_termi *termi)
 	termi->new_t = new_term;
 }
 
-void	termi_old(struct s_termi termi, int fd)
+void	termi_old(struct s_termi termi)
 {
 	tcsetattr(0, TCSANOW, termi.save_t);
 }
 
-void	termi_new(struct s_termi termi, int fd)
+void	termi_new(struct s_termi termi)
 {
 	tcsetattr(0, TCSANOW, termi.new_t);
 }

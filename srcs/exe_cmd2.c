@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:44:58 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/22 21:27:12 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:23:47 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	exe_cmd2(char **cmd, t_data *data)
 	char	*temp2;
 	char	**temp;
 
+	temp2 = 0;
 	temp = update_env(data, 0);
 	path = parse_env2(temp);
 	if (is_slash(cmd[0]))

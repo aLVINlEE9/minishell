@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 16:11:03 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:20:30 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_line(t_data *data)
 
 	while (1)
 	{
-		termi_new(data->termi, 0);
+		termi_new(data->termi);
 		set_signal();
 		data->heredoc_is_still_alive = 0;
 		str = readline("minishell$ ");
@@ -66,6 +66,6 @@ int	main(int argc, char **argv, char **envp)
 	cmd = 0;
 	init_all(&data, cmd, &termi, envp);
 	get_line(&data);
-	termi_old(data.termi, 0);
+	termi_old(data.termi);
 	free_for_all(&data);
 }

@@ -6,7 +6,7 @@
 /*   By: junhjeon <junhjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 14:00:18 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 16:08:20 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:21:02 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	built_exit_args(char **cmd2, int flag, t_data *data, long long code)
 			return ;
 		}
 		code = ft_atol(cmd2[1]);
-		termi_old(data->termi, 0);
+		termi_old(data->termi);
 		exit((unsigned char)code);
 	}
 	write(2, "numeric arg required\n", 21);
-	termi_old(data->termi, 0);
+	termi_old(data->termi);
 	exit(255);
 }

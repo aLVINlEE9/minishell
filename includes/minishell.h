@@ -237,8 +237,8 @@ typedef struct s_dollar_str
 }				t_dollar_str_jh;
 
 void		set_termi(struct s_termi *termi);
-void		termi_old(struct s_termi termi, int fd);
-void		termi_new(struct s_termi termi, int fd);
+void		termi_old(struct s_termi termi);
+void		termi_new(struct s_termi termi);
 void		sig_handler(int signal);
 void		set_signal(void);
 void		print_error(char *s, int n);

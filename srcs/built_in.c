@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 15:32:17 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:24:12 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	built_exit(char **cmd2, int flag, t_data *data)
 	{
 		if (flag == 1)
 			write(2, "exit\n", 5);
-		termi_old(data->termi, 0);
+		termi_old(data->termi);
 		exit(0);
 	}
 	else
@@ -73,7 +73,6 @@ void	built_exit(char **cmd2, int flag, t_data *data)
 
 void	built_pwd(t_data *data)
 {
-	t_env	*env;
 	char	*ret;
 
 	ret = getcwd(NULL, 0);
