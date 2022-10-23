@@ -6,13 +6,13 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 15:49:10 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 14:22:44 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:08:33 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipex(t_data *data, char **envp)
+void	pipex(t_data *data)
 {
 	struct s_token_list		*token_lst;
 	struct s_env_list		*env_lst;

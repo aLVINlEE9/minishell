@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:43:43 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 13:28:29 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 15:32:17 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	check_builtin(t_token **cmd, t_data *data)
 		return (0);
 	}
 }
+
 void	built_exit(char **cmd2, int flag, t_data *data)
 {
 	long long	code;
@@ -67,33 +68,14 @@ void	built_exit(char **cmd2, int flag, t_data *data)
 		exit(0);
 	}
 	else
-	{
-		if (ft_is_digit(cmd2[1]))
-		{
-			if (cmd2[2] != 0)
-			{
-				if (flag == 1)
-				{
-					write(2, "exit\n", 5);
-					write(2, "too many args\n", 14);
-				}
-				return ;
-			}
-			code = ft_atol(cmd2[1]);
-			termi_old(data->termi, 0);
-			exit((unsigned char)code);
-		}
-		write(2, "numeric arg required\n", 21);
-		termi_old(data->termi, 0);
-		exit(255);
-	}
+		built_exit_args(cmd2, flag, data, code);
 }
 
 void	built_pwd(t_data *data)
 {
 	t_env	*env;
 	char	*ret;
-	
+
 	ret = getcwd(NULL, 0);
 	write(1, ret, ft_strlen(ret));
 	write(1, "\n", 1);
@@ -101,49 +83,18 @@ void	built_pwd(t_data *data)
 	data->exit_code = 0;
 }
 
-int	check_echo_opt(char **cmd2)
-{
-	int	len;
-	int	count;
-	int	opt_count;
-
-	len = 1;
-	count = 0;
-	opt_count = 0;
-	if (cmd2[1] == 0)
-		return (0);
-	while (cmd2[len])
-	{
-		count = 0;
-		if (cmd2[len][count ++] == '-')
-		{
-			while (cmd2[len][count])
-			{
-				if (cmd2[len][count ++] != 'n')
-					return (opt_count);
-			}
-			opt_count ++;
-			len ++;
-		}
-		else
-			break ;
-	}
-	return (opt_count);
-}
-
 void	built_echo(char **cmd2, t_data *data)
 {
 	int	len;
 
-	len = check_echo_opt(cmd2);
+	len = check_echo_opt(cmd2, 1);
 	if (len)
 	{
 		while (cmd2[len + 1])
 		{
 			write(1, cmd2[len + 1], ft_strlen(cmd2[len + 1]));
-			if (cmd2[len + 2] != 0)
+			if (cmd2[2 + len ++] != 0)
 				write(1, " ", 1);
-			len ++;
 		}
 	}
 	else

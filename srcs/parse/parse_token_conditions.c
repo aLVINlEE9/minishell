@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:36:35 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 13:55:17 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:07:45 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	condition_append_token(t_parse *parse)
 {
 	if (!parse->in_qout)
 	{
-		if ((is_null(parse->s[parse->i]) && ft_strlen(parse->s) == (parse->i)) \
+		if ((is_null(parse->s[parse->i]) && (int)ft_strlen(parse->s) == (parse->i)) \
 			|| is_space(parse->s[parse->i]))
 			return (1);
 		else if (is_specifier(parse, 0))

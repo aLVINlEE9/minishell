@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:56:58 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 14:33:58 by seungsle         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:05:27 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	replace_dollar_options(t_data *data, t_parse *parse, char *buf_start, \
 
 void	replace_util(t_data *data, t_parse *parse, int idx, int start)
 {
-	size_t	buf_env_len;
 	char	*buf_start;
 	char	*buf_env;
 	char	*buf_end;

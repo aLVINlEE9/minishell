@@ -6,7 +6,7 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 12:17:37 by seungsle          #+#    #+#             */
-/*   Updated: 2022/10/23 14:20:32 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:11:03 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_all(t_data *data, char **cmd, struct s_termi *termi, char **envp)
 	update_home(data);
 }
 
-void	get_line(t_data *data, char **envp)
+void	get_line(t_data *data)
 {
 	char	*str;
 
@@ -49,7 +49,7 @@ void	get_line(t_data *data, char **envp)
 		{
 			add_history(str);
 			if (parse_token(data, str))
-				pipex(data, envp);
+				pipex(data);
 			free_for_line(data);
 		}
 	}
@@ -63,8 +63,9 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	cmd = 0;
 	init_all(&data, cmd, &termi, envp);
-	get_line(&data, envp);
+	get_line(&data);
 	termi_old(data.termi, 0);
 	free_for_all(&data);
 }

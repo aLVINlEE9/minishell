@@ -6,20 +6,18 @@
 /*   By: seungsle <seungsle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:23:50 by junhjeon          #+#    #+#             */
-/*   Updated: 2022/10/23 14:51:18 by junhjeon         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:12:06 by junhjeon         ###   ########.fr       */
 /*   Updated: 2022/10/23 14:18:24 by junhjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exe_fork(t_token ***cmd_lst, struct s_env_list *env_lst, \
-		t_data *data)
+void	exe_fork(t_token ***cmd_lst, t_data *data)
 {
 	int		fd[5];
 	int		count;
 	pid_t	pid;
-	int		exitcode;
 
 	fd[2] = -1;
 	fd[3] = dup(0);
